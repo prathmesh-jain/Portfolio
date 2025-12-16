@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react'
+import { useEffect, useState } from 'react'
 import { FaGithub } from "react-icons/fa";
 const Home = () => {
     const [scrollY, setScrollY] = useState(0);

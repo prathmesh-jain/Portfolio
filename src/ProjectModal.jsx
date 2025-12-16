@@ -1,4 +1,4 @@
-import React, { useEffect, useRef, useState } from 'react';
+import { useEffect, useRef, useState } from 'react';
 
 const ProjectModal = ({ project, onClose }) => {
   const [imgIdx, setImgIdx] = useState(0);

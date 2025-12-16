@@ -1,5 +1,3 @@
-import React from 'react';
-
 const Footer = () => {
     return (
         <footer className="relative bg-custom-bg py-6 overflow-hidden">

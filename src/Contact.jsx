@@ -1,5 +1,5 @@
-import { FaHome, FaPhone, FaEnvelope } from "react-icons/fa";
-import React, { useRef, useState } from 'react';
+import { FaHome} from "react-icons/fa";
+import { useRef, useState } from 'react';
 import { sendForm } from '@emailjs/browser/es/methods/sendForm/sendForm.js';
 
 

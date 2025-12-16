@@ -1,5 +1,3 @@
-import React from "react";
-
 const workExperience = [
     {
         company: "Tata Consultancy Services (TCS)",
