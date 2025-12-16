@@ -49,16 +49,6 @@ const Contact = () => {
                 </span>
               </li>
               <li className="flex items-center gap-3">
-                {/* Phone Icon */}
-                <FaPhone size={15} className='text-indigo-300' />
-                <span>+91 8657376595</span>
-              </li>
-              <li className="flex items-end gap-3">
-                {/* Email Icon */}
-                <FaEnvelope className='text-indigo-300' />
-                <a href='mailto:prathmeshjain42@gmail.com' className='text-gray-200'>prathmeshjain42@gmail.com</a>
-              </li>
-              <li className="flex items-center gap-3">
                 {/* Social Links */}
                 <span className='text-indigo-300 font-bold'>Socials:</span>
                 <a href="https://www.linkedin.com/in/prathmeshjain22" target="_blank" className="text-indigo-400 hover:text-indigo-200 underline">
