@@ -11,14 +11,27 @@ const Contact = () => {
   const EMAILJS_SERVICE_ID = import.meta.env.VITE_EMAILJS_SERVICE_ID;
   const EMAILJS_TEMPLATE_ID = import.meta.env.VITE_EMAILJS_TEMPLATE_ID;
   const EMAILJS_PUBLIC_KEY = import.meta.env.VITE_EMAILJS_PUBLIC_KEY;
-
+  
   const sendEmail = (e) => {
     e.preventDefault();
+    setLoading(true); // Set loading to true when email sending starts
     sendForm(EMAILJS_SERVICE_ID, EMAILJS_TEMPLATE_ID, form.current, EMAILJS_PUBLIC_KEY)
       .then(() => {
         alert('Email Sent!');
         e.target.reset();
+        setStatus('success'); // Set status to success
+        setTimeout(() => {
+          setStatus(null)
+        }, 3000);
       })
+      .catch((error) => {
+        console.error('Email sending failed:', error);
+        alert('Failed to send email. Please try again later.');
+        setStatus('error'); // Set status to error
+      })
+      .finally(() => {
+        setLoading(false); // Set loading to false when email sending finishes (success or error)
+      });
   };
 
   return (
