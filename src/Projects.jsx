@@ -26,7 +26,7 @@ const projectsData = [
     description: 'Developed a full-stack Expense Tracker app with Expo (React Native), Node.js, Express, and MongoDB for seamless data flow and secure user management. Implemented global state handling using Zustand and crafted a responsive UI with NativeWind. Added full CRUD functionality for expenses and visualized financial trends through a dynamic line chart.',
     image: '/images/expensegauge.jpg',
     tech: ['React Native', 'Expo', 'Node.js', 'MongoDB', 'Express', 'Zustand', 'NativeWind'],
-    links: {  },
+    links: { live: 'https://expensegauge.vercel.app', github: 'https://github.com/pratsj22/expensegauge-app' },
     gallery: ['/images/expensegauge1.jpg', '/images/expensegauge2.jpg', '/images/expensegauge3.jpg', '/images/expensegauge4.jpg'],
   },
 ];
