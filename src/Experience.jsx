@@ -14,8 +14,14 @@ const workExperience = [
 
 export default function Work() {
     return (
-        <section className="py-12 sm:scroll-mt-0 scroll-mt-60" id="experience">
-            <div className=" mx-auto xl:px-20 lg:px-15 md:px-10 px-5">
+        <section className="relative py-12 sm:scroll-mt-0 scroll-mt-60 overflow-hidden" id="experience">
+            <div className='absolute inset-0 pointer-events-none'>
+                <div className='absolute -top-40 left-1/2 h-[520px] w-[520px] -translate-x-1/2 rounded-full bg-indigo-600/10 blur-3xl anim-float' />
+                <div className='absolute -bottom-40 -left-40 h-[520px] w-[520px] rounded-full bg-fuchsia-600/10 blur-3xl anim-float-rev' />
+                <div className='absolute inset-0 bg-gradient-to-b from-indigo-950/10 via-transparent to-transparent' />
+            </div>
+
+            <div className="relative mx-auto xl:px-20 lg:px-15 md:px-10 px-5">
                 <h1 className="md:text-5xl text-4xl font-bold text-indigo-100 my-16 text-left w-full font-poppins pl-10">Experience</h1>
                 <div className="relative xl:px-10 lg:px-5 md:px-2 w-full lg:w-2/3 py-5 mx-auto">
                     {/* Timeline vertical line with gradient */}

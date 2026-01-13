@@ -35,7 +35,12 @@ const Contact = () => {
   };
 
   return (
-    <section className="h-fit w-full flex justify-center bg-custom-bg py-12 pt-16 px-2 scroll-mt-72 sm:scroll-mt-16" id="contact">
+    <section className="relative h-fit w-full flex justify-center bg-custom-bg py-12 pt-16 px-2 scroll-mt-72 sm:scroll-mt-16 overflow-hidden" id="contact">
+      <div className='absolute inset-0 pointer-events-none'>
+        <div className='absolute -top-40 left-1/2 h-[520px] w-[520px] -translate-x-1/2 rounded-full bg-indigo-600/10 blur-3xl anim-float' />
+        <div className='absolute -bottom-40 -right-40 h-[520px] w-[520px] rounded-full bg-fuchsia-600/10 blur-3xl anim-float-rev' />
+        <div className='absolute inset-0 bg-gradient-to-b from-indigo-950/10 via-transparent to-transparent' />
+      </div>
       <div className="lg:w-3/4 w-full bg-custom-bg rounded-xl shadow-xl overflow-hidden grid grid-cols-1 md:grid-cols-2">
         {/* Left: Info */}
         <div className="relative flex flex-col justify-between p-10 bg-gradient-to-br from-[#181534] to-[#291c36]">

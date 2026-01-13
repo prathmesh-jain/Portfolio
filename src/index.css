@@ -115,3 +115,93 @@
 .animate-modalPop {
   animation: modalPop 0.3s cubic-bezier(.4, 0, .2, 1);
 }
+
+@keyframes floatSoft {
+  0% {
+    transform: translate3d(0, 0, 0);
+  }
+
+  50% {
+    transform: translate3d(0, -14px, 0);
+  }
+
+  100% {
+    transform: translate3d(0, 0, 0);
+  }
+}
+
+@keyframes floatSoftReverse {
+  0% {
+    transform: translate3d(0, 0, 0);
+  }
+
+  50% {
+    transform: translate3d(0, 12px, 0);
+  }
+
+  100% {
+    transform: translate3d(0, 0, 0);
+  }
+}
+
+@keyframes gradientShift {
+  0% {
+    background-position: 0% 50%;
+  }
+
+  50% {
+    background-position: 100% 50%;
+  }
+
+  100% {
+    background-position: 0% 50%;
+  }
+}
+
+@keyframes spinSlow {
+  0% {
+    transform: rotate(0deg);
+  }
+
+  100% {
+    transform: rotate(360deg);
+  }
+}
+
+@keyframes holoSweep {
+  0% {
+    transform: translate3d(-18%, -14%, 0) rotate(10deg);
+    opacity: 0.45;
+  }
+
+  50% {
+    transform: translate3d(10%, 6%, 0) rotate(-8deg);
+    opacity: 0.85;
+  }
+
+  100% {
+    transform: translate3d(22%, 18%, 0) rotate(10deg);
+    opacity: 0.5;
+  }
+}
+
+.anim-float {
+  animation: floatSoft 8s ease-in-out infinite;
+}
+
+.anim-float-rev {
+  animation: floatSoftReverse 10s ease-in-out infinite;
+}
+
+.anim-gradient {
+  background-size: 200% 200%;
+  animation: gradientShift 10s ease-in-out infinite;
+}
+
+.anim-spin-slow {
+  animation: spinSlow 18s linear infinite;
+}
+
+.anim-holo {
+  animation: holoSweep 6.5s ease-in-out infinite alternate;
+}
