@@ -2,21 +2,10 @@ import { useEffect, useRef, useState } from 'react'
 import { FaGithub } from "react-icons/fa";
 
 const Home = () => {
-    const [scrollY, setScrollY] = useState(0);
     const idleTimerRef = useRef(null);
     const lastMoveRef = useRef(0);
     const targetTiltRef = useRef({ rx: 0, ry: 0, gx: 50, gy: 35 });
     const [tilt3d, setTilt3d] = useState({ rx: 0, ry: 0, gx: 50, gy: 35 });
-
-    useEffect(() => {
-        const handleScroll = () => {
-            const scroll = window.scrollY;
-            setScrollY(scroll);
-        };
-
-        window.addEventListener('scroll', handleScroll);
-        return () => window.removeEventListener('scroll', handleScroll);
-    }, []);
 
     useEffect(() => {
         const lerp = (a, b, t) => a + (b - a) * t;
@@ -70,14 +59,11 @@ const Home = () => {
         };
     }, []);
 
-    const parallaxY = Math.min(28, scrollY * 0.04);
-    const tilt = Math.min(7, scrollY * 0.01);
-    const textParallax = Math.min(18, scrollY * 0.03);
-
     const handleCardMove = (e) => {
         if (e.pointerType === 'touch') return;
         lastMoveRef.current = Date.now();
         const el = e.currentTarget;
+
         const rect = el.getBoundingClientRect();
 
         const x = (e.clientX - rect.left) / rect.width;
@@ -101,7 +87,7 @@ const Home = () => {
         targetTiltRef.current = { rx: 0, ry: 0, gx: 50, gy: 35 };
     };
 
-    const cardRotateX = tilt + tilt3d.rx;
+    const cardRotateX = tilt3d.rx;
     const cardRotateY = tilt3d.ry;
 
     return (
@@ -129,8 +115,7 @@ const Home = () => {
 
             <div className='relative mx-auto w-full xl:px-20 md:px-10 px-5 py-6 flex items-center min-h-[calc(100svh-90px)] md:h-[calc(100vh-90px)]'>
                 <div className='flex flex-col-reverse items-center gap-10 md:flex-row'>
-                    <div className='text-left' style={{ transform: `translateY(${textParallax}px)` }}>
-
+                    <div className='text-left'>
 
                         <h1 className='mt-5 font-poppins font-extrabold tracking-tight text-[clamp(2.2rem,4vw,3.3rem)] leading-[1.05]'>
                             Hi, I'm <span className='text-indigo-400'>Prathmesh Jain</span>.
@@ -177,7 +162,7 @@ const Home = () => {
                         <div
                             className='relative rounded-3xl border border-indigo-400/20 bg-gradient-to-b from-white/5 to-transparent p-5 shadow-[0_0_70px_rgba(99,102,241,0.22)] transition-transform duration-300 ease-out'
                             style={{
-                                transform: `translateY(-${parallaxY}px) rotateX(${cardRotateX}deg) rotateY(${cardRotateY}deg)`,
+                                transform: `rotateX(${cardRotateX}deg) rotateY(${cardRotateY}deg)`,
                                 transformStyle: 'preserve-3d',
                                 willChange: 'transform',
                                 perspective: 1000,
@@ -211,7 +196,7 @@ const Home = () => {
                                 <img
                                     src='/profile.jpg'
                                     alt='Profile'
-                                    className='w-full h-[clamp(340px,60vh,620px)] object-cover object-top'
+                                    className='w-full sm:h-[clamp(340px,60vh,620px)] h-[clamp(340px,50vh,520px)] object-cover object-top'
                                 />
 
                                 <div className='absolute left-4 top-4 rounded-2xl border border-white/10 bg-black/45 px-3 py-2' style={{ transform: 'translateZ(36px)' }}>
