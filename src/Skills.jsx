@@ -22,6 +22,7 @@ const Skills = () => {
         { name: 'HTML', icon: '/icons/HTML.svg' },
         { name: 'CSS', icon: '/icons/CSS.svg' },
         { name: 'JavaScript', icon: '/icons/JavaScript.svg' },
+        { name: 'React Native', icon: '/icons/React-Dark.svg' },
       ],
     },
     {
@@ -32,6 +33,17 @@ const Skills = () => {
         { name: 'Express', icon: '/icons/ExpressJS-Dark.svg' },
         { name: 'FastAPI', icon: '/icons/FastAPI.svg' },
         { name: 'Flask', icon: '/icons/Flask-Dark.svg' },
+      ],
+    },
+    {
+      title: 'AI/LLM',
+      description: 'AI and LLM integration',
+      items: [
+        { name: 'Langchain', icon: '/icons/langchain.png' },
+        { name: 'Langgraph', icon: '/icons/langgraph.png' },
+        { name: 'CrewAI', icon: '/icons/crewai.png' },
+        { name: 'RAG' },
+        { name: 'MCP' },
       ],
     },
     {
@@ -58,19 +70,12 @@ const Skills = () => {
         { name: 'GitHub', icon: '/icons/Github-Dark.svg' },
         { name: 'VS Code', icon: '/icons/VSCode-Dark.svg' },
       ],
-    },
-    {
-      title: 'Mobile',
-      description: 'Cross-platform apps with shared UI patterns.',
-      items: [
-        { name: 'React Native', icon: '/icons/React-Dark.svg' },
-      ],
-    },
+    }
   ];
 
   const SkillChip = ({ skill }) => (
     <div className='group/chip inline-flex items-center gap-2 rounded-2xl border border-white/10 bg-black/20 px-3 py-2 text-left transition-colors hover:bg-black/35'>
-      <img src={skill.icon} alt={skill.name} className='h-5 w-5' />
+      {skill.icon && <img src={skill.icon} alt={skill.name} className='h-6 w-6' />}
       <span className='text-xs font-semibold text-indigo-100 font-inter'>{skill.name}</span>
     </div>
   );

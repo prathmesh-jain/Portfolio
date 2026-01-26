@@ -5,8 +5,8 @@ const workExperience = [
         team: undefined,
         duration: "Oct 2024 - Present",
         description:
-            "Developing enterprise-level Generative AI solutions using Azure OpenAI, Python, and FastAPI to automate document processing and enhance business workflows. Designed and developed responsive user interfaces using React.js, enabling users to interact with AI models and visualize results in real time. Contributed to improving code quality and maintainability through regular code reviews and technical discussions.",
-        techStack: ["React.js", "Python", "FastAPI", "Azure OpenAI"],
+            "Developing enterprise-level Generative AI solutions using Python, FastAPI, Langchain and CrewAI to automate document processing and enhance business workflows. Designed and developed responsive user interfaces using React.js, enabling users to interact with AI models and visualize results in real time. Contributed to improving code quality and maintainability through regular code reviews and technical discussions.",
+        techStack: ["React.js", "Python", "FastAPI", "Langchain", "CrewAI","Agentic AI"],
         logo: "/images/tcs.webp",
     },
     // Add more experiences here in the future
