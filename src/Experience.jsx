@@ -1,12 +1,24 @@
 const workExperience = [
     {
         company: "Tata Consultancy Services (TCS)",
-        role: "Systems Engineer",
-        team: undefined,
+        role: "Full Stack GenAI Engineer",
+        team: "BFSI Americas · Research & Innovation",
         duration: "Oct 2024 - Present",
         description:
-            "Developing enterprise-level Generative AI solutions using Python, FastAPI, Langchain and CrewAI to automate document processing and enhance business workflows. Designed and developed responsive user interfaces using React.js, enabling users to interact with AI models and visualize results in real time. Contributed to improving code quality and maintainability through regular code reviews and technical discussions.",
-        techStack: ["React.js", "Python", "FastAPI", "Langchain", "CrewAI","Agentic AI"],
+            "Building production-grade GenAI systems and full-stack applications within the BFSI Americas CTO team. I design stateful, multi-step agentic workflows with LangChain, LangGraph, and CrewAI, integrate real-time search and web automation exposed through MCP, and ship RAG-backed FastAPI services behind React frontends with strong reliability, monitoring, and cost controls.",
+        techStack: [
+            "React.js",
+            "TypeScript",
+            "Python",
+            "FastAPI",
+            "LangChain",
+            "LangGraph",
+            "CrewAI",
+            "RAG",
+            "MCP",
+            "Playwright",
+            "Server-Sent Events (SSE)",
+        ],
         logo: "/images/tcs.webp",
     },
     // Add more experiences here in the future
@@ -43,7 +55,7 @@ export default function Work() {
                                         {exp.company}
                                     </h2>
                                     <div className="flex flex-col sm:flex-row sm:items-center sm:gap-4 mb-2">
-                                        <span className="md:text-lg text-base font-semibold  text-gray-200">{exp.role}</span>
+                                        <span className="md:text-lg text-base font-semibold  text-gray-200 whitespace-nowrap">{exp.role}</span>
                                         <span className="md:text-sm text-xs  text-gray-400">{exp.team}</span>
                                         <span className="md:text-sm text-xs text-gray-500">{exp.duration}</span>
                                     </div>

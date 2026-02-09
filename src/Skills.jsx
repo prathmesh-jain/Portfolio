@@ -22,6 +22,7 @@ const Skills = () => {
         { name: 'HTML', icon: '/icons/HTML.svg' },
         { name: 'CSS', icon: '/icons/CSS.svg' },
         { name: 'JavaScript', icon: '/icons/JavaScript.svg' },
+        { name: 'TypeScript', icon: '/icons/TypeScript.svg' },
         { name: 'React Native', icon: '/icons/React-Dark.svg' },
       ],
     },
@@ -37,7 +38,7 @@ const Skills = () => {
     },
     {
       title: 'AI/LLM',
-      description: 'AI and LLM integration',
+      description: 'Agentic AI workflows, RAG pipelines, and production LLM integration.',
       items: [
         { name: 'Langchain', icon: '/icons/langchain.png' },
         { name: 'Langgraph', icon: '/icons/langgraph.png' },

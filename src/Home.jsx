@@ -144,7 +144,7 @@ const Home = () => {
                             </a> */}
 
                             <a
-                                href='https://github.com/pratsj22'
+                                href='https://github.com/prathmesh-jain'
                                 target='_blank'
                                 rel='noreferrer'
                                 className='inline-flex justify-center items-center gap-2 rounded-xl border border-indigo-400/30 bg-black/20 px-5 py-3 text-sm font-semibold text-indigo-100 hover:bg-indigo-500/10 transition-colors'
@@ -201,7 +201,7 @@ const Home = () => {
 
                                 <div className='absolute left-4 top-4 rounded-2xl border border-white/10 bg-black/45 px-3 py-2' style={{ transform: 'translateZ(36px)' }}>
                                     <div className='text-[11px] text-gray-300 font-inter'>Currently</div>
-                                    <div className='text-sm font-semibold text-indigo-100 font-poppins'>Systems Engineer @ TCS</div>
+                                    <div className='text-sm font-semibold text-indigo-100 font-poppins'>Full Stack GenAI Engineer @ TCS</div>
                                 </div>
 
                                 <div className='absolute right-4 bottom-4 rounded-2xl border border-white/10 bg-black/45 px-3 py-2' style={{ transform: 'translateZ(30px)' }}>

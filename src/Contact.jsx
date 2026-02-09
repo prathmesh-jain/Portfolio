@@ -72,7 +72,7 @@ const Contact = () => {
                 <a href="https://www.linkedin.com/in/prathmeshjain22" target="_blank" className="text-indigo-400 hover:text-indigo-200 underline">
                   <img src="/icons/LinkedIn.svg" alt="" className='w-6 h-6' />
                 </a>
-                <a href="https://github.com/pratsj22" target="_blank" className="text-indigo-400 hover:text-indigo-200 underline">
+                <a href="https://github.com/prathmesh-jain" target="_blank" className="text-indigo-400 hover:text-indigo-200 underline">
                   <img src="/icons/Github-Dark.svg" alt="" className='w-6 h-6' />
                 </a>
                 <a href="https://leetcode.com/spider_22/" target="_blank" className="text-indigo-400 hover:text-indigo-200 underline">

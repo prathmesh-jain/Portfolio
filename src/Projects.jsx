@@ -8,7 +8,7 @@ const projectsData = [
     description: 'Developed a feature-rich full-stack E-commerce platform from scratch using React.js for frontend, Node.js and Express.js for backend APIs, and MongoDB for database management. Used Redux toolkit for state management and ensured seamless user experience through responsive design and optimized performance.',
     image: '/images/patronix.png',
     tech: ['React.js', 'Node.js', 'Express.js', 'MongoDB', 'Redux'],
-    links: { live: 'https://patronix-ecommerce-website.onrender.com', github: 'https://github.com/pratsj22/Patronix-Ecommerce-Website' },
+    links: { live: 'https://patronix-ecommerce-website.onrender.com', github: 'https://github.com/prathmesh-jain/Patronix-Ecommerce-Website' },
     gallery: ['/images/patronix.png', '/images/patronix1.png','/images/patronix2.png','/images/patronix3.png','/images/patronix4.png','/images/patronix5.png'],
   },
   {
@@ -17,7 +17,7 @@ const projectsData = [
     description: 'Developed a text-automation website with features such as text-summarization, text-extraction, and language translation. Implemented NLP algorithms for text summarization and language processing. Used React for frontend interface and Flask with Python for backend processing.',
     image: '/images/automatify.png',
     tech: ['React.js', 'Flask', 'Python', 'NLP'],
-    links: { live: 'https://automatify-text-automation-website.onrender.com', github: 'https://github.com/pratsj22/Automatify-Text-Automation-Website' },
+    links: { live: 'https://automatify-text-automation-website.onrender.com', github: 'https://github.com/prathmesh-jain/Automatify-Text-Automation-Website' },
     gallery: ['/images/automatify.png', '/images/automatify1.png','/images/automatify2.png','/images/automatify3.png','/images/automatify4.png'],
   },
   {
@@ -26,7 +26,7 @@ const projectsData = [
     description: 'Developed a full-stack Expense Tracker app with Expo (React Native), Node.js, Express, and MongoDB for seamless data flow and secure user management. Implemented global state handling using Zustand and crafted a responsive UI with NativeWind. Added full CRUD functionality for expenses and visualized financial trends through a dynamic line chart.',
     image: '/images/expensegauge.jpg',
     tech: ['React Native', 'Expo', 'Node.js', 'MongoDB', 'Express', 'Zustand', 'NativeWind'],
-    links: { live: 'https://expensegauge.vercel.app', github: 'https://github.com/pratsj22/expensegauge-app' },
+    links: { live: 'https://expensegauge.vercel.app', github: 'https://github.com/prathmesh-jain/expensegauge-app' },
     gallery: ['/images/expensegauge1.jpg', '/images/expensegauge2.jpg', '/images/expensegauge3.jpg', '/images/expensegauge4.jpg'],
   },
 ];
