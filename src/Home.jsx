@@ -40,25 +40,6 @@ const Home = () => {
         return () => cancelAnimationFrame(animId);
     }, []);
 
-    useEffect(() => {
-        idleTimerRef.current = setInterval(() => {
-            const now = Date.now();
-            if (now - lastMoveRef.current < 400) return;
-
-            const t = now / 1000;
-            targetTiltRef.current = {
-                rx: Math.sin(t * 0.9) * 1.6,
-                ry: Math.cos(t * 0.7) * 2.2,
-                gx: 50 + Math.sin(t * 0.6) * 8,
-                gy: 35 + Math.cos(t * 0.6) * 6,
-            };
-        }, 80);
-
-        return () => {
-            if (idleTimerRef.current) clearInterval(idleTimerRef.current);
-        };
-    }, []);
-
     const handleCardMove = (e) => {
         if (e.pointerType === 'touch') return;
         lastMoveRef.current = Date.now();
@@ -99,7 +80,7 @@ const Home = () => {
             <div className='absolute inset-0 bg-custom-bg' />
 
             <div
-                className='absolute inset-0 opacity-35 anim-gradient'
+                className='absolute inset-0 opacity-35'
                 style={{ backgroundImage: 'linear-gradient(120deg, rgba(99,102,241,0.18), rgba(168,85,247,0.10), rgba(236,72,153,0.10))' }}
             />
             <div className='absolute inset-0 bg-gradient-to-b from-indigo-950/40 via-transparent to-transparent' />
@@ -110,8 +91,8 @@ const Home = () => {
                     backgroundSize: '26px 26px',
                 }}
             />
-            <div className='absolute -top-28 -left-28 h-[360px] w-[360px] rounded-full bg-indigo-600/20 blur-3xl anim-float' />
-            <div className='absolute -bottom-28 -right-28 h-[420px] w-[420px] rounded-full bg-fuchsia-600/10 blur-3xl anim-float-rev' />
+            <div className='absolute -top-28 -left-28 h-[360px] w-[360px] rounded-full bg-indigo-600/20 blur-3xl' />
+            <div className='absolute -bottom-28 -right-28 h-[420px] w-[420px] rounded-full bg-fuchsia-600/10 blur-3xl' />
 
             <div className='relative mx-auto w-full xl:px-20 md:px-10 px-5 py-6 flex items-center min-h-[calc(100svh-90px)] md:h-[calc(100vh-90px)]'>
                 <div className='flex flex-col-reverse items-center gap-10 md:flex-row'>
@@ -136,13 +117,6 @@ const Home = () => {
                                 Download Resume
                             </a>
 
-                            {/* <a
-                                href='#projects'
-                                className='inline-flex justify-center items-center rounded-xl border border-indigo-400/30 bg-black/20 px-5 py-3 text-sm font-semibold text-indigo-100 hover:bg-indigo-500/10 transition-colors'
-                            >
-                                View Projects
-                            </a> */}
-
                             <a
                                 href='https://github.com/prathmesh-jain'
                                 target='_blank'
@@ -156,9 +130,6 @@ const Home = () => {
                     </div>
 
                     <div className='relative mx-auto w-full max-w-[clamp(340px,33vw,620px)]'>
-                        <div className='absolute -top-8 -left-6 h-16 w-16 rounded-3xl bg-indigo-500/10 blur-xl anim-float' />
-                        <div className='absolute -bottom-10 -right-6 h-20 w-20 rounded-3xl bg-fuchsia-500/10 blur-xl anim-float-rev' />
-
                         <div
                             className='relative rounded-3xl border border-indigo-400/20 bg-gradient-to-b from-white/5 to-transparent p-5 shadow-[0_0_70px_rgba(99,102,241,0.22)] transition-transform duration-300 ease-out'
                             style={{
@@ -175,19 +146,10 @@ const Home = () => {
                                         'conic-gradient(from 180deg at 50% 50%, rgba(99,102,241,0.38), rgba(236,72,153,0.22), rgba(168,85,247,0.26), rgba(99,102,241,0.38))',
                                 }}
                             />
-                            <div className='absolute inset-0 rounded-3xl bg-gradient-to-br from-indigo-600/10 via-transparent to-fuchsia-600/10' />
                             <div
                                 className='absolute inset-0 rounded-3xl pointer-events-none'
                                 style={{
                                     background: `radial-gradient(600px circle at ${tilt3d.gx}% ${tilt3d.gy}%, rgba(255,255,255,0.22), transparent 45%)`,
-                                    mixBlendMode: 'overlay',
-                                }}
-                            />
-                            <div
-                                className='absolute inset-0 rounded-3xl pointer-events-none opacity-70 anim-holo'
-                                style={{
-                                    backgroundImage:
-                                        'linear-gradient(120deg, transparent 0%, rgba(255,255,255,0.14) 18%, transparent 38%, rgba(255,255,255,0.10) 55%, transparent 78%)',
                                     mixBlendMode: 'overlay',
                                 }}
                             />

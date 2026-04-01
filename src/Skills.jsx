@@ -121,7 +121,7 @@ const Skills = () => {
           perspective: 1000,
         }}
       >
-        <div className='absolute -top-10 -right-10 h-28 w-28 rounded-full bg-indigo-600/10 blur-3xl anim-float pointer-events-none' />
+        <div className='absolute -top-10 -right-10 h-28 w-28 rounded-full bg-indigo-600/10 blur-3xl  pointer-events-none' />
         <div
           className='absolute inset-0 rounded-3xl pointer-events-none'
           style={{
@@ -149,8 +149,8 @@ const Skills = () => {
   return (
     <section className='relative w-full pt-10 sm:scroll-mt-0 scroll-mt-60 overflow-hidden pb-10' style={{ minHeight: "calc(100vh -90px)" }} id='skills'>
       <div className='absolute inset-0 pointer-events-none'>
-        <div className='absolute -top-40 left-1/2 h-[520px] w-[520px] -translate-x-1/2 rounded-full bg-indigo-600/10 blur-3xl anim-float' />
-        <div className='absolute -bottom-40 -right-40 h-[520px] w-[520px] rounded-full bg-fuchsia-600/10 blur-3xl anim-float-rev' />
+        <div className='absolute -top-40 left-1/2 h-[520px] w-[520px] -translate-x-1/2 rounded-full bg-indigo-600/10 blur-3xl ' />
+        <div className='absolute -bottom-40 -right-40 h-[520px] w-[520px] rounded-full bg-fuchsia-600/10 blur-3xl ' />
         <div className='absolute inset-0 bg-gradient-to-b from-indigo-950/10 via-transparent to-transparent' />
       </div>
 
