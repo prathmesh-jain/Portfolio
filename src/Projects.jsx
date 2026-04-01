@@ -54,12 +54,7 @@ const Projects = () => {
       </div>
 
       <div className='relative flex items-center w-full mt-16 flex-col box-border xl:px-20 md:px-10 px-5'>
-        <div className='flex justify-between w-full items-center pt-10 mb-10  md:pb-5 pb-2'>
-          <h1 className='md:text-5xl text-4xl font-bold text-indigo-100 tracking-wide text-left w-full pl-10 font-poppins'>Projects</h1>
-          <a href='https://github.com/prathmesh-jain?tab=repositories' target='_blank' className='whitespace-nowrap text-indigo-100 tracking-wide text-lg font-poppins hover:scale-105'>
-            View All →
-          </a>
-        </div>
+        <h1 className='md:text-5xl text-4xl font-bold text-indigo-100 tracking-wide text-left w-full pl-10 font-poppins pt-10 mb-10  md:pb-5 pb-2'>Projects</h1>
         <div className='flex w-full md:w-11/12 h-fit xl:p-5 md:p-0 sm:p-5 gap-8 md:gap-0 justify-between flex-wrap'>
           {projectsData.map((project, idx) => (
             <div
@@ -76,6 +71,9 @@ const Projects = () => {
             </div>
           ))}
         </div>
+        <a href='https://github.com/prathmesh-jain?tab=repositories' target='_blank' className='whitespace-nowrap text-indigo-100 tracking-wide text-lg font-poppins hover:scale-105 mt-10'>
+          View All →
+        </a>
 
         {modalOpen && selectedProject && (
           <ProjectModal project={selectedProject} onClose={closeModal} />
