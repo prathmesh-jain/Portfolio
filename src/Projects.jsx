@@ -23,7 +23,7 @@ const projectsData = [
   {
     title: 'ExpenseGauge',
     subtitle: 'Expense Tracker App',
-    description: 'Developed a full-stack Expense Tracker app with Expo (React Native), Node.js, Express, and MongoDB for seamless data flow and secure user management. Implemented global state handling using Zustand and crafted a responsive UI with NativeWind. Added full CRUD functionality for expenses and visualized financial trends through a dynamic line chart.',
+    description: 'Developed a full-stack offline-first Expense Tracker app with Expo (React Native), Node.js, Express, and MongoDB for seamless data flow and secure user management. Implemented global state handling using Zustand and crafted a responsive UI with NativeWind. Added full CRUD functionality for expenses and visualized financial trends through a dynamic line chart.',
     image: '/images/expensegauge.jpg',
     tech: ['React Native', 'Expo', 'Node.js', 'MongoDB', 'Express', 'Zustand', 'NativeWind'],
     links: { live: 'https://expensegauge.vercel.app', github: 'https://github.com/prathmesh-jain/expensegauge-app' },
