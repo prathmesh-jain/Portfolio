@@ -12,13 +12,13 @@ const projectsData = [
     gallery: ['/images/patronix.png', '/images/patronix1.png','/images/patronix2.png','/images/patronix3.png','/images/patronix4.png','/images/patronix5.png'],
   },
   {
-    title: 'Automatify',
-    subtitle: 'Text-Automation Website',
-    description: 'Developed a text-automation website with features such as text-summarization, text-extraction, and language translation. Implemented NLP algorithms for text summarization and language processing. Used React for frontend interface and Flask with Python for backend processing.',
-    image: '/images/automatify.png',
-    tech: ['React.js', 'Flask', 'Python', 'NLP'],
-    links: { live: 'https://automatify-text-automation-website.onrender.com', github: 'https://github.com/prathmesh-jain/Automatify-Text-Automation-Website' },
-    gallery: ['/images/automatify.png', '/images/automatify1.png','/images/automatify2.png','/images/automatify3.png','/images/automatify4.png'],
+    title: 'BizAssist',
+    subtitle: 'AI Business Operations Assistant',
+    description: `Developed BizAssist as an AI-driven business operations assistant, handling end-to-end development including backend, frontend, and AI orchestration. The system uses a multi-agent architecture with LangGraph, where user queries are validated, planned, and routed to specialized agents for financial analysis, document Q&A (RAG), spreadsheet automation, and general tasks.I developed the backend using FastAPI and integrated LangChain with ChromaDB for a RAG pipeline, enabling intelligent querying over uploaded documents. I also implemented a multimodal pipeline to process PDFs, DOCX, and images using OCR. On the frontend, I built a React interface with Zustand for state management and used Server-Sent Events (SSE) to stream real-time responses.`,
+    image: '/images/bizassist.png',
+    tech: ['React.js', 'FastAPI', 'Python', 'Langchain','Langgraph'],
+    links: { live: 'https://bizassist.prathmeshjain.online', github: 'https://github.com/prathmesh-jain/BizAssist' },
+    gallery: ['/images/bizassist.png', '/images/bizassist1.png','/images/bizassist2.png','/images/bizassist3.png'],
   },
   {
     title: 'ExpenseGauge',
@@ -54,7 +54,6 @@ const Projects = () => {
       </div>
 
       <div className='relative flex items-center w-full mt-16 flex-col box-border xl:px-20 md:px-10 px-5'>
-        {/* <img src='/new.jpg' alt='' className='absolute inset-0 h-full w-full opacity-10 mask-image' /> */}
         <h1 className='md:text-5xl text-4xl font-bold text-indigo-100 tracking-wide md:pb-5 pb-2 pt-10 mb-10 text-left w-full pl-10 font-poppins'>Projects</h1>
         <div className='flex w-full md:w-11/12 h-fit xl:p-5 md:p-0 sm:p-5 gap-8 md:gap-0 justify-between flex-wrap'>
           {projectsData.map((project, idx) => (
@@ -73,7 +72,6 @@ const Projects = () => {
           ))}
         </div>
 
-        {/* Modal placeholder for integration */}
         {modalOpen && selectedProject && (
           <ProjectModal project={selectedProject} onClose={closeModal} />
         )}
