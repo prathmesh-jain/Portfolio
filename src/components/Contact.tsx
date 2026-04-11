@@ -64,7 +64,12 @@ const Contact: React.FC = () => {
             </svg>
           </div>
           <div className="relative z-[9]">
-            <h2 className="text-3xl md:text-3xl font-semibold text-white mb-4 font-poppins">Let's Connect!</h2>
+            <motion.h2
+              initial={{ opacity: 0.5, scale: 2 }}
+              whileInView={{ opacity: 1, scale: 1 }}
+              viewport={{ once: true }}
+              transition={{ duration: 0.7 }}
+              className="text-3xl md:text-3xl font-semibold text-white mb-4 font-poppins">Let's Connect!</motion.h2>
             <p className="text-gray-300 mb-8 max-w-md text-base text-justify font-inter">I'm always open to new opportunities, collaborations, or a friendly chat about tech. Drop me a message and I'll get back to you soon!</p>
             <ul className="space-y-6 text-gray-200">
               <li className="flex items-center gap-3">
@@ -74,7 +79,12 @@ const Contact: React.FC = () => {
                   Mumbai, Maharashtra, India
                 </span>
               </li>
-              <li className="flex items-center gap-3">
+              <motion.li
+                initial={{ opacity: 0, x: -100 }}
+                whileInView={{ opacity: 1, x: 0 }}
+                viewport={{ once: true }}
+                transition={{ duration: 0.6 }}
+                className="flex items-center gap-3">
                 {/* Social Links */}
                 <span className='text-indigo-300 font-bold'>Socials:</span>
                 <a href="https://www.linkedin.com/in/prathmeshjain22" target="_blank" rel="noopener noreferrer" className="text-indigo-400 hover:text-indigo-200 underline">
@@ -88,7 +98,7 @@ const Contact: React.FC = () => {
                     <img src="/icons/leetcode.png" alt="LeetCode" className=' rounded w-full h-full' />
                   </div>
                 </a>
-              </li>
+              </motion.li>
             </ul>
           </div>
         </div>

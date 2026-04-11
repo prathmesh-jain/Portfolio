@@ -50,7 +50,7 @@ const Experience: React.FC = () => {
                 <motion.h1
                     initial={{ opacity: 0, x: -20 }}
                     whileInView={{ opacity: 1, x: 0 }}
-                    viewport={{ once: true }}
+                    viewport={{ once: false }}
                     className="md:text-5xl text-4xl font-bold text-indigo-100 my-16 text-left w-full font-poppins pl-10"
                 >
                     Experience
@@ -69,7 +69,7 @@ const Experience: React.FC = () => {
                             key={idx}
                             initial={{ opacity: 0, y: 50 }}
                             whileInView={{ opacity: 1, y: 0 }}
-                            viewport={{ once: true, margin: "-100px" }}
+                            viewport={{ once: false, margin: "-100px" }}
                             transition={{ duration: 0.5, delay: idx * 0.2 }}
                             className="mb-16 relative group"
                         >
