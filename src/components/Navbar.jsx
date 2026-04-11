@@ -1,6 +1,6 @@
 import { Disclosure, DisclosureButton, DisclosurePanel } from '@headlessui/react'
 import { FaBars, FaTimes } from "react-icons/fa";
-import useScrollNavigation from './hooks/useScrollNavigation'
+import useScrollNavigation from '../hooks/useScrollNavigation'
 import { useRef } from 'react';
 
 const navigation = [

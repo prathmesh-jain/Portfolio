@@ -1,5 +1,5 @@
 import { useRef, useState } from 'react'
-import SVGComponent from './SvgComponent'
+import SVGComponent from './ui/SvgComponent'
 
 const Skills = () => {
 
