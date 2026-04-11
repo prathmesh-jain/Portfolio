@@ -1,36 +1,38 @@
-import { FaHome} from "react-icons/fa";
-import { useRef, useState } from 'react';
-import { sendForm } from '@emailjs/browser/es/methods/sendForm/sendForm.js';
+import React, { useRef, useState } from 'react';
+import { FaHome } from "react-icons/fa";
+import emailjs from '@emailjs/browser';
+import { motion } from 'motion/react';
 
-
-const Contact = () => {
-  const form = useRef();
-  const [status, setStatus] = useState(null);
+const Contact: React.FC = () => {
+  const form = useRef<HTMLFormElement>(null);
+  const [status, setStatus] = useState<'success' | 'error' | null>(null);
   const [loading, setLoading] = useState(false);
 
   const EMAILJS_SERVICE_ID = import.meta.env.VITE_EMAILJS_SERVICE_ID;
   const EMAILJS_TEMPLATE_ID = import.meta.env.VITE_EMAILJS_TEMPLATE_ID;
   const EMAILJS_PUBLIC_KEY = import.meta.env.VITE_EMAILJS_PUBLIC_KEY;
-  
-  const sendEmail = (e) => {
+
+  const sendEmail = (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
-    setLoading(true); // Set loading to true when email sending starts
-    sendForm(EMAILJS_SERVICE_ID, EMAILJS_TEMPLATE_ID, form.current, EMAILJS_PUBLIC_KEY)
+    if (!form.current) return;
+
+    setLoading(true);
+    emailjs.sendForm(EMAILJS_SERVICE_ID, EMAILJS_TEMPLATE_ID, form.current, EMAILJS_PUBLIC_KEY)
       .then(() => {
         alert('Email Sent!');
-        e.target.reset();
-        setStatus('success'); // Set status to success
+        if (form.current) form.current.reset();
+        setStatus('success');
         setTimeout(() => {
-          setStatus(null)
+          setStatus(null);
         }, 3000);
       })
       .catch((error) => {
         console.error('Email sending failed:', error);
         alert('Failed to send email. Please try again later.');
-        setStatus('error'); // Set status to error
+        setStatus('error');
       })
       .finally(() => {
-        setLoading(false); // Set loading to false when email sending finishes (success or error)
+        setLoading(false);
       });
   };
 
@@ -41,7 +43,13 @@ const Contact = () => {
         <div className='absolute -bottom-40 -right-40 h-[520px] w-[520px] rounded-full bg-fuchsia-600/10 blur-3xl ' />
         <div className='absolute inset-0 bg-gradient-to-b from-indigo-950/10 via-transparent to-transparent' />
       </div>
-      <div className="lg:w-3/4 w-full bg-custom-bg rounded-xl shadow-xl overflow-hidden grid grid-cols-1 md:grid-cols-2">
+      <motion.div
+        initial={{ opacity: 0, y: 30 }}
+        whileInView={{ opacity: 1, y: 0 }}
+        viewport={{ once: true }}
+        transition={{ duration: 0.6 }}
+        className="lg:w-3/4 w-full bg-custom-bg rounded-xl shadow-xl overflow-hidden grid grid-cols-1 md:grid-cols-2"
+      >
         {/* Left: Info */}
         <div className="relative flex flex-col justify-between p-10 bg-gradient-to-br from-[#181534] to-[#291c36]">
           {/* Subtle grid pattern */}
@@ -69,15 +77,15 @@ const Contact = () => {
               <li className="flex items-center gap-3">
                 {/* Social Links */}
                 <span className='text-indigo-300 font-bold'>Socials:</span>
-                <a href="https://www.linkedin.com/in/prathmeshjain22" target="_blank" className="text-indigo-400 hover:text-indigo-200 underline">
-                  <img src="/icons/LinkedIn.svg" alt="" className='w-6 h-6' />
+                <a href="https://www.linkedin.com/in/prathmeshjain22" target="_blank" rel="noopener noreferrer" className="text-indigo-400 hover:text-indigo-200 underline">
+                  <img src="/icons/LinkedIn.svg" alt="LinkedIn" className='w-6 h-6' />
                 </a>
-                <a href="https://github.com/prathmesh-jain" target="_blank" className="text-indigo-400 hover:text-indigo-200 underline">
-                  <img src="/icons/Github-Dark.svg" alt="" className='w-6 h-6' />
+                <a href="https://github.com/prathmesh-jain" target="_blank" rel="noopener noreferrer" className="text-indigo-400 hover:text-indigo-200 underline">
+                  <img src="/icons/Github-Dark.svg" alt="GitHub" className='w-6 h-6' />
                 </a>
-                <a href="https://leetcode.com/spider_22/" target="_blank" className="text-indigo-400 hover:text-indigo-200 underline">
+                <a href="https://leetcode.com/spider_22/" target="_blank" rel="noopener noreferrer" className="text-indigo-400 hover:text-indigo-200 underline">
                   <div className='bg-gray-950 rounded p-1 w-6 h-6'>
-                    <img src="/icons/leetcode.png" alt="" className=' rounded w-full h-full' />
+                    <img src="/icons/leetcode.png" alt="LeetCode" className=' rounded w-full h-full' />
                   </div>
                 </a>
               </li>
@@ -87,36 +95,70 @@ const Contact = () => {
         {/* Right: Form */}
         <form ref={form} onSubmit={sendEmail} className="relative flex flex-col justify-center text-left p-10 bg-gradient-to-tr from-[#291b3c] to-[#191432]">
           <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-            <div>
+            <motion.div
+              initial={{ opacity: 0, x: 10 }}
+              whileInView={{ opacity: 1, x: 0 }}
+              viewport={{ once: true }}
+              transition={{ delay: 0.1 }}
+            >
               <label htmlFor="firstName" className="block text-sm font-semibold text-gray-200 mb-1 pl-1">First name</label>
               <input type="text" id="firstName" name="firstName" autoComplete='given-name' required className="w-full rounded-md border border-none bg-gradient-to-tr from-[#241d49] to-[#281b47] text-white px-4 py-2 focus:outline-none focus:ring-2 focus:ring-indigo-400" />
-            </div>
-            <div>
+            </motion.div>
+            <motion.div
+              initial={{ opacity: 0, x: 10 }}
+              whileInView={{ opacity: 1, x: 0 }}
+              viewport={{ once: true }}
+              transition={{ delay: 0.2 }}
+            >
               <label htmlFor="lastName" className="block text-sm font-semibold text-gray-200 mb-1 pl-1">Last name</label>
               <input type="text" id="lastName" name="lastName" autoComplete='family-name' className="w-full rounded-md border border-none bg-gradient-to-tr from-[#241d49] to-[#281b47] text-white px-4 py-2 focus:outline-none focus:ring-2 focus:ring-indigo-400" />
-            </div>
+            </motion.div>
           </div>
-          <div className="mt-6">
+          <motion.div
+            initial={{ opacity: 0, y: 10 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            viewport={{ once: true }}
+            transition={{ delay: 0.3 }}
+            className="mt-6"
+          >
             <label htmlFor="user_email" className="block text-sm font-semibold text-gray-200 mb-1 pl-1">Email</label>
             <input type="email" id="user_email" name="user_email" autoComplete='email' required className="w-full rounded-md border border-none bg-gradient-to-tr from-[#241d49] to-[#281b47] text-white px-4 py-2 focus:outline-none focus:ring-2 focus:ring-indigo-400" />
-          </div>
-          <div className="mt-6">
+          </motion.div>
+          <motion.div
+            initial={{ opacity: 0, y: 10 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            viewport={{ once: true }}
+            transition={{ delay: 0.4 }}
+            className="mt-6"
+          >
             <label htmlFor="phone" className="block text-sm font-semibold text-gray-200 mb-1 pl-1">Phone number</label>
             <input type="tel" id="phone" name="phone" autoComplete='tel' className="w-full rounded-md border border-none bg-gradient-to-tr from-[#241d49] to-[#281b47] text-white px-4 py-2 focus:outline-none focus:ring-2 focus:ring-indigo-400" />
-          </div>
-          <div className="mt-6">
+          </motion.div>
+          <motion.div
+            initial={{ opacity: 0, y: 10 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            viewport={{ once: true }}
+            transition={{ delay: 0.5 }}
+            className="mt-6"
+          >
             <label htmlFor="message" className="block text-sm font-semibold text-gray-200 mb-1 pl-1">Message</label>
-            <textarea id="message" name="message" rows="4" autoComplete='off' required className="w-full resize-none rounded-md border border-none bg-gradient-to-tr from-[#241d49] to-[#281b47] text-white px-4 py-2 focus:outline-none focus:ring-2 focus:ring-indigo-400" />
-          </div>
+            <textarea id="message" name="message" rows={4} autoComplete='off' required className="w-full resize-none rounded-md border border-none bg-gradient-to-tr from-[#241d49] to-[#281b47] text-white px-4 py-2 focus:outline-none focus:ring-2 focus:ring-indigo-400" />
+          </motion.div>
           <div className="flex justify-end mt-8">
-            <button type="submit" disabled={loading} className="bg-violet-900 hover:bg-violet-600 text-white font-semibold px-6 py-2 rounded-md transition focus:outline-none focus:ring-2 focus:ring-indigo-400 disabled:opacity-60 disabled:cursor-not-allowed">
+            <motion.button
+              whileHover={{ scale: 1.05 }}
+              whileTap={{ scale: 0.95 }}
+              type="submit"
+              disabled={loading}
+              className="bg-violet-900 hover:bg-violet-600 text-white font-semibold px-6 py-2 rounded-md transition focus:outline-none focus:ring-2 focus:ring-indigo-400 disabled:opacity-60 disabled:cursor-not-allowed"
+            >
               {loading ? 'Sending...' : 'Send message'}
-            </button>
+            </motion.button>
           </div>
-          {status === 'success' && <p className="text-green-400 mt-2">Message sent successfully!</p>}
-          {status === 'error' && <p className="text-red-400 mt-2">Something went wrong. Please try again.</p>}
+          {status === 'success' && <motion.p initial={{ opacity: 0 }} animate={{ opacity: 1 }} className="text-green-400 mt-2">Message sent successfully!</motion.p>}
+          {status === 'error' && <motion.p initial={{ opacity: 0 }} animate={{ opacity: 1 }} className="text-red-400 mt-2">Something went wrong. Please try again.</motion.p>}
         </form>
-      </div>
+      </motion.div>
     </section>
   );
 };

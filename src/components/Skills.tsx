@@ -1,9 +1,21 @@
-import { useRef, useState } from 'react'
+import React from 'react'
 import SVGComponent from './ui/SvgComponent'
+import { motion, useMotionValue, useSpring, useTransform } from "motion/react"
 
-const Skills = () => {
+interface Skill {
+  name: string;
+  icon?: string;
+}
 
-  const coreStack = [
+interface SkillGroup {
+  title: string;
+  description: string;
+  items: Skill[];
+}
+
+const Skills: React.FC = () => {
+
+  const coreStack: Skill[] = [
     { name: 'React', icon: '/icons/React-Dark.svg' },
     { name: 'Tailwind', icon: '/icons/TailwindCSS-Dark.svg' },
     { name: 'Node.js', icon: '/icons/NodeJS-Dark.svg' },
@@ -11,7 +23,7 @@ const Skills = () => {
     { name: 'MongoDB', icon: '/icons/MongoDB.svg' },
   ];
 
-  const skillGroups = [
+  const skillGroups: SkillGroup[] = [
     {
       title: 'Frontend',
       description: 'UI engineering, components, state, and responsive design.',
@@ -74,58 +86,60 @@ const Skills = () => {
     }
   ];
 
-  const SkillChip = ({ skill }) => (
+  const SkillChip: React.FC<{ skill: Skill }> = ({ skill }) => (
     <div className='group/chip inline-flex items-center gap-2 rounded-2xl border border-white/10 bg-black/20 px-3 py-2 text-left transition-colors hover:bg-black/35'>
       {skill.icon && <img src={skill.icon} alt={skill.name} className='h-6 w-6' />}
       <span className='text-xs font-semibold text-indigo-100 font-inter'>{skill.name}</span>
     </div>
   );
 
-  const TiltCard = ({ title, description, items }) => {
-    const raf = useRef(null);
-    const [tilt3d, setTilt3d] = useState({ rx: 0, ry: 0, gx: 50, gy: 35 });
+  const TiltCard: React.FC<SkillGroup> = ({ title, description, items }) => {
+    const x = useMotionValue(0.5);
+    const y = useMotionValue(0.5);
 
-    const onMove = (e) => {
-      const el = e.currentTarget;
-      const rect = el.getBoundingClientRect();
-      const x = (e.clientX - rect.left) / rect.width;
-      const y = (e.clientY - rect.top) / rect.height;
-      const dx = (x - 0.5) * 2;
-      const dy = (y - 0.5) * 2;
+    const mouseXSpring = useSpring(x);
+    const mouseYSpring = useSpring(y);
 
-      const next = {
-        rx: -dy * 7,
-        ry: dx * 9,
-        gx: Math.max(0, Math.min(100, x * 100)),
-        gy: Math.max(0, Math.min(100, y * 100)),
-      };
+    const rotateX = useTransform(mouseYSpring, [0, 1], [7, -7]);
+    const rotateY = useTransform(mouseXSpring, [0, 1], [-9, 9]);
 
-      if (raf.current) cancelAnimationFrame(raf.current);
-      raf.current = requestAnimationFrame(() => setTilt3d(next));
+    const handleMouseMove = (e: React.MouseEvent<HTMLDivElement>) => {
+      const rect = e.currentTarget.getBoundingClientRect();
+      const width = rect.width;
+      const height = rect.height;
+      const mouseX = e.clientX - rect.left;
+      const mouseY = e.clientY - rect.top;
+      x.set(mouseX / width);
+      y.set(mouseY / height);
     };
 
-    const onLeave = () => {
-      if (raf.current) cancelAnimationFrame(raf.current);
-      setTilt3d({ rx: 0, ry: 0, gx: 50, gy: 35 });
+    const handleMouseLeave = () => {
+      x.set(0.5);
+      y.set(0.5);
     };
+
+    const backgroundX = useTransform(mouseXSpring, [0, 1], ["0%", "100%"]);
+    const backgroundY = useTransform(mouseYSpring, [0, 1], ["0%", "100%"]);
 
     return (
-      <div
-        className='group relative rounded-3xl border border-indigo-400/15 bg-gradient-to-b from-white/5 to-transparent p-6 shadow-[0_0_34px_rgba(99,102,241,0.08)] transition-transform duration-150 hover:border-indigo-400/30'
-        onMouseMove={onMove}
-        onMouseLeave={onLeave}
+      <motion.div
+        onMouseMove={handleMouseMove}
+        onMouseLeave={handleMouseLeave}
         style={{
-          transform: `rotateX(${tilt3d.rx}deg) rotateY(${tilt3d.ry}deg)`,
-          transformStyle: 'preserve-3d',
-          willChange: 'transform',
-          perspective: 1000,
+          rotateX,
+          rotateY,
+          transformStyle: "preserve-3d",
         }}
+        className='group relative rounded-3xl border border-indigo-400/15 bg-gradient-to-b from-white/5 to-transparent p-6 shadow-[0_0_34px_rgba(99,102,241,0.08)] transition-transform duration-150 hover:border-indigo-400/30'
       >
         <div className='absolute -top-10 -right-10 h-28 w-28 rounded-full bg-indigo-600/10 blur-3xl  pointer-events-none' />
-        <div
+        <motion.div
           className='absolute inset-0 rounded-3xl pointer-events-none'
           style={{
-            background: `radial-gradient(650px circle at ${tilt3d.gx}% ${tilt3d.gy}%, rgba(255,255,255,0.16), transparent 45%)`,
+            background: useTransform(
+              [backgroundX, backgroundY],
+              ([xVal, yVal]) => `radial-gradient(650px circle at ${xVal} ${yVal}, rgba(255,255,255,0.16), transparent 45%)`
+            ),
             mixBlendMode: 'overlay',
           }}
         />
@@ -142,12 +156,12 @@ const Skills = () => {
             <SkillChip key={skill.name} skill={skill} />
           ))}
         </div>
-      </div>
+      </motion.div>
     );
   };
 
   return (
-    <section className='relative w-full pt-10 sm:scroll-mt-0 scroll-mt-60 overflow-hidden pb-10' style={{ minHeight: "calc(100vh -90px)" }} id='skills'>
+    <section className='relative w-full pt-10 sm:scroll-mt-0 scroll-mt-60 overflow-hidden pb-10' style={{ minHeight: "calc(100vh - 90px)" }} id='skills'>
       <div className='absolute inset-0 pointer-events-none'>
         <div className='absolute -top-40 left-1/2 h-[520px] w-[520px] -translate-x-1/2 rounded-full bg-indigo-600/10 blur-3xl ' />
         <div className='absolute -bottom-40 -right-40 h-[520px] w-[520px] rounded-full bg-fuchsia-600/10 blur-3xl ' />

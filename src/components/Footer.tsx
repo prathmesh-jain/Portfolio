@@ -1,9 +1,11 @@
-const Footer = () => {
+import React from 'react';
+import { motion } from 'motion/react';
+
+const Footer: React.FC = () => {
     return (
         <footer className="relative bg-custom-bg py-6 overflow-hidden">
             {/* Main Background Gradient */}
             <div className="absolute inset-0 bg-custom-bg from-[#18092b] via-[#231452] to-[#1a0b2e]"></div>
-
 
             <div className="relative z-10 max-w-6xl mx-auto px-4">
                 {/* Main Footer Content */}
@@ -11,18 +13,21 @@ const Footer = () => {
                     Made with ❤️
                 </p>
                 <div className="text-center mb-5">
-
                     {/* Tech Stack Icons */}
                     <div className="flex flex-wrap justify-center items-center gap-6 mb-5">
-                        <div className="flex flex-col items-center group">
+                        <motion.div
+                            whileHover={{ scale: 1.1, rotate: 10 }}
+                            className="flex flex-col items-center group"
+                        >
                             <img src="/icons/react-icon.png" alt="React" className="w-12 h-12" />
-                        </div>
+                        </motion.div>
 
-                        <div className="flex flex-col items-center group">
+                        <motion.div
+                            whileHover={{ scale: 1.1, y: -5 }}
+                            className="flex flex-col items-center group"
+                        >
                             <img src="/icons/tailwind.png" alt="Tailwind CSS" className="w-12 h-6" />
-                        </div>
-
-
+                        </motion.div>
                     </div>
 
                     <div className="text-center xl:block hidden">
@@ -37,7 +42,6 @@ const Footer = () => {
                             </a>
                         </p>
                     </div>
-
                 </div>
 
                 {/* Attribution */}
@@ -49,7 +53,6 @@ const Footer = () => {
                     </div>
                 </div>
             </div>
-
         </footer>
     );
 };

@@ -1,10 +1,15 @@
-import { useState, useEffect, useRef } from 'react';
+import { useState, useEffect, useRef, RefObject } from 'react';
 
-const useScrollNavigation = (isProgrammaticScroll) => {
-  const [activeSection, setActiveSection] = useState(0);
-  const activeSectionRef = useRef(0);
+interface Section {
+  id: string;
+  href: string;
+}
 
-  const sections = [
+const useScrollNavigation = (isProgrammaticScroll?: RefObject<boolean>) => {
+  const [activeSection, setActiveSection] = useState<number>(0);
+  const activeSectionRef = useRef<number>(0);
+
+  const sections: Section[] = [
     { id: 'home', href: '/' },
     { id: 'skills', href: '#skills' },
     { id: 'experience', href: '#experience' },
@@ -14,19 +19,18 @@ const useScrollNavigation = (isProgrammaticScroll) => {
 
   useEffect(() => {
     // Function to determine which section is currently in view
-    const getCurrentSection = () => {
-      const scrollPosition = window.scrollY + window.innerHeight -200;
+    const getCurrentSection = (): number => {
+      const scrollPosition = window.scrollY + window.innerHeight - 200;
       for (let i = sections.length - 1; i >= 0; i--) {
         const element = document.getElementById(sections[i].id);
         if (element) {
           const elementTop = element.offsetTop;
-          const elementBottom = elementTop + element.offsetHeight;
-          if (scrollPosition >= elementTop && scrollPosition <= elementBottom) {
+          if (scrollPosition >= elementTop) {
             return i;
           }
         }
       }
-      if(window.scrollY < 100){
+      if (window.scrollY < 100) {
         return 0;
       }
       return activeSectionRef.current;
@@ -61,7 +65,7 @@ const useScrollNavigation = (isProgrammaticScroll) => {
     };
   }, [isProgrammaticScroll]);
 
-  const updateActiveSection = (index) => {
+  const updateActiveSection = (index: number) => {
     activeSectionRef.current = index;
     setActiveSection(index);
   };

@@ -1,81 +1,40 @@
-import { useEffect, useRef, useState } from 'react'
+import React from 'react'
 import { FaGithub } from "react-icons/fa";
+import { motion, useMotionValue, useSpring, useTransform } from "motion/react";
 
-const Home = () => {
-    const idleTimerRef = useRef(null);
-    const lastMoveRef = useRef(0);
-    const targetTiltRef = useRef({ rx: 0, ry: 0, gx: 50, gy: 35 });
-    const [tilt3d, setTilt3d] = useState({ rx: 0, ry: 0, gx: 50, gy: 35 });
+const Home: React.FC = () => {
+    const x = useMotionValue(0.5);
+    const y = useMotionValue(0.5);
 
-    useEffect(() => {
-        const lerp = (a, b, t) => a + (b - a) * t;
-        let animId = 0;
+    const mouseXSpring = useSpring(x, { stiffness: 150, damping: 20 });
+    const mouseYSpring = useSpring(y, { stiffness: 150, damping: 20 });
 
-        const tick = () => {
-            setTilt3d((prev) => {
-                const target = targetTiltRef.current;
-                const next = {
-                    rx: lerp(prev.rx, target.rx, 0.12),
-                    ry: lerp(prev.ry, target.ry, 0.12),
-                    gx: lerp(prev.gx, target.gx, 0.18),
-                    gy: lerp(prev.gy, target.gy, 0.18),
-                };
+    const rotateX = useTransform(mouseYSpring, [0, 1], [25, -25]);
+    const rotateY = useTransform(mouseXSpring, [0, 1], [-34, 34]);
 
-                if (
-                    Math.abs(next.rx - prev.rx) < 0.001 &&
-                    Math.abs(next.ry - prev.ry) < 0.001 &&
-                    Math.abs(next.gx - prev.gx) < 0.01 &&
-                    Math.abs(next.gy - prev.gy) < 0.01
-                ) {
-                    return prev;
-                }
-
-                return next;
-            });
-
-            animId = requestAnimationFrame(tick);
-        };
-
-        animId = requestAnimationFrame(tick);
-        return () => cancelAnimationFrame(animId);
-    }, []);
-
-    const handleCardMove = (e) => {
-        if (e.pointerType === 'touch') return;
-        lastMoveRef.current = Date.now();
-        const el = e.currentTarget;
-
-        const rect = el.getBoundingClientRect();
-
-        const x = (e.clientX - rect.left) / rect.width;
-        const y = (e.clientY - rect.top) / rect.height;
-
-        const dx = (x - 0.5) * 2;
-        const dy = (y - 0.5) * 2;
-
-        const next = {
-            rx: -dy * 25,
-            ry: dx * 34,
-            gx: Math.max(0, Math.min(100, x * 100)),
-            gy: Math.max(0, Math.min(100, y * 100)),
-        };
-
-        targetTiltRef.current = next;
+    const handleMouseMove = (e: React.MouseEvent | React.PointerEvent) => {
+        const rect = e.currentTarget.getBoundingClientRect();
+        const width = rect.width;
+        const height = rect.height;
+        const mouseX = e.clientX - rect.left;
+        const mouseY = e.clientY - rect.top;
+        x.set(mouseX / width);
+        y.set(mouseY / height);
     };
 
-    const handleCardLeave = () => {
-        lastMoveRef.current = 0;
-        targetTiltRef.current = { rx: 0, ry: 0, gx: 50, gy: 35 };
+    const handleMouseLeave = () => {
+        x.set(0.5);
+        y.set(0.5);
     };
 
-    const cardRotateX = tilt3d.rx;
-    const cardRotateY = tilt3d.ry;
+    const backgroundX = useTransform(mouseXSpring, [0, 1], ["0%", "100%"]);
+    const backgroundY = useTransform(mouseYSpring, [0, 1], ["0%", "100%"]);
 
     return (
         <section
             className='relative overflow-hidden pb-5 min-h-[calc(100svh-90px)] md:h-[calc(100vh-90px)]'
-            onPointerMove={handleCardMove}
-            onPointerLeave={handleCardLeave}
+            onPointerMove={handleMouseMove}
+            onPointerLeave={handleMouseLeave}
         >
             <div className='absolute inset-0 bg-custom-bg' />
 
@@ -96,8 +55,12 @@ const Home = () => {
 
             <div className='relative mx-auto w-full xl:px-20 md:px-10 px-5 py-6 flex items-center min-h-[calc(100svh-90px)] md:h-[calc(100vh-90px)]'>
                 <div className='flex flex-col-reverse items-center gap-10 md:flex-row'>
-                    <div className='text-left'>
-
+                    <motion.div
+                        initial={{ opacity: 0, x: -30 }}
+                        animate={{ opacity: 1, x: 0 }}
+                        transition={{ duration: 0.8 }}
+                        className='text-left'
+                    >
                         <h1 className='mt-5 font-poppins font-extrabold tracking-tight text-[clamp(2.2rem,4vw,3.3rem)] leading-[1.05]'>
                             Hi, I'm <span className='text-indigo-400'>Prathmesh Jain</span>.
                             <span className='block text-indigo-100'>I build fast, modern web apps.</span>
@@ -108,36 +71,37 @@ const Home = () => {
                         </p>
 
                         <div className='mt-6 flex flex-col sm:flex-row sm:items-center gap-4'>
-
-                            <a
+                            <motion.a
+                                whileHover={{ scale: 1.05 }}
+                                whileTap={{ scale: 0.95 }}
                                 href='/Prathmesh_Jain_Resume.pdf'
                                 download='Prathmesh_Jain_Resume.pdf'
                                 className='inline-flex justify-center items-center rounded-xl bg-indigo-600 px-5 py-3 text-sm font-semibold text-white hover:bg-indigo-500 transition-colors'
                             >
                                 Download Resume
-                            </a>
+                            </motion.a>
 
-                            <a
+                            <motion.a
+                                whileHover={{ scale: 1.05 }}
+                                whileTap={{ scale: 0.95 }}
                                 href='https://github.com/prathmesh-jain'
                                 target='_blank'
                                 rel='noreferrer'
                                 className='inline-flex justify-center items-center gap-2 rounded-xl border border-indigo-400/30 bg-black/20 px-5 py-3 text-sm font-semibold text-indigo-100 hover:bg-indigo-500/10 transition-colors'
                             >
                                 GitHub <FaGithub size={18} />
-                            </a>
+                            </motion.a>
                         </div>
-
-                    </div>
+                    </motion.div>
 
                     <div className='relative mx-auto w-full max-w-[clamp(340px,33vw,620px)]'>
-                        <div
-                            className='relative rounded-3xl border border-indigo-400/20 bg-gradient-to-b from-white/5 to-transparent p-5 shadow-[0_0_70px_rgba(99,102,241,0.22)] transition-transform duration-300 ease-out'
+                        <motion.div
                             style={{
-                                transform: `rotateX(${cardRotateX}deg) rotateY(${cardRotateY}deg)`,
+                                rotateX,
+                                rotateY,
                                 transformStyle: 'preserve-3d',
-                                willChange: 'transform',
-                                perspective: 1000,
                             }}
+                            className='relative rounded-3xl border border-indigo-400/20 bg-gradient-to-b from-white/5 to-transparent p-5 shadow-[0_0_70px_rgba(99,102,241,0.22)]'
                         >
                             <div
                                 className='absolute -inset-10 rounded-[40px] opacity-55 blur-2xl anim-spin-slow'
@@ -146,10 +110,13 @@ const Home = () => {
                                         'conic-gradient(from 180deg at 50% 50%, rgba(99,102,241,0.38), rgba(236,72,153,0.22), rgba(168,85,247,0.26), rgba(99,102,241,0.38))',
                                 }}
                             />
-                            <div
+                            <motion.div
                                 className='absolute inset-0 rounded-3xl pointer-events-none'
                                 style={{
-                                    background: `radial-gradient(600px circle at ${tilt3d.gx}% ${tilt3d.gy}%, rgba(255,255,255,0.22), transparent 45%)`,
+                                    background: useTransform(
+                                        [backgroundX, backgroundY],
+                                        ([xVal, yVal]) => `radial-gradient(600px circle at ${xVal} ${yVal}, rgba(255,255,255,0.22), transparent 45%)`
+                                    ),
                                     mixBlendMode: 'overlay',
                                 }}
                             />
@@ -178,7 +145,7 @@ const Home = () => {
                                 <span className='rounded-full border border-white/10 bg-black/20 px-3 py-1 text-xs font-semibold text-gray-200 font-inter'>APIs</span>
                                 <span className='rounded-full border border-white/10 bg-black/20 px-3 py-1 text-xs font-semibold text-gray-200 font-inter'>Performance</span>
                             </div>
-                        </div>
+                        </motion.div>
                     </div>
                 </div>
             </div>

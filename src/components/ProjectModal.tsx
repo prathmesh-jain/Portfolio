@@ -1,10 +1,28 @@
-import { useEffect, useRef, useState } from 'react';
+import React, { useEffect, useRef, useState } from 'react';
 
-const ProjectModal = ({ project, onClose }) => {
+interface Project {
+  title: string;
+  subtitle: string;
+  description: string;
+  image: string;
+  tech: string[];
+  links: {
+    live: string;
+    github: string;
+  };
+  gallery: string[];
+}
+
+interface ProjectModalProps {
+  project: Project;
+  onClose: () => void;
+}
+
+const ProjectModal: React.FC<ProjectModalProps> = ({ project, onClose }) => {
   const [imgIdx, setImgIdx] = useState(0);
   const [isImageModalOpen, setIsImageModalOpen] = useState(false);
   const [isDescExpanded, setIsDescExpanded] = useState(false);
-  const modalRef = useRef(null);
+  const modalRef = useRef<HTMLDivElement>(null);
   const totalImgs = project.gallery.length;
   const descriptionText = project.description || '';
   const descPreviewLimit = 400;
@@ -20,7 +38,7 @@ const ProjectModal = ({ project, onClose }) => {
 
   // Focus trap and prevent background scroll
   useEffect(() => {
-    const handleEsc = (e) => {
+    const handleEsc = (e: KeyboardEvent) => {
       if (e.key === 'Escape') {
         if (isImageModalOpen) {
           setIsImageModalOpen(false);
@@ -29,7 +47,7 @@ const ProjectModal = ({ project, onClose }) => {
         onClose();
       }
     };
-    const handleImageNavKeys = (e) => {
+    const handleImageNavKeys = (e: KeyboardEvent) => {
       if (!isImageModalOpen || totalImgs <= 1) return;
       if (e.key === 'ArrowRight') {
         e.preventDefault();
@@ -39,10 +57,12 @@ const ProjectModal = ({ project, onClose }) => {
         setImgIdx((idx) => (idx - 1 + totalImgs) % totalImgs);
       }
     };
-    const handleTab = (e) => {
-      const focusableEls = modalRef.current.querySelectorAll(
+    const handleTab = (e: KeyboardEvent) => {
+      if (!modalRef.current) return;
+      const focusableEls = modalRef.current.querySelectorAll<HTMLElement>(
         'a, button, textarea, input, select, [tabindex]:not([tabindex="-1"])'
       );
+      if (focusableEls.length === 0) return;
       const firstEl = focusableEls[0];
       const lastEl = focusableEls[focusableEls.length - 1];
       if (e.key === 'Tab') {
@@ -81,13 +101,13 @@ const ProjectModal = ({ project, onClose }) => {
   const nextImg = () => setImgIdx((idx) => (idx + 1) % totalImgs);
   const prevImg = () => setImgIdx((idx) => (idx - 1 + totalImgs) % totalImgs);
 
-  const [dragStartX, setDragStartX] = useState(null);
+  const [dragStartX, setDragStartX] = useState<number | null>(null);
 
-  const handleTouchStart = (e) => {
+  const handleTouchStart = (e: React.TouchEvent) => {
     setDragStartX(e.touches[0].clientX);
   };
 
-  const handleTouchEnd = (e) => {
+  const handleTouchEnd = (e: React.TouchEvent) => {
     if (dragStartX === null) return;
     const dragEndX = e.changedTouches[0].clientX;
     if (dragEndX - dragStartX > 50) prevImg(); // swipe right

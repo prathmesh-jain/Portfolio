@@ -1,7 +1,21 @@
-import { useState } from 'react';
+import React, { useState } from 'react';
 import ProjectModal from './ProjectModal';
+import { motion, AnimatePresence } from 'motion/react';
 
-const projectsData = [
+interface Project {
+  title: string;
+  subtitle: string;
+  description: string;
+  image: string;
+  tech: string[];
+  links: {
+    live: string;
+    github: string;
+  };
+  gallery: string[];
+}
+
+const projectsData: Project[] = [
   {
     title: 'Patronix',
     subtitle: 'Ecommerce Website',
@@ -31,11 +45,11 @@ const projectsData = [
   },
 ];
 
-const Projects = () => {
-  const [selectedProject, setSelectedProject] = useState(null);
-  const [modalOpen, setModalOpen] = useState(false);
+const Projects: React.FC = () => {
+  const [selectedProject, setSelectedProject] = useState<Project | null>(null);
+  const [modalOpen, setModalOpen] = useState<boolean>(false);
 
-  const openModal = (project) => {
+  const openModal = (project: Project) => {
     setSelectedProject(project);
     setModalOpen(true);
   };
@@ -54,30 +68,52 @@ const Projects = () => {
       </div>
 
       <div className='relative flex items-center w-full mt-16 flex-col box-border xl:px-20 md:px-10 px-5'>
-        <h1 className='md:text-5xl text-4xl font-bold text-indigo-100 tracking-wide text-left w-full pl-10 font-poppins pt-10 mb-10  md:pb-5 pb-2'>Projects</h1>
+        <motion.h1
+          initial={{ opacity: 0, y: 20 }}
+          whileInView={{ opacity: 1, y: 0 }}
+          viewport={{ once: true }}
+          transition={{ duration: 0.5 }}
+          className='md:text-5xl text-4xl font-bold text-indigo-100 tracking-wide text-left w-full pl-10 font-poppins pt-10 mb-10  md:pb-5 pb-2'
+        >
+          Projects
+        </motion.h1>
         <div className='flex w-full md:w-11/12 h-fit xl:p-5 md:p-0 sm:p-5 gap-8 md:gap-0 justify-between flex-wrap'>
           {projectsData.map((project, idx) => (
-            <div
+            <motion.div
               key={project.title}
-              className='group rounded-3xl shadow-md relative hover:text-indigo-200 border-2 border-custom-bg text-gray-300 hover:border-indigo-700 hover:shadow-[0_0_55px_rgba(99,102,241,0.22)] transition-all ease-in duration-300 cursor-pointer bg-custom-bg overflow-hidden xl:h-[20rem] lg:h-[17rem] md:h-[14rem] h-[18rem] xl:w-[20rem] lg:w-[17rem] md:w-[14rem] w-[18rem] mx-auto hover:scale-[1.02]'
+              initial={{ opacity: 0, scale: 0.9 }}
+              whileInView={{ opacity: 1, scale: 1 }}
+              whileHover={{ scale: 1.02 }}
+              viewport={{ once: true }}
+              transition={{ duration: 0.3, delay: idx * 0.1 }}
+              className='group rounded-3xl shadow-md relative hover:text-indigo-200 border-2 border-custom-bg text-gray-300 hover:border-indigo-700 hover:shadow-[0_0_55px_rgba(99,102,241,0.22)] cursor-pointer bg-custom-bg overflow-hidden xl:h-[20rem] lg:h-[17rem] md:h-[14rem] h-[18rem] xl:w-[20rem] lg:w-[17rem] md:w-[14rem] w-[18rem] mx-auto'
               onClick={() => openModal(project)}
             >
-              <img src={project.image} alt='' className='h-full w-full opacity rounded-3xl' />
+              <img src={project.image} alt={project.title} className='h-full w-full opacity rounded-3xl object-cover' />
               <div className='absolute inset-0 sm:bg-black/30 bg-black/10 group-hover:bg-transparent transition-all ease-in duration-300'></div>
               <div className='lg:text-sm text-xs font-semibold text-left bg-black/60 group-hover:bg-indigo-900/90 border border-none group-hover:border-solid group-hover:border-indigo-700 rounded-full p-2 lg:px-6 px-4 absolute bottom-5 left-5'>
                 {project.title}
-                <div>{project.subtitle}</div>
+                <div className='text-xs'>{project.subtitle}</div>
               </div>
-            </div>
+            </motion.div>
           ))}
         </div>
-        <a href='https://github.com/prathmesh-jain?tab=repositories' target='_blank' className='whitespace-nowrap text-indigo-100 tracking-wide text-lg font-poppins hover:scale-105 mt-10'>
+        <motion.a
+          initial={{ opacity: 0 }}
+          whileInView={{ opacity: 1 }}
+          whileHover={{ x: 5 }}
+          href='https://github.com/prathmesh-jain?tab=repositories'
+          target='_blank'
+          className='whitespace-nowrap text-indigo-100 tracking-wide text-lg font-poppins mt-10'
+        >
           View All →
-        </a>
+        </motion.a>
 
-        {modalOpen && selectedProject && (
-          <ProjectModal project={selectedProject} onClose={closeModal} />
-        )}
+        <AnimatePresence>
+          {modalOpen && selectedProject && (
+            <ProjectModal project={selectedProject} onClose={closeModal} />
+          )}
+        </AnimatePresence>
       </div>
     </section>
   );

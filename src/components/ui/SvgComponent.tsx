@@ -2,7 +2,7 @@ import './svgStyling.css'
 import { useEffect } from "react";
 import { useState } from "react";
 
-const SVGComponent = (props) => {
+const SVGComponent = (props: any) => {
     const [inView, setInView] = useState(false);
     useEffect(() => {
 
