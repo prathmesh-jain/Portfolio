@@ -26,6 +26,7 @@ export default function Navbar() {
     const isProgrammaticScroll = useRef<boolean>(false);
     const { activeSection, updateActiveSection, sections } = useScrollNavigation(isProgrammaticScroll);
     const timerRef = useRef<ReturnType<typeof setTimeout> | null>(null);
+    const navRef = useRef(null);
 
     const handleNavClick = (index: number) => {
         if (timerRef.current) clearTimeout(timerRef.current);
@@ -35,7 +36,16 @@ export default function Navbar() {
         } else {
             const element = document.getElementById(sections[index].id);
             if (element) {
-                element.scrollIntoView({ behavior: 'smooth', block: 'start' });
+                const isMobile = window.matchMedia('(max-width: 640px)').matches;
+                const buffer = isMobile ? 120 : -60
+                const navbarOffset = navRef.current?.getBoundingClientRect().height ?? 0;
+                const elementTop = element.getBoundingClientRect().top + window.scrollY;
+                const offsetPosition = elementTop - navbarOffset - buffer;
+
+                window.scrollTo({
+                    top: offsetPosition,
+                    behavior: 'smooth',
+                });
             }
         }
         updateActiveSection(index);
@@ -49,7 +59,7 @@ export default function Navbar() {
         <Disclosure as="nav" className="text-white sticky top-0 bg-custom-bg z-10">
             {({ open, close }) => (
                 <>
-                    <div className="mx-auto px-2 sm:px-6 lg:px-8">
+                    <div ref={navRef} className="mx-auto px-2 sm:px-6 lg:px-8">
                         <div className="relative flex py-8 items-center justify-between">
                             <div className="absolute inset-y-0 right-0 flex items-center sm:hidden">
                                 {/* Mobile menu button*/}
@@ -124,8 +134,10 @@ export default function Navbar() {
                                             )}
                                             onClick={(e) => {
                                                 e.preventDefault();
-                                                handleNavClick(index);
-                                                close();
+                                                close(); // close immediately
+                                                setTimeout(() => {
+                                                    handleNavClick(index);
+                                                }, 50); // small delay for layout stabilization
                                             }}
                                         >
                                             {item.name}
