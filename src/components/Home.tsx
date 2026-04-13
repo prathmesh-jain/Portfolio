@@ -32,7 +32,7 @@ const Home: React.FC = () => {
 
     return (
         <section
-            className='relative overflow-hidden pb-5 min-h-[calc(100svh-90px)] md:h-[calc(100vh-90px)]'
+            className='relative overflow-hidden pb-5 min-h-[calc(100svh-90px)] md:min-h-[calc(100vh-90px)]'
             onPointerMove={handleMouseMove}
             onPointerLeave={handleMouseLeave}
         >
@@ -53,7 +53,7 @@ const Home: React.FC = () => {
             <div className='absolute -top-28 -left-28 h-[360px] w-[360px] rounded-full bg-indigo-600/20 blur-3xl' />
             <div className='absolute -bottom-28 -right-28 h-[420px] w-[420px] rounded-full bg-fuchsia-600/10 blur-3xl' />
 
-            <div className='relative mx-auto w-full xl:px-20 md:px-10 px-5 py-6 flex items-center min-h-[calc(100svh-90px)] md:h-[calc(100vh-90px)]'>
+            <div className='relative mx-auto w-full xl:px-20 md:px-10 px-5 py-6 flex items-center min-h-[calc(100svh-90px)] md:min-h-[calc(100vh-90px)]'>
                 <div className='flex flex-col-reverse items-center gap-10 md:flex-row'>
                     <motion.div
                         initial={{ opacity: 0, x: -30 }}
