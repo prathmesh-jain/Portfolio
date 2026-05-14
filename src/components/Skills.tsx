@@ -64,7 +64,7 @@ const Skills: React.FC = () => {
       description: 'Schema design, queries, and persistence layers.',
       items: [
         { name: 'MongoDB', icon: '/icons/MongoDB.svg' },
-        { name: 'MySQL', icon: '/icons/MySQL-Dark.svg' },
+        { name: 'PostgreSQL', icon: '/icons/PostgreSQL-Dark.svg' },
       ],
     },
     {
