@@ -1,8 +1,9 @@
 import './svgStyling.css'
 import { useEffect } from "react";
 import { useState } from "react";
+import type { SVGProps } from "react";
 
-const SVGComponent = (props: any) => {
+const SVGComponent = (props: SVGProps<SVGSVGElement>) => {
     const [inView, setInView] = useState(false);
     useEffect(() => {
 
@@ -33,7 +34,6 @@ const SVGComponent = (props: any) => {
                     xmlns="http://www.w3.org/2000/svg"
                     viewBox="0 0 500 500"
                     xmlnsXlink="http://www.w3.org/1999/xlink"
-                    xmlns:svgjs="http://svgjs.com/svgjs"
                     {...props}
                 >
                     <g

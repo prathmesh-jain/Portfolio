@@ -1,4 +1,4 @@
-import React, { useRef } from 'react';
+import { useRef } from 'react';
 import { Disclosure, DisclosureButton, DisclosurePanel } from '@headlessui/react';
 import { FaBars, FaTimes } from "react-icons/fa";
 import useScrollNavigation from '../hooks/useScrollNavigation';
@@ -26,7 +26,7 @@ export default function Navbar() {
     const isProgrammaticScroll = useRef<boolean>(false);
     const { activeSection, updateActiveSection, sections } = useScrollNavigation(isProgrammaticScroll);
     const timerRef = useRef<ReturnType<typeof setTimeout> | null>(null);
-    const navRef = useRef(null);
+    const navRef = useRef<HTMLDivElement>(null);
 
     const handleNavClick = (index: number) => {
         if (timerRef.current) clearTimeout(timerRef.current);
@@ -60,7 +60,7 @@ export default function Navbar() {
             {({ open, close }) => (
                 <>
                     <div ref={navRef} className="mx-auto px-2 sm:px-6 lg:px-8">
-                        <div className="relative flex py-8 items-center justify-between">
+                        <div className="relative flex py-5 items-center justify-between">
                             <div className="absolute inset-y-0 right-0 flex items-center sm:hidden">
                                 {/* Mobile menu button*/}
                                 <DisclosureButton className="group relative inline-flex items-center justify-center rounded-md p-2 text-gray-400 sm:hover:bg-gray-700 hover:text-white sm:focus:outline-none sm:focus:ring-2 focus:ring-inset sm:focus:ring-white">
@@ -77,7 +77,7 @@ export default function Navbar() {
                                 <motion.div
                                     initial={{ opacity: 0, x: -20 }}
                                     animate={{ opacity: 1, x: 0 }}
-                                    className="flex flex-shrink-0 items-center font-bold md:text-3xl text-2xl font-inter"
+                                    className="flex shrink-0 items-center font-bold md:text-3xl text-2xl font-inter"
                                 >
                                     Prathmesh Jain
                                 </motion.div>
