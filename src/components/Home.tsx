@@ -42,7 +42,7 @@ const Home: React.FC = () => {
                 className='absolute inset-0 opacity-35'
                 style={{ backgroundImage: 'linear-gradient(120deg, rgba(99,102,241,0.18), rgba(168,85,247,0.10), rgba(236,72,153,0.10))' }}
             />
-            <div className='absolute inset-0 bg-gradient-to-b from-indigo-950/40 via-transparent to-transparent' />
+            <div className='absolute inset-0 bg-linear-to-b from-indigo-950/40 via-transparent to-transparent' />
             <div
                 className='absolute inset-0 opacity-[0.14] pointer-events-none'
                 style={{
@@ -50,8 +50,8 @@ const Home: React.FC = () => {
                     backgroundSize: '26px 26px',
                 }}
             />
-            <div className='absolute -top-28 -left-28 h-[360px] w-[360px] rounded-full bg-indigo-600/20 blur-3xl' />
-            <div className='absolute -bottom-28 -right-28 h-[420px] w-[420px] rounded-full bg-fuchsia-600/10 blur-3xl' />
+            <div className='absolute -top-28 -left-28 h-90 w-90 rounded-full bg-indigo-600/20 blur-3xl' />
+            <div className='absolute -bottom-28 -right-28 h-105 w-105 rounded-full bg-fuchsia-600/10 blur-3xl' />
 
             <div className='relative mx-auto w-full xl:px-20 md:px-10 px-5 py-6 flex items-center min-h-[calc(100svh-90px)] md:min-h-[calc(100vh-90px)]'>
                 <div className='flex flex-col-reverse items-center gap-10 md:flex-row'>
@@ -101,7 +101,7 @@ const Home: React.FC = () => {
                                 rotateY,
                                 transformStyle: 'preserve-3d',
                             }}
-                            className='relative rounded-3xl border border-indigo-400/20 bg-gradient-to-b from-white/5 to-transparent p-5 shadow-[0_0_70px_rgba(99,102,241,0.22)]'
+                            className='relative rounded-3xl border border-indigo-400/20 bg-linear-to-b from-white/5 to-transparent p-5 shadow-[0_0_70px_rgba(99,102,241,0.22)]'
                         >
                             <div
                                 className='absolute -inset-10 rounded-[40px] opacity-55 blur-2xl anim-spin-slow'

@@ -41,9 +41,9 @@ const Experience: React.FC = () => {
     return (
         <section className="relative py-12 sm:scroll-mt-0 scroll-mt-60 overflow-hidden" id="experience">
             <div className='absolute inset-0 pointer-events-none'>
-                <div className='absolute -top-40 left-1/2 h-[520px] w-[520px] -translate-x-1/2 rounded-full bg-indigo-600/10 blur-3xl ' />
-                <div className='absolute -bottom-40 -left-40 h-[520px] w-[520px] rounded-full bg-fuchsia-600/10 blur-3xl ' />
-                <div className='absolute inset-0 bg-gradient-to-b from-indigo-950/10 via-transparent to-transparent' />
+                <div className='absolute -top-40 left-1/2 h-130 w-130 -translate-x-1/2 rounded-full bg-indigo-600/10 blur-3xl ' />
+                <div className='absolute -bottom-40 -left-40 h-130 w-130 rounded-full bg-fuchsia-600/10 blur-3xl ' />
+                <div className='absolute inset-0 bg-linear-to-b from-indigo-950/10 via-transparent to-transparent' />
             </div>
 
             <div className="relative mx-auto xl:px-20 lg:px-15 md:px-10 px-5">
@@ -51,7 +51,7 @@ const Experience: React.FC = () => {
                     initial={{ opacity: 0, x: -20 }}
                     whileInView={{ opacity: 1, x: 0 }}
                     viewport={{ once: false }}
-                    className="md:text-5xl text-4xl font-bold text-indigo-100 my-16 text-left w-full font-poppins pl-10"
+                    className="md:text-4xl text-3xl font-bold text-indigo-100 my-16 text-left w-full font-poppins pl-10"
                 >
                     Experience
                 </motion.h1>
@@ -62,7 +62,7 @@ const Experience: React.FC = () => {
                         whileInView={{ height: '100%' }}
                         viewport={{ once: true }}
                         transition={{ duration: 1, ease: "easeInOut" }}
-                        className="absolute xl:left-[26px] lg:left-[14px] md:left-[10px] left-[2px] top-0 w-1 bg-gradient-to-b from-indigo-700 via-indigo-900 to-gray-800 rounded-full z-0 hidden sm:flex"
+                        className="absolute xl:left-6 lg:left-3 md:left-2 left-0.5 top-0 w-1 bg-linear-to-b from-indigo-700 via-indigo-900 to-gray-800 rounded-full z-0 hidden sm:flex"
                     />
                     {workExperience.map((exp, idx) => (
                         <motion.div
@@ -74,7 +74,7 @@ const Experience: React.FC = () => {
                             className="mb-16 relative group"
                         >
                             {/* Animated Timeline dot */}
-                            <span className="absolute xl:-left-6 lg:-left-4 md:-left-2 -left-2 top-8 w-6 h-6 bg-gray-950 border-4 border-indigo-500 group-hover:border-indigo-700 transition-all duration-300 rounded-full shadow-lg hidden sm:flex items-center justify-center z-[9]">
+                            <span className="absolute xl:-left-6 lg:-left-4 md:-left-2 -left-2 top-8 w-6 h-6 bg-gray-950 border-4 border-indigo-500 group-hover:border-indigo-700 transition-all duration-300 rounded-full shadow-lg hidden sm:flex items-center justify-center z-9">
                                 <span className={`block w-2.5 h-2.5 bg-indigo-500 group-hover:bg-indigo-700 rounded-full ${idx === 0 ? 'animate-pulse' : ''}`}></span>
                             </span>
                             <div className="sm:ml-8 bg-gray-900 rounded-2xl shadow-xl border-t-4 border-indigo-500 group-hover:border-indigo-700 transition-all duration-300 sm:p-8 p-6 hover:scale-[1.025] hover:shadow-2xl relative">

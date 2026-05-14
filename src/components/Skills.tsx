@@ -130,7 +130,7 @@ const Skills: React.FC = () => {
           rotateY,
           transformStyle: "preserve-3d",
         }}
-        className='group relative rounded-3xl border border-indigo-400/15 bg-gradient-to-b from-white/5 to-transparent p-6 shadow-[0_0_34px_rgba(99,102,241,0.08)] transition-transform duration-150 hover:border-indigo-400/30'
+        className='group relative rounded-3xl border border-indigo-400/15 bg-linear-to-b from-white/5 to-transparent p-6 shadow-[0_0_34px_rgba(99,102,241,0.08)] transition-transform duration-150 hover:border-indigo-400/30'
       >
         <div className='absolute -top-10 -right-10 h-28 w-28 rounded-full bg-indigo-600/10 blur-3xl  pointer-events-none' />
         <motion.div
@@ -163,14 +163,14 @@ const Skills: React.FC = () => {
   return (
     <section className='relative w-full pt-10 sm:scroll-mt-0 scroll-mt-60 overflow-hidden pb-10' style={{ minHeight: "calc(100vh - 90px)" }} id='skills'>
       <div className='absolute inset-0 pointer-events-none'>
-        <div className='absolute -top-40 left-1/2 h-[520px] w-[520px] -translate-x-1/2 rounded-full bg-indigo-600/10 blur-3xl ' />
-        <div className='absolute -bottom-40 -right-40 h-[520px] w-[520px] rounded-full bg-fuchsia-600/10 blur-3xl ' />
-        <div className='absolute inset-0 bg-gradient-to-b from-indigo-950/10 via-transparent to-transparent' />
+        <div className='absolute -top-40 left-1/2 h-130 w-130 -translate-x-1/2 rounded-full bg-indigo-600/10 blur-3xl ' />
+        <div className='absolute -bottom-40 -right-40 h-130 w-130 rounded-full bg-fuchsia-600/10 blur-3xl ' />
+        <div className='absolute inset-0 bg-linear-to-b from-indigo-950/10 via-transparent to-transparent' />
       </div>
 
       <div className='relative flex items-center w-full mt-16 flex-col xl:px-20 md:px-10 px-5 py-1'>
         <div className='w-full pl-2 sm:pl-10 text-left'>
-          <h1 className='mt-5 md:text-5xl text-4xl font-bold text-indigo-100 box-border font-poppins tracking-wide'>Skills</h1>
+          <h1 className='mt-5 md:text-4xl text-3xl font-bold text-indigo-100 box-border font-poppins tracking-wide'>Skills</h1>
           <p className='mt-3 max-w-2xl text-sm sm:text-base text-gray-300 font-inter leading-relaxed'>
             Frontend, backend, databases, and tooling - grouped the way projects are actually built.
           </p>

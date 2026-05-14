@@ -135,7 +135,7 @@ const ProjectModal: React.FC<ProjectModalProps> = ({ project, onClose }) => {
           &times;
         </button>
         {/* Left: Text Content */}
-        <div className="flex-1 flex flex-col md:p-14 p-4 pb-3 min-w-[320px] max-w-[600px] justify-start">
+        <div className="flex-1 flex flex-col md:p-14 p-4 pb-3 min-w-[320px] max-w-150 justify-start">
           <h2 className="md:text-3xl text-2xl font-bold text-indigo-200 sm:mb-2 mb-1 font-poppins drop-shadow text-left">{project.title}</h2>
           <h3 className="text-lg text-indigo-300 sm:mb-4 mb-2 font-inter text-left">{project.subtitle}</h3>
           <div className={`sm:mb-6 mb-4 ${isDescExpanded ? 'max-h-56 overflow-y-auto pr-1' : ''}`}>
@@ -172,7 +172,7 @@ const ProjectModal: React.FC<ProjectModalProps> = ({ project, onClose }) => {
                 href={project.links.live}
                 target="_blank"
                 rel="noopener noreferrer"
-                className="bg-gradient-to-r from-indigo-500 to-indigo-700 hover:from-indigo-400 hover:to-indigo-600 text-white sm:px-5 px-3 py-2 rounded-xl font-semibold shadow-lg transition focus:outline-none focus:ring-2 focus:ring-indigo-400 text-sm sm:text-base"
+                className="bg-linear-to-r from-indigo-500 to-indigo-700 hover:from-indigo-400 hover:to-indigo-600 text-white sm:px-5 px-3 py-2 rounded-xl font-semibold shadow-lg transition focus:outline-none focus:ring-2 focus:ring-indigo-400 text-sm sm:text-base"
               >
                 Live Demo
               </a>
@@ -182,7 +182,7 @@ const ProjectModal: React.FC<ProjectModalProps> = ({ project, onClose }) => {
                 href={project.links.github}
                 target="_blank"
                 rel="noopener noreferrer"
-                className="bg-gradient-to-r from-gray-800 to-indigo-900 hover:from-gray-700 hover:to-indigo-800 text-white sm:px-5 px-3 py-2 rounded-xl font-semibold shadow-lg transition focus:outline-none focus:ring-2 focus:ring-indigo-400 text-sm sm:text-base"
+                className="bg-linear-to-r from-gray-800 to-indigo-900 hover:from-gray-700 hover:to-indigo-800 text-white sm:px-5 px-3 py-2 rounded-xl font-semibold shadow-lg transition focus:outline-none focus:ring-2 focus:ring-indigo-400 text-sm sm:text-base"
               >
                 GitHub
               </a>
@@ -190,7 +190,7 @@ const ProjectModal: React.FC<ProjectModalProps> = ({ project, onClose }) => {
           </div>
         </div>
         {/* Right: Image Slideshow */}
-        <div className=" bg-black/20 md:w-[420px] w-full md:py-14 md:h-full h-1/2 pb-10 py-4 px-8 relative">
+        <div className=" bg-black/20 md:w-105 w-full md:py-14 md:h-full h-1/2 pb-10 py-4 px-8 relative">
           <div className="relative md:w-full md:h-full h-9/12 w-9/12 m-auto" onTouchStart={handleTouchStart} onTouchEnd={handleTouchEnd}>
             <img
               src={project.gallery[imgIdx]}
@@ -226,11 +226,11 @@ const ProjectModal: React.FC<ProjectModalProps> = ({ project, onClose }) => {
       </div>
       {isImageModalOpen && (
         <div
-          className="fixed inset-0 z-[70] bg-black/85 backdrop-blur-sm flex items-center justify-center p-4"
+          className="fixed inset-0 z-70 bg-black/85 backdrop-blur-sm flex items-center justify-center p-4"
           onClick={() => setIsImageModalOpen(false)}
         >
           <button
-            className="absolute top-4 right-4 text-white text-3xl font-bold cursor-pointer bg-black/50 rounded-full w-10 h-10 flex items-center justify-center transition hover:bg-black/70 shadow-lg focus:outline-none focus:ring-2 focus:ring-white/70 z-[80]"
+            className="absolute top-4 right-4 text-white text-3xl font-bold cursor-pointer bg-black/50 rounded-full w-10 h-10 flex items-center justify-center transition hover:bg-black/70 shadow-lg focus:outline-none focus:ring-2 focus:ring-white/70 z-80"
             onClick={() => setIsImageModalOpen(false)}
             aria-label="Close image preview"
           >
@@ -244,7 +244,7 @@ const ProjectModal: React.FC<ProjectModalProps> = ({ project, onClose }) => {
               {totalImgs > 1 && (
                 <button
                   onClick={prevImg}
-                  className="absolute left-2 md:left-4 z-[80] bg-black/55 hover:bg-black/75 text-white rounded-full w-10 h-10 hidden sm:flex items-center justify-center shadow focus:outline-none focus:ring-2 focus:ring-white/70"
+                  className="absolute left-2 md:left-4 z-80 bg-black/55 hover:bg-black/75 text-white rounded-full w-10 h-10 hidden sm:flex items-center justify-center shadow focus:outline-none focus:ring-2 focus:ring-white/70"
                   aria-label="Previous preview image"
                 >
                   &#8592;
@@ -258,7 +258,7 @@ const ProjectModal: React.FC<ProjectModalProps> = ({ project, onClose }) => {
               {totalImgs > 1 && (
                 <button
                   onClick={nextImg}
-                  className="absolute right-2 md:right-4 z-[80] bg-black/55 hover:bg-black/75 text-white rounded-full w-10 h-10 hidden sm:flex items-center justify-center shadow focus:outline-none focus:ring-2 focus:ring-white/70"
+                  className="absolute right-2 md:right-4 z-80 bg-black/55 hover:bg-black/75 text-white rounded-full w-10 h-10 hidden sm:flex items-center justify-center shadow focus:outline-none focus:ring-2 focus:ring-white/70"
                   aria-label="Next preview image"
                 >
                   &#8594;
@@ -271,7 +271,7 @@ const ProjectModal: React.FC<ProjectModalProps> = ({ project, onClose }) => {
                   <button
                     key={imgSrc + index}
                     onClick={() => setImgIdx(index)}
-                    className={`flex-shrink-0 rounded-lg border-2 transition ${imgIdx === index
+                    className={`shrink-0 rounded-lg border-2 transition ${imgIdx === index
                         ? 'border-indigo-300 ring-2 ring-indigo-300/70'
                         : 'border-white/25 hover:border-white/55'
                       }`}
