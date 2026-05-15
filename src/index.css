@@ -95,10 +95,54 @@
   }
 }
 
+#root {
+  /* max-width: 1280px; */
+  margin: 0 auto;
+  /* padding: 2rem; */
+  text-align: center;
+  background-color: rgb(21, 10, 45);
+  color: white;
+  box-sizing: border-box;
+}
+
+html,
+body,
+#root {
+  background-color: rgb(21, 10, 45);
+  min-height: 100%;
+  scroll-behavior: smooth;
+}
+
+.mask-home-image {
+  mask-image: linear-gradient(to bottom, transparent 0%, rgb(202, 19, 19) 5%, rgb(223, 27, 27) 100%);
+  -webkit-mask-image: linear-gradient(to bottom, transparent 0%, rgb(227, 20, 20) 5%, rgb(239, 17, 17) 100%);
+}
+
+.mask-image {
+  mask-image: linear-gradient(to bottom, transparent, black 5%, black 90%, transparent);
+  -webkit-mask-image: linear-gradient(to bottom, transparent, black 5%, black 90%, transparent);
+}
+
 .anim-spin-slow {
   animation: spinSlow 18s linear infinite;
 }
 
 .anim-holo {
   animation: holoSweep 6.5s ease-in-out infinite alternate;
+}
+
+::-webkit-scrollbar {
+  height: 300px;
+  width: 8px;
+  overflow: auto;
+  padding: 0 10px;
+}
+
+::-webkit-scrollbar-track {
+  background-color: #150a2d00;
+}
+
+::-webkit-scrollbar-thumb {
+  background: #351380; 
+  border-radius: 10px;
 }
