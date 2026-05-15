@@ -30,7 +30,7 @@ const Footer: React.FC = () => {
                         </motion.div>
                     </div>
 
-                    <div className="text-center xl:block hidden">
+                    <div className="text-center lg:block hidden">
                         <p className="text-gray-500 text-xs font-inter">
                             <a
                                 href="https://storyset.com/coding"
