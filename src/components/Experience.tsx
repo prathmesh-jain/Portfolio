@@ -62,7 +62,7 @@ const Experience: React.FC = () => {
                         whileInView={{ height: '100%' }}
                         viewport={{ once: true }}
                         transition={{ duration: 1, ease: "easeInOut" }}
-                        className="absolute xl:left-6 lg:left-3 md:left-2 left-0.5 top-0 w-1 bg-linear-to-b from-indigo-700 via-indigo-900 to-gray-800 rounded-full z-0 hidden sm:flex"
+                        className="absolute xl:left-[26px] lg:left-[14px] md:left-[10px] left-[2px] top-0 w-1 bg-gradient-to-b from-indigo-700 via-indigo-900 to-gray-800 rounded-full z-0 hidden sm:flex"
                     />
                     {workExperience.map((exp, idx) => (
                         <motion.div
