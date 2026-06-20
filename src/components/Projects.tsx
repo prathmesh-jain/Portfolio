@@ -31,7 +31,7 @@ const projectsData: Project[] = [
     description: `Developed BizAssist as an AI-driven business operations assistant, handling end-to-end development including backend, frontend, and AI orchestration. The system uses a multi-agent architecture with LangGraph, where user queries are validated, planned, and routed to specialized agents for financial analysis, document Q&A (RAG), spreadsheet automation, and general tasks.I developed the backend using FastAPI and integrated LangChain with ChromaDB for a RAG pipeline, enabling intelligent querying over uploaded documents. I also implemented a multimodal pipeline to process PDFs, DOCX, and images using OCR. On the frontend, I built a React interface with Zustand for state management and used Server-Sent Events (SSE) to stream real-time responses.`,
     image: '/images/bizassist.png',
     tech: ['React.js', 'FastAPI', 'Python', 'Langchain', 'Langgraph'],
-    links: { live: 'https://bizassist.prathmeshjain.online', github: 'https://github.com/prathmesh-jain/BizAssist' },
+    links: { live: 'https://bizassist.prathmeshjain.in', github: 'https://github.com/prathmesh-jain/BizAssist' },
     gallery: ['/images/bizassist.png', '/images/bizassist1.png', '/images/bizassist2.png', '/images/bizassist3.png'],
   },
   {
