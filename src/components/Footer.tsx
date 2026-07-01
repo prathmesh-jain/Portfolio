@@ -35,19 +35,10 @@ const Footer: React.FC = () => {
           </div>
 
           <div
-            className='mt-6 flex flex-col gap-3 border-t pt-5 text-sm sm:flex-row sm:items-center sm:justify-between'
+            className='mt-6 border-t pt-5 text-sm'
             style={{ borderColor: 'var(--border)' }}
           >
             <p style={{ color: 'var(--text-soft)' }}>© 2026 Prathmesh Jain. All rights reserved.</p>
-            <a
-              href='https://storyset.com/coding'
-              target='_blank'
-              rel='noopener noreferrer'
-              className='text-sm'
-              style={{ color: 'var(--text-soft)' }}
-            >
-              Coding illustrations by Storyset
-            </a>
           </div>
         </div>
       </div>
