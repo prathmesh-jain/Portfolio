@@ -42,7 +42,7 @@ const App = () => {
           onToggleTheme={() => setTheme((currentTheme) => currentTheme === 'dark' ? 'light' : 'dark')}
         />
         <Home />
-        <Skills />
+        <Skills theme={theme}/>
         <Experience />
         <Projects />
         <Contact />

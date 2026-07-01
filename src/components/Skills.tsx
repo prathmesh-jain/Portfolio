@@ -1,15 +1,25 @@
 import React, { useState } from 'react'
 import { AnimatePresence, motion, useMotionValue, useSpring, useTransform } from 'motion/react'
+import type { ThemeMode } from '../App'
+
+interface SkillsProps {
+  theme: ThemeMode
+}
 
 interface Skill {
   name: string
   icon?: string
+  darkIcon?: string
 }
 
 interface SkillGroup {
   title: string
   description: string
   items: Skill[]
+}
+
+interface TiltCardProps extends SkillGroup {
+  theme: ThemeMode
 }
 
 const coreStack: Skill[] = [
@@ -49,8 +59,8 @@ const skillGroups: SkillGroup[] = [
     title: 'AI & LLM Systems',
     description: 'Agentic workflows, RAG pipelines, and the tooling I use to build practical AI features.',
     items: [
-      { name: 'LangChain', icon: '/icons/langchain.png' },
-      { name: 'LangGraph', icon: '/icons/langgraph.png' },
+      { name: 'LangChain', icon: '/icons/langchain.svg' ,darkIcon:'/icons/langchain-dark.png'},
+      { name: 'LangGraph', icon: '/icons/langgraph.png' ,darkIcon:'/icons/langgraph-dark.png'},
       { name: 'CrewAI', icon: '/icons/crewai.png' },
       { name: 'RAG' },
       { name: 'MCP' },
@@ -84,9 +94,15 @@ const skillGroups: SkillGroup[] = [
   },
 ]
 
-const SkillChip: React.FC<{ skill: Skill }> = ({ skill }) => {
+const SkillChip: React.FC<{
+  skill: Skill
+  theme: ThemeMode
+}> = ({ skill, theme }) => {
   const [isHovered, setIsHovered] = useState(false)
-
+  const icon =
+    theme === 'dark' && skill.darkIcon
+      ? skill.darkIcon
+      : skill.icon
   return (
     <motion.button
       type='button'
@@ -102,9 +118,13 @@ const SkillChip: React.FC<{ skill: Skill }> = ({ skill }) => {
         color: 'var(--text-secondary)',
       }}
     >
-      {skill.icon && (
-        <span className='icon-shell icon-shell--sm'>
-          <img src={skill.icon} alt={skill.name} className='h-[18px] w-[18px] object-contain' />
+      {icon && (
+        <span className="icon-shell icon-shell--sm">
+          <img
+            src={icon}
+            alt={skill.name}
+            className="h-[18px] w-[18px] object-contain"
+          />
         </span>
       )}
       <span className='text-xs font-semibold'>{skill.name}</span>
@@ -125,9 +145,13 @@ const SkillChip: React.FC<{ skill: Skill }> = ({ skill }) => {
             }}
           >
             <div className='flex items-center gap-2 whitespace-nowrap'>
-              {skill.icon && (
-                <span className='icon-shell icon-shell--sm'>
-                  <img src={skill.icon} alt='' className='h-[18px] w-[18px] object-contain' />
+              {icon && (
+                <span className="icon-shell icon-shell--sm">
+                  <img
+                    src={icon}
+                    alt={skill.name}
+                    className="h-[18px] w-[18px] object-contain"
+                  />
                 </span>
               )}
               <span className='text-sm font-semibold' style={{ color: 'var(--text-primary)' }}>
@@ -141,7 +165,12 @@ const SkillChip: React.FC<{ skill: Skill }> = ({ skill }) => {
   )
 }
 
-const TiltCard: React.FC<SkillGroup> = ({ title, description, items }) => {
+const TiltCard: React.FC<TiltCardProps> = ({
+  title,
+  description,
+  items,
+  theme,
+}) => {
   const x = useMotionValue(0.5)
   const y = useMotionValue(0.5)
 
@@ -190,14 +219,19 @@ const TiltCard: React.FC<SkillGroup> = ({ title, description, items }) => {
 
       <div className='relative mt-6 flex flex-wrap gap-2' style={{ transform: 'translateZ(10px)' }}>
         {items.map((skill) => (
-          <SkillChip key={skill.name} skill={skill} />
+          <SkillChip
+            key={skill.name}
+            skill={skill}
+            theme={theme}
+          />
         ))}
       </div>
     </motion.div>
   )
 }
 
-const Skills: React.FC = () => {
+
+const Skills: React.FC<SkillsProps> = ({ theme }) => {
   return (
     <section id='skills' className='relative px-5 pb-12 pt-18 md:px-10 xl:px-20'>
       <div className='mx-auto max-w-7xl'>
@@ -216,7 +250,7 @@ const Skills: React.FC = () => {
           <div className='section-kicker'>Core Stack</div>
           <div className='mt-4 flex flex-wrap gap-3'>
             {coreStack.map((skill) => (
-              <SkillChip key={skill.name} skill={skill} />
+              <SkillChip key={skill.name} skill={skill} theme={theme} />
             ))}
           </div>
         </div>
@@ -230,7 +264,12 @@ const Skills: React.FC = () => {
               viewport={{ once: true, margin: '-80px' }}
               transition={{ duration: 0.45, delay: index * 0.06 }}
             >
-              <TiltCard title={group.title} description={group.description} items={group.items} />
+              <TiltCard
+                title={group.title}
+                description={group.description}
+                items={group.items}
+                theme={theme}
+              />
             </motion.div>
           ))}
         </div>
