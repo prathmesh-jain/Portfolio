@@ -23,10 +23,6 @@ const navigation: NavigationItem[] = [
   { name: "Let's Connect", href: '#contact' },
 ]
 
-function classNames(...classes: Array<string | false | null | undefined>) {
-  return classes.filter(Boolean).join(' ')
-}
-
 export default function Navbar({ theme, onToggleTheme }: NavbarProps) {
   const isProgrammaticScroll = useRef<boolean>(false)
   const { activeSection, updateActiveSection, sections } = useScrollNavigation(isProgrammaticScroll)
