@@ -1,5 +1,5 @@
 import { useRef } from 'react'
-import { Disclosure, DisclosureButton, DisclosurePanel } from '@headlessui/react'
+import { Popover, PopoverButton, PopoverPanel } from '@headlessui/react'
 import { FaBars, FaMoon, FaSun, FaTimes } from 'react-icons/fa'
 import { AnimatePresence, motion } from 'motion/react'
 import useScrollNavigation from '../hooks/useScrollNavigation'
@@ -70,9 +70,12 @@ export default function Navbar({ theme, onToggleTheme }: NavbarProps) {
   const themeLabel = theme === 'dark' ? 'Switch to light mode' : 'Switch to dark mode'
 
   return (
-    <Disclosure as='nav' className='sticky top-0 z-40 px-3 pt-3 sm:px-5'>
+    <Popover
+      as="nav"
+      className="sticky top-0 z-40 px-3 pt-3 sm:px-5"
+    >
       {({ open, close }) => (
-        <>
+        <div className="relative">
           <div
             ref={navRef}
             className='mx-auto flex max-w-7xl items-center justify-between gap-3 rounded-full border px-4 py-3 sm:px-6'
@@ -98,7 +101,7 @@ export default function Navbar({ theme, onToggleTheme }: NavbarProps) {
               </motion.div>
             </button>
 
-            <div className='hidden items-center gap-2 sm:flex'>
+            <div className='hidden items-center gap-2 md:flex'>
               <div className='flex items-center gap-1 rounded-full p-1' style={{ background: 'var(--chip-bg)' }}>
                 {navigation.map((item, index) => (
                   <button
@@ -137,7 +140,7 @@ export default function Navbar({ theme, onToggleTheme }: NavbarProps) {
               </button>
             </div>
 
-            <div className='flex items-center gap-2 sm:hidden'>
+            <div className='flex items-center gap-2 md:hidden'>
               <button
                 type='button'
                 onClick={onToggleTheme}
@@ -152,7 +155,7 @@ export default function Navbar({ theme, onToggleTheme }: NavbarProps) {
                 {theme === 'dark' ? <FaSun size={14} /> : <FaMoon size={14} />}
               </button>
 
-              <DisclosureButton
+              <PopoverButton
                 className='inline-flex h-10 w-10 items-center justify-center rounded-full border'
                 style={{
                   background: 'var(--chip-bg)',
@@ -162,18 +165,22 @@ export default function Navbar({ theme, onToggleTheme }: NavbarProps) {
               >
                 <span className='sr-only'>Open menu</span>
                 {open ? <FaTimes size={18} /> : <FaBars size={18} />}
-              </DisclosureButton>
+              </PopoverButton>
             </div>
           </div>
 
           <AnimatePresence>
             {open && (
-              <DisclosurePanel static className='sm:hidden'>
+              <PopoverPanel
+                static
+                className="absolute left-0 right-0 top-full z-50 mt-3 md:hidden"
+              >
                 <motion.div
                   initial={{ opacity: 0, y: -10 }}
                   animate={{ opacity: 1, y: 0 }}
                   exit={{ opacity: 0, y: -10 }}
-                  className='mx-auto mt-3 max-w-7xl rounded-3xl border p-3'
+                  transition={{ duration: 0.2 }}
+                  className="rounded-3xl border p-3"
                   style={{
                     background: 'var(--nav-bg)',
                     borderColor: 'var(--border)',
@@ -182,32 +189,35 @@ export default function Navbar({ theme, onToggleTheme }: NavbarProps) {
                   }}
                 >
                   {navigation.map((item, index) => (
-                    <DisclosureButton
+                    <button
                       key={item.name}
-                      as='button'
-                      type='button'
+                      type="button"
                       aria-current={index === activeSection ? 'page' : undefined}
                       onClick={() => {
                         close()
-                        setTimeout(() => handleNavClick(index), 60)
+                        handleNavClick(index)
                       }}
-                      className={classNames(
-                        'mb-1 block w-full rounded-2xl px-4 py-3 text-left text-sm font-medium last:mb-0'
-                      )}
+                      className="mb-1 block w-full rounded-2xl px-4 py-3 text-left text-sm font-medium last:mb-0"
                       style={{
-                        background: index === activeSection ? 'var(--accent-soft)' : 'transparent',
-                        color: index === activeSection ? 'var(--text-primary)' : 'var(--text-muted)',
+                        background:
+                          index === activeSection
+                            ? 'var(--accent-soft)'
+                            : 'transparent',
+                        color:
+                          index === activeSection
+                            ? 'var(--text-primary)'
+                            : 'var(--text-muted)',
                       }}
                     >
                       {item.name}
-                    </DisclosureButton>
+                    </button>
                   ))}
                 </motion.div>
-              </DisclosurePanel>
+              </PopoverPanel>
             )}
           </AnimatePresence>
-        </>
+        </div>
       )}
-    </Disclosure>
+    </Popover>
   )
 }

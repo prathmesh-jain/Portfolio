@@ -159,7 +159,7 @@ const Projects: React.FC = () => {
                         border: '1px solid var(--border)',
                       }}
                     >
-                      Open case study
+                      See Details
                     </motion.div>
                   </div>
                 </motion.article>

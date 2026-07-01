@@ -222,14 +222,14 @@ const ProjectModal: React.FC<ProjectModalProps> = ({ project, onClose }) => {
                     animate={{ opacity: 1, scale: 1 }}
                     exit={{ opacity: 0, scale: 0.99 }}
                     transition={{ duration: 0.32, ease: [0.22, 1, 0.36, 1] }}
-                    className='h-[240px] w-full object-cover sm:h-[320px] lg:h-[min(52vh,440px)]'
+                    className='h-[240px] w-full object-contain lg:object-fill sm:h-[320px] lg:h-[min(52vh,440px)]'
                   />
                 </AnimatePresence>
 
                 <button
                   type='button'
                   onClick={() => setIsImageModalOpen(true)}
-                  className='absolute right-4 top-4 inline-flex items-center gap-2 rounded-full px-4 py-2 text-xs font-semibold sm:text-sm'
+                  className='absolute left-1 top-1 inline-flex items-center gap-2 rounded-full px-4 py-2 text-xs font-semibold sm:text-sm'
                   style={{
                     background: 'rgba(0, 0, 0, 0.36)',
                     color: '#ffffff',
@@ -302,20 +302,21 @@ const ProjectModal: React.FC<ProjectModalProps> = ({ project, onClose }) => {
             style={{ background: 'rgba(0, 0, 0, 0.88)', backdropFilter: 'blur(10px)' }}
             onClick={() => setIsImageModalOpen(false)}
           >
+            <button
+              type='button'
+              onClick={() => setIsImageModalOpen(false)}
+              aria-label='Close image preview'
+              className='fixed right-4 top-4 z-[70] inline-flex h-11 w-11 items-center justify-center rounded-full'
+              style={{
+                background: 'rgba(255, 255, 255, 0.02)',
+                border: '1px solid rgba(255, 255, 255, 0.18)',
+                color: '#ffffff',
+              }}
+            >
+              <FaTimes size={15} />
+            </button>
             <div className='relative flex max-h-[92vh] w-full max-w-6xl flex-col items-center gap-4' onClick={(event) => event.stopPropagation()}>
-              <button
-                type='button'
-                onClick={() => setIsImageModalOpen(false)}
-                aria-label='Close image preview'
-                className='absolute right-0 top-0 inline-flex h-11 w-11 items-center justify-center rounded-full'
-                style={{
-                  background: 'rgba(255, 255, 255, 0.08)',
-                  border: '1px solid rgba(255, 255, 255, 0.18)',
-                  color: '#ffffff',
-                }}
-              >
-                <FaTimes size={15} />
-              </button>
+
 
               <img
                 src={project.gallery[imgIdx]}
