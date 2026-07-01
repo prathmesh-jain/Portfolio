@@ -1,6 +1,6 @@
 import React, { useState } from 'react'
 import ProjectModal from './ProjectModal'
-import { AnimatePresence, LayoutGroup, motion } from 'motion/react'
+import { AnimatePresence, motion } from 'motion/react'
 
 export interface Project {
   title: string
@@ -97,97 +97,94 @@ const Projects: React.FC = () => {
           </p>
         </div>
 
-        <LayoutGroup>
-          <div className='mt-10 grid grid-cols-1 gap-6 lg:grid-cols-3'>
-            {projectsData.map((project, index) => (
-              <motion.button
-                key={project.title}
-                type='button'
-                initial={{ opacity: 0, y: 28 }}
-                whileInView={{ opacity: 1, y: 0 }}
-                viewport={{ once: true, margin: '-80px' }}
-                transition={{ duration: 0.45, delay: index * 0.08, ease: [0.22, 1, 0.36, 1] }}
-                onClick={() => setSelectedProject(project)}
-                className='text-left'
+        <div className='mt-10 grid grid-cols-1 gap-6 lg:grid-cols-3'>
+          {projectsData.map((project, index) => (
+            <motion.button
+              key={project.title}
+              type='button'
+              initial={{ opacity: 0, y: 28 }}
+              whileInView={{ opacity: 1, y: 0 }}
+              viewport={{ once: true, margin: '-80px' }}
+              transition={{ duration: 0.45, delay: index * 0.08, ease: [0.22, 1, 0.36, 1] }}
+              onClick={() => setSelectedProject(project)}
+              className='text-left'
+            >
+              <motion.article
+                layoutId={`project-card-${project.title}`}
+                transition={{ layout: { duration: 0.28, ease: [0.22, 1, 0.36, 1] } }}
+                className='glass-panel project-card group h-full overflow-hidden rounded-[2rem]'
               >
-                <motion.article
-                  layoutId={`project-card-${project.title}`}
-                  transition={{ layout: { duration: 0.28, ease: [0.22, 1, 0.36, 1] } }}
-                  className='glass-panel project-card group h-full overflow-hidden rounded-[2rem]'
-                >
-                  <motion.div layoutId={`project-image-${project.title}`} className='relative h-56 overflow-hidden sm:h-60 lg:h-52 xl:h-56'>
-                    <img src={project.image} alt={project.title} className='project-thumb h-full w-full object-cover' />
-                    <div
-                      className='absolute inset-0'
-                      style={{
-                        background:
-                          'linear-gradient(180deg, rgba(0,0,0,0.02) 0%, rgba(0,0,0,0.08) 55%, rgba(0,0,0,0.48) 100%)',
-                      }}
-                    />
+                <motion.div layoutId={`project-image-${project.title}`} className='relative h-56 overflow-hidden sm:h-60 lg:h-52 xl:h-56'>
+                  <img src={project.image} alt={project.title} className='project-thumb h-full w-full object-cover' />
+                  <div
+                    className='absolute inset-0'
+                    style={{
+                      background:
+                        'linear-gradient(180deg, rgba(0,0,0,0.02) 0%, rgba(0,0,0,0.08) 55%, rgba(0,0,0,0.48) 100%)',
+                    }}
+                  />
+                </motion.div>
+
+                <div className='space-y-4 p-5'>
+                  <motion.div >
+                    <div className='section-kicker'>Case Study</div>
+                    <h3 className='mt-3 font-poppins text-2xl font-semibold' style={{ color: 'var(--text-primary)' }}>
+                      {project.title}
+                    </h3>
+                    <p className='mt-2 text-sm font-medium' style={{ color: 'var(--text-muted)' }}>
+                      {project.subtitle}
+                    </p>
                   </motion.div>
 
-                  <div className='space-y-4 p-5'>
-                    <motion.div layoutId={`project-title-block-${project.title}`}>
-                      <div className='section-kicker'>Case Study</div>
-                      <h3 className='mt-3 font-poppins text-2xl font-semibold' style={{ color: 'var(--text-primary)' }}>
-                        {project.title}
-                      </h3>
-                      <p className='mt-2 text-sm font-medium' style={{ color: 'var(--text-muted)' }}>
-                        {project.subtitle}
-                      </p>
-                    </motion.div>
+                  <p className='line-clamp-3 text-sm leading-7' style={{ color: 'var(--text-muted)' }}>
+                    {project.description}
+                  </p>
 
-                    <p className='line-clamp-3 text-sm leading-7' style={{ color: 'var(--text-muted)' }}>
-                      {project.description}
-                    </p>
+                  <motion.div className='flex flex-wrap gap-2'>
+                    {project.tech.slice(0, 4).map((tech) => (
+                      <span key={tech} className='tag-chip rounded-full px-3 py-1 text-xs font-medium'>
+                        {tech}
+                      </span>
+                    ))}
+                  </motion.div>
 
-                    <motion.div layoutId={`project-tags-${project.title}`} className='flex flex-wrap gap-2'>
-                      {project.tech.slice(0, 4).map((tech) => (
-                        <span key={tech} className='tag-chip rounded-full px-3 py-1 text-xs font-medium'>
-                          {tech}
-                        </span>
-                      ))}
-                    </motion.div>
+                  <motion.div
+                    className='inline-flex items-center rounded-full px-4 py-2 text-sm font-semibold'
+                    transition={{ layout: { duration: 0.28, ease: [0.22, 1, 0.36, 1] } }}
+                    style={{
+                      background: 'var(--accent-soft)',
+                      color: 'var(--text-primary)',
+                      border: '1px solid var(--border)',
+                    }}
+                  >
+                    See Details
+                  </motion.div>
+                </div>
+              </motion.article>
+            </motion.button>
+          ))}
+        </div>
 
-                    <motion.div
-                      layoutId={`project-cta-${project.title}`}
-                      className='inline-flex items-center rounded-full px-4 py-2 text-sm font-semibold'
-                      transition={{ layout: { duration: 0.28, ease: [0.22, 1, 0.36, 1] } }}
-                      style={{
-                        background: 'var(--accent-soft)',
-                        color: 'var(--text-primary)',
-                        border: '1px solid var(--border)',
-                      }}
-                    >
-                      See Details
-                    </motion.div>
-                  </div>
-                </motion.article>
-              </motion.button>
-            ))}
-          </div>
+        <motion.a
+          initial={{ opacity: 0, y: 12 }}
+          whileInView={{ opacity: 1, y: 0 }}
+          viewport={{ once: true }}
+          whileHover={{ x: 4 }}
+          href='https://github.com/prathmesh-jain?tab=repositories'
+          target='_blank'
+          rel='noreferrer'
+          className='mt-8 inline-flex items-center gap-2 font-poppins text-sm font-semibold'
+          style={{ color: 'var(--text-primary)' }}
+        >
+          View all repositories
+          <span aria-hidden='true'>→</span>
+        </motion.a>
 
-          <motion.a
-            initial={{ opacity: 0, y: 12 }}
-            whileInView={{ opacity: 1, y: 0 }}
-            viewport={{ once: true }}
-            whileHover={{ x: 4 }}
-            href='https://github.com/prathmesh-jain?tab=repositories'
-            target='_blank'
-            rel='noreferrer'
-            className='mt-8 inline-flex items-center gap-2 font-poppins text-sm font-semibold'
-            style={{ color: 'var(--text-primary)' }}
-          >
-            View all repositories
-            <span aria-hidden='true'>→</span>
-          </motion.a>
-
-          <AnimatePresence>
-            {selectedProject && (
-              <ProjectModal project={selectedProject} onClose={() => setSelectedProject(null)} />
-            )}
-          </AnimatePresence>
-        </LayoutGroup>
+        <AnimatePresence>
+          {selectedProject && (
+            <ProjectModal project={selectedProject} onClose={() => setSelectedProject(null)} />
+          )}
+        </AnimatePresence>
       </div>
     </section>
   )

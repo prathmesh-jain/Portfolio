@@ -1,11 +1,35 @@
 import React, { useEffect, useRef, useState } from 'react'
 import { AnimatePresence, motion } from 'motion/react'
+import type { Variants } from "motion/react"
 import { FaArrowLeft, FaArrowRight, FaExpand, FaExternalLinkAlt, FaGithub, FaTimes } from 'react-icons/fa'
 import type { Project } from './Projects'
 
 interface ProjectModalProps {
   project: Project
   onClose: () => void
+}
+const containerVariants = {
+  hidden: {},
+  visible: {
+    transition: {
+      delayChildren: 0.20,
+      staggerChildren: 0.08,
+    },
+  },
+}
+const itemVariants: Variants = {
+  hidden: {
+    opacity: 0,
+    y: 100,
+  },
+  visible: {
+    opacity: 1,
+    y: 0,
+    transition: {
+      duration: 0.8,
+      ease: [0.22, 1, 0.26, 1] as const,
+    },
+  },
 }
 
 const ProjectModal: React.FC<ProjectModalProps> = ({ project, onClose }) => {
@@ -98,7 +122,6 @@ const ProjectModal: React.FC<ProjectModalProps> = ({ project, onClose }) => {
           tabIndex={-1}
           role='dialog'
           aria-modal='true'
-          layoutId={`project-card-${project.title}`}
           transition={{ layout: { duration: 0.28, ease: [0.22, 1, 0.36, 1] } }}
           onClick={(event) => event.stopPropagation()}
           className='glass-panel animate-modal-pop relative max-h-[92vh] w-full max-w-5xl overflow-hidden rounded-[2rem] outline-none'
@@ -118,8 +141,12 @@ const ProjectModal: React.FC<ProjectModalProps> = ({ project, onClose }) => {
           </button>
 
           <div className='grid max-h-[92vh] grid-cols-1 overflow-y-auto lg:grid-cols-[0.95fr_1.05fr]'>
-            <div className='order-2 flex flex-col p-5 text-left sm:p-8 lg:order-1 lg:p-10'>
-              <motion.div layoutId={`project-title-block-${project.title}`}>
+            <motion.div
+              variants={containerVariants}
+              initial="hidden"
+              animate="visible"
+              className='order-2 flex flex-col p-5 text-left sm:p-8 lg:order-1 lg:p-10'>
+              <motion.div variants={itemVariants}>
                 <div className='section-kicker'>Project Details</div>
                 <h2 className='mt-4 font-poppins text-3xl font-semibold sm:text-4xl' style={{ color: 'var(--text-primary)' }}>
                   {project.title}
@@ -129,7 +156,7 @@ const ProjectModal: React.FC<ProjectModalProps> = ({ project, onClose }) => {
                 </p>
               </motion.div>
 
-              <div className='mt-6'>
+              <motion.div variants={itemVariants} className='mt-6'>
                 <p className='text-sm leading-8 sm:text-base' style={{ color: 'var(--text-secondary)' }}>
                   {displayedDescription}
                 </p>
@@ -144,10 +171,10 @@ const ProjectModal: React.FC<ProjectModalProps> = ({ project, onClose }) => {
                     {isDescExpanded ? 'Read less' : 'Read more'}
                   </button>
                 )}
-              </div>
+              </motion.div>
 
               <motion.div
-                layoutId={`project-tags-${project.title}`}
+                variants={itemVariants}
                 transition={{ layout: { duration: 0.28, ease: [0.22, 1, 0.36, 1] } }}
                 className='mt-6 flex flex-wrap gap-2'
               >
@@ -159,7 +186,7 @@ const ProjectModal: React.FC<ProjectModalProps> = ({ project, onClose }) => {
               </motion.div>
 
               <motion.div
-                layoutId={`project-cta-${project.title}`}
+                variants={itemVariants}
                 transition={{ layout: { duration: 0.28, ease: [0.22, 1, 0.36, 1] } }}
                 className='mt-8 flex flex-wrap gap-3'
               >
@@ -188,7 +215,7 @@ const ProjectModal: React.FC<ProjectModalProps> = ({ project, onClose }) => {
                 )}
               </motion.div>
 
-              <div className='soft-panel mt-8 rounded-[1.6rem] p-5'>
+              <motion.div variants={itemVariants} className='soft-panel mt-8 rounded-[1.6rem] p-5'>
                 <div className='section-kicker'>Highlights</div>
                 <div className='mt-4 space-y-3'>
                   {project.highlights.map((highlight) => (
@@ -202,8 +229,8 @@ const ProjectModal: React.FC<ProjectModalProps> = ({ project, onClose }) => {
                     </div>
                   ))}
                 </div>
-              </div>
-            </div>
+              </motion.div>
+            </motion.div>
 
             <div className='order-1 p-4 sm:p-6 lg:order-2 lg:p-6'>
               <motion.div
@@ -289,8 +316,8 @@ const ProjectModal: React.FC<ProjectModalProps> = ({ project, onClose }) => {
               )}
             </div>
           </div>
-        </motion.div>
-      </motion.div>
+        </motion.div >
+      </motion.div >
 
       <AnimatePresence>
         {isImageModalOpen && (
