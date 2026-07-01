@@ -1,152 +1,159 @@
 import React from 'react'
-import { FaGithub } from "react-icons/fa";
-import { motion, useMotionValue, useSpring, useTransform } from "motion/react";
+import { FaArrowRight, FaGithub } from 'react-icons/fa'
+import { motion, useMotionValue, useSpring, useTransform } from 'motion/react'
 
 const Home: React.FC = () => {
     const x = useMotionValue(0.5);
     const y = useMotionValue(0.5);
 
-    const mouseXSpring = useSpring(x, { stiffness: 150, damping: 20 });
-    const mouseYSpring = useSpring(y, { stiffness: 150, damping: 20 });
+    const mouseXSpring = useSpring(x, { stiffness: 150, damping: 20 })
+    const mouseYSpring = useSpring(y, { stiffness: 150, damping: 20 })
 
-    const rotateX = useTransform(mouseYSpring, [0, 1], [25, -25]);
-    const rotateY = useTransform(mouseXSpring, [0, 1], [-34, 34]);
+    const rotateX = useTransform(mouseYSpring, [0, 1], [14, -14])
+    const rotateY = useTransform(mouseXSpring, [0, 1], [-16, 16])
+    const backgroundX = useTransform(mouseXSpring, [0, 1], ['0%', '100%'])
+    const backgroundY = useTransform(mouseYSpring, [0, 1], ['0%', '100%'])
 
     const handleMouseMove = (e: React.MouseEvent | React.PointerEvent) => {
-        const rect = e.currentTarget.getBoundingClientRect();
-        const width = rect.width;
-        const height = rect.height;
-        const mouseX = e.clientX - rect.left;
-        const mouseY = e.clientY - rect.top;
-        x.set(mouseX / width);
-        y.set(mouseY / height);
-    };
+        const rect = e.currentTarget.getBoundingClientRect()
+        x.set((e.clientX - rect.left) / rect.width)
+        y.set((e.clientY - rect.top) / rect.height)
+    }
 
     const handleMouseLeave = () => {
-        x.set(0.5);
-        y.set(0.5);
-    };
-
-    const backgroundX = useTransform(mouseXSpring, [0, 1], ["0%", "100%"]);
-    const backgroundY = useTransform(mouseYSpring, [0, 1], ["0%", "100%"]);
+        x.set(0.5)
+        y.set(0.5)
+    }
 
     return (
         <section
-            className='relative overflow-hidden pb-5 min-h-[calc(100svh-90px)] md:min-h-[calc(100vh-90px)]'
+            id='home'
+            className='relative overflow-hidden px-5 pb-6 pt-8 md:px-10 xl:px-20'
             onPointerMove={handleMouseMove}
             onPointerLeave={handleMouseLeave}
         >
-            <div className='absolute inset-0 bg-custom-bg' />
-
-            <div
-                className='absolute inset-0 opacity-35'
-                style={{ backgroundImage: 'linear-gradient(120deg, rgba(99,102,241,0.18), rgba(168,85,247,0.10), rgba(236,72,153,0.10))' }}
-            />
-            <div className='absolute inset-0 bg-linear-to-b from-indigo-950/40 via-transparent to-transparent' />
-            <div
-                className='absolute inset-0 opacity-[0.14] pointer-events-none'
-                style={{
-                    backgroundImage: 'radial-gradient(circle at 1px 1px, rgba(255,255,255,0.35) 1px, transparent 0)',
-                    backgroundSize: '26px 26px',
-                }}
-            />
-            <div className='absolute -top-28 -left-28 h-90 w-90 rounded-full bg-indigo-600/20 blur-3xl' />
-            <div className='absolute -bottom-28 -right-28 h-105 w-105 rounded-full bg-fuchsia-600/10 blur-3xl' />
-
-            <div className='relative mx-auto w-full xl:px-20 md:px-10 px-5 py-6 flex items-center min-h-[calc(100svh-90px)] md:min-h-[calc(100vh-90px)]'>
-                <div className='flex flex-col-reverse items-center gap-10 md:flex-row'>
+            <div className='mx-auto flex min-h-[calc(100svh-var(--nav-height))] max-w-7xl items-center'>
+                <div className='grid w-full items-center gap-8 py-6 lg:grid-cols-[1.02fr_0.98fr] lg:py-8'>
                     <motion.div
-                        initial={{ opacity: 0, x: -30 }}
-                        animate={{ opacity: 1, x: 0 }}
-                        transition={{ duration: 0.8 }}
-                        className='text-left'
+                        initial={{ opacity: 0, y: 24 }}
+                        animate={{ opacity: 1, y: 0 }}
+                        transition={{ duration: 0.7 }}
+                        className='order-2 lg:order-1 text-left'
                     >
-                        <h1 className='mt-5 font-poppins font-extrabold tracking-tight text-[clamp(2.2rem,4vw,3.3rem)] leading-[1.05]'>
-                            Hi, I'm <span className='text-indigo-400'>Prathmesh Jain</span>.
-                            <span className='block text-indigo-100'>I build fast, modern web apps.</span>
+                        <div className='section-kicker'>Full Stack Developer · AI Engineer</div>
+                        <h1 className='section-title mt-4 max-w-3xl font-poppins font-semibold leading-[0.98] tracking-[-0.04em] text-[1.8rem] sm:text-[3.2rem] md:text-[3.6rem] lg:text-[3.5rem]'>
+                            Hi, I&apos;m Prathmesh Jain.
+                            <span className='block' style={{ color: 'var(--text-secondary)' }}>
+                                I build full-stack products
+                            </span>
+                            <span className='block' style={{ color: 'var(--accent-strong)' }}>
+                                with polished, practical UX.
+                            </span>
                         </h1>
 
-                        <p className='mt-4 max-w-xl text-sm sm:text-base text-gray-300 font-inter leading-relaxed'>
-                            I'm a developer who loves shipping clean UI, reliable APIs, and polished user experiences. Explore my work and let's build something impactful.
+                        <p className='section-copy mt-5 max-w-2xl md:max-w-4xl text-sm leading-7 sm:text-base sm:leading-8 md:text-lg md:leading-9 lg:text-lg lg:leading-8 xl:leading-9'>
+                            I work across React, FastAPI, Python, and applied AI to ship products that feel smooth to use
+                            and solid under the hood. I care about clean interfaces, reliable backend systems, and motion
+                            that adds clarity instead of noise.
                         </p>
 
-                        <div className='mt-6 flex flex-col sm:flex-row sm:items-center gap-4'>
+                        <div className='mt-7 flex flex-col gap-3 sm:flex-row sm:items-center'>
                             <motion.a
-                                whileHover={{ scale: 1.05 }}
-                                whileTap={{ scale: 0.95 }}
+                                whileHover={{ y: -2 }}
+                                whileTap={{ scale: 0.98 }}
                                 href='/Prathmesh_Jain_Resume.pdf'
                                 download='Prathmesh_Jain_Resume.pdf'
-                                className='inline-flex justify-center items-center rounded-xl bg-indigo-600 px-5 py-3 text-sm font-semibold text-white hover:bg-indigo-500 transition-colors'
+                                className='accent-button inline-flex items-center justify-center gap-2 rounded-2xl px-6 py-3 text-sm font-semibold'
                             >
                                 Download Resume
+                                <FaArrowRight size={12} />
                             </motion.a>
 
                             <motion.a
-                                whileHover={{ scale: 1.05 }}
-                                whileTap={{ scale: 0.95 }}
+                                whileHover={{ y: -2 }}
+                                whileTap={{ scale: 0.98 }}
                                 href='https://github.com/prathmesh-jain'
                                 target='_blank'
                                 rel='noreferrer'
-                                className='inline-flex justify-center items-center gap-2 rounded-xl border border-indigo-400/30 bg-black/20 px-5 py-3 text-sm font-semibold text-indigo-100 hover:bg-indigo-500/10 transition-colors'
+                                className='secondary-button inline-flex items-center justify-center gap-2 rounded-2xl px-6 py-3 text-sm font-semibold'
                             >
-                                GitHub <FaGithub size={18} />
+                                GitHub
+                                <FaGithub size={16} />
                             </motion.a>
+                        </div>
+
+                        <div className='mt-8 flex flex-wrap sm:gap-3 gap-2 text-[11px] sm:text-sm'>
+                            {['React + TypeScript', 'FastAPI + Python', 'AI workflows'].map((item) => (
+                                <span key={item} className='tag-chip rounded-full sm:px-4 px-3 py-2 font-medium'>
+                                    {item}
+                                </span>
+                            ))}
                         </div>
                     </motion.div>
 
-                    <div className='relative mx-auto w-full max-w-[clamp(340px,33vw,620px)]'>
+                    <motion.div
+                        initial={{ opacity: 0, scale: 0.96 }}
+                        animate={{ opacity: 1, scale: 1 }}
+                        transition={{ duration: 0.75, delay: 0.1 }}
+                        className='relative order-1 lg:order-2 mx-auto w-10/11 max-w-md lg:w-full lg:max-w-120'
+                    >
                         <motion.div
-                            style={{
-                                rotateX,
-                                rotateY,
-                                transformStyle: 'preserve-3d',
-                            }}
-                            className='relative rounded-3xl border border-indigo-400/20 bg-linear-to-b from-white/5 to-transparent p-5 shadow-[0_0_70px_rgba(99,102,241,0.22)]'
+                            style={{ rotateX, rotateY, transformStyle: 'preserve-3d' }}
+                            className='glass-panel relative rounded-4xl p-4 sm:p-5'
                         >
                             <div
-                                className='absolute -inset-10 rounded-[40px] opacity-55 blur-2xl anim-spin-slow'
+                                className='pointer-events-none absolute -inset-10 rounded-[2.75rem] opacity-70 blur-3xl'
                                 style={{
                                     background:
-                                        'conic-gradient(from 180deg at 50% 50%, rgba(99,102,241,0.38), rgba(236,72,153,0.22), rgba(168,85,247,0.26), rgba(99,102,241,0.38))',
+                                        'conic-gradient(from 160deg at 50% 50%, transparent 0deg, var(--accent-glow) 80deg, transparent 180deg, rgba(255,255,255,0.05) 240deg, transparent 360deg)',
                                 }}
                             />
+
                             <motion.div
-                                className='absolute inset-0 rounded-3xl pointer-events-none'
+                                className='pointer-events-none absolute inset-0 rounded-4xl'
                                 style={{
                                     background: useTransform(
                                         [backgroundX, backgroundY],
-                                        ([xVal, yVal]) => `radial-gradient(600px circle at ${xVal} ${yVal}, rgba(255,255,255,0.22), transparent 45%)`
+                                        ([xValue, yValue]) =>
+                                            `radial-gradient(520px circle at ${xValue} ${yValue}, rgba(255,255,255,0.16), transparent 46%)`
                                     ),
                                     mixBlendMode: 'overlay',
                                 }}
                             />
 
-                            <div className='relative rounded-2xl overflow-hidden bg-black/30' style={{ transform: 'translateZ(22px)' }}>
+                            <div className='relative aspect-10/11 overflow-hidden rounded-[1.6rem]' style={{ transform: 'translateZ(26px)' }}>
                                 <img
                                     src='/profile.jpg'
-                                    alt='Profile'
-                                    className='w-full sm:h-[clamp(340px,60vh,620px)] h-[clamp(340px,50vh,520px)] object-cover object-top'
+                                    alt='Prathmesh Jain portrait'
+                                    className='absolute inset-0 h-full w-full object-cover object-top'
                                 />
 
-                                <div className='absolute left-4 top-4 rounded-2xl border border-white/10 bg-black/45 px-3 py-2' style={{ transform: 'translateZ(36px)' }}>
-                                    <div className='text-[11px] text-gray-300 font-inter'>Currently</div>
-                                    <div className='text-sm font-semibold text-indigo-100 font-poppins'>Full Stack GenAI Engineer @ TCS</div>
+                                <div
+                                    className='glass-panel absolute left-3 top-3 rounded-2xl sm:px-4 px-3 sm:py-3 py-2 text-left sm:left-6 sm:top-6'
+                                    style={{ transform: 'translateZ(34px)' }}
+                                >
+                                    <div className='sm:text-[11px] text-[9px] uppercase tracking-[0.22em]' style={{ color: 'var(--text-soft)' }}>
+                                        Current Role
+                                    </div>
+                                    <div className='mt-1 font-poppins text-xs font-semibold sm:text-base' style={{ color: 'var(--text-primary)' }}>
+                                        Full Stack AI Engineer @ TCS
+                                    </div>
                                 </div>
 
-                                <div className='absolute right-4 bottom-4 rounded-2xl border border-white/10 bg-black/45 px-3 py-2' style={{ transform: 'translateZ(30px)' }}>
-                                    <div className='text-[11px] text-gray-300 font-inter'>Building with</div>
-                                    <div className='text-sm font-semibold text-indigo-100 font-poppins'>React • FastAPI • Python</div>
+                                <div
+                                    className='glass-panel absolute bottom-4 right-4 rounded-2xl sm:px-4 px-3 sm:py-3 py-2 text-left sm:bottom-6 sm:right-6'
+                                    style={{ transform: 'translateZ(30px)' }}
+                                >
+                                    <div className='sm:text-[11px] text-[9px] uppercase tracking-[0.22em]' style={{ color: 'var(--text-soft)' }}>
+                                        Shipping With
+                                    </div>
+                                    <div className='mt-1 font-poppins text-xs font-semibold sm:text-base' style={{ color: 'var(--text-primary)' }}>
+                                        React, FastAPI, LangGraph
+                                    </div>
                                 </div>
-                            </div>
-
-                            <div className='sm:flex hidden relative mt-4 flex-wrap gap-2 text-left' style={{ transform: 'translateZ(18px)' }}>
-                                <span className='rounded-full border border-white/10 bg-black/20 px-3 py-1 text-xs font-semibold text-gray-200 font-inter'>Full-stack</span>
-                                <span className='rounded-full border border-white/10 bg-black/20 px-3 py-1 text-xs font-semibold text-gray-200 font-inter'>UI polish</span>
-                                <span className='rounded-full border border-white/10 bg-black/20 px-3 py-1 text-xs font-semibold text-gray-200 font-inter'>APIs</span>
-                                <span className='rounded-full border border-white/10 bg-black/20 px-3 py-1 text-xs font-semibold text-gray-200 font-inter'>Performance</span>
                             </div>
                         </motion.div>
-                    </div>
+                    </motion.div>
                 </div>
             </div>
         </section>

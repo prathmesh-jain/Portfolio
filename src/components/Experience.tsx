@@ -1,112 +1,128 @@
-import React from 'react';
-import { motion } from 'motion/react';
+import React from 'react'
+import { motion } from 'motion/react'
 
-interface Experience {
-    company: string;
-    role: string;
-    team: string;
-    duration: string;
-    description: string;
-    techStack: string[];
-    logo?: string;
+interface ExperienceItem {
+  company: string
+  role: string
+  team: string
+  duration: string
+  description: string
+  techStack: string[]
+  logo?: string
 }
 
-const workExperience: Experience[] = [
-    {
-        company: "Tata Consultancy Services (TCS)",
-        role: "Full Stack GenAI Engineer",
-        team: "BFSI Americas · Research & Innovation",
-        duration: "Oct 2024 - Present",
-        description:
-            "Building production-grade GenAI systems and full-stack applications within the BFSI Americas CTO team. I design stateful, multi-step agentic workflows with LangChain, LangGraph, and CrewAI, integrate real-time search and web automation exposed through MCP, and ship RAG-backed FastAPI services behind React frontends with strong reliability, monitoring, and cost controls.",
-        techStack: [
-            "React.js",
-            "TypeScript",
-            "Python",
-            "FastAPI",
-            "LangChain",
-            "LangGraph",
-            "CrewAI",
-            "RAG",
-            "MCP",
-            "Playwright",
-            "Server-Sent Events (SSE)",
-        ],
-        logo: "/images/tcs.webp",
-    },
-    // Add more experiences here in the future
-];
+const workExperience: ExperienceItem[] = [
+  {
+    company: 'Tata Consultancy Services (TCS)',
+    role: 'Full Stack AI Engineer',
+    team: 'BFSI Americas · Research & Innovation',
+    duration: 'Oct 2024 - Present',
+    description:
+      'Building production-grade AI systems and full-stack applications within the BFSI Americas CTO team. I design stateful, multi-step agentic workflows with LangChain, LangGraph, and CrewAI, integrate real-time search and web automation exposed through MCP, and ship RAG-backed FastAPI services behind React frontends with strong reliability, monitoring, and cost controls.',
+    techStack: [
+      'React.js',
+      'TypeScript',
+      'Python',
+      'FastAPI',
+      'LangChain',
+      'LangGraph',
+      'CrewAI',
+      'RAG',
+      'MCP',
+      'Playwright',
+      'SSE',
+    ],
+    logo: '/images/tcs.webp',
+  },
+]
 
 const Experience: React.FC = () => {
-    return (
-        <section className="relative py-12 sm:scroll-mt-0 scroll-mt-60 overflow-hidden" id="experience">
-            <div className='absolute inset-0 pointer-events-none'>
-                <div className='absolute -top-40 left-1/2 h-130 w-130 -translate-x-1/2 rounded-full bg-indigo-600/10 blur-3xl ' />
-                <div className='absolute -bottom-40 -left-40 h-130 w-130 rounded-full bg-fuchsia-600/10 blur-3xl ' />
-                <div className='absolute inset-0 bg-linear-to-b from-indigo-950/10 via-transparent to-transparent' />
-            </div>
+  return (
+    <section id='experience' className='relative px-5 pb-12 pt-18 md:px-10 xl:px-20'>
+      <div className='mx-auto max-w-7xl'>
+        <div className='max-w-3xl text-left'>
+          <div className='section-kicker'>Experience</div>
+          <h2 className='section-title mt-4 font-poppins text-4xl font-semibold tracking-[-0.03em] sm:text-5xl'>
+            Experience grounded in shipping usable systems.
+          </h2>
+          <p className='section-copy mt-5 text-base leading-8 sm:text-lg'>
+            My current role combines full-stack product development, applied AI systems, and the UX details that make
+            complex tools easier to use.
+          </p>
+        </div>
 
-            <div className="relative mx-auto xl:px-20 lg:px-15 md:px-10 px-5">
-                <motion.h1
-                    initial={{ opacity: 0, x: -20 }}
-                    whileInView={{ opacity: 1, x: 0 }}
-                    viewport={{ once: false }}
-                    className="md:text-4xl text-3xl font-bold text-indigo-100 my-16 text-left w-full font-poppins pl-10"
-                >
-                    Experience
-                </motion.h1>
-                <div className="relative xl:px-10 lg:px-5 md:px-2 w-full lg:w-2/3 py-5 mx-auto">
-                    {/* Timeline vertical line with gradient */}
-                    <motion.div
-                        initial={{ height: 0 }}
-                        whileInView={{ height: '100%' }}
-                        viewport={{ once: true }}
-                        transition={{ duration: 1, ease: "easeInOut" }}
-                        className="absolute xl:left-[26px] lg:left-[14px] md:left-[10px] left-[2px] top-0 w-1 bg-gradient-to-b from-indigo-700 via-indigo-900 to-gray-800 rounded-full z-0 hidden sm:flex"
-                    />
-                    {workExperience.map((exp, idx) => (
-                        <motion.div
-                            key={idx}
-                            initial={{ opacity: 0, y: 50 }}
-                            whileInView={{ opacity: 1, y: 0 }}
-                            viewport={{ once: false, margin: "-100px" }}
-                            transition={{ duration: 0.5, delay: idx * 0.2 }}
-                            className="mb-16 relative group"
-                        >
-                            {/* Animated Timeline dot */}
-                            <span className="absolute xl:-left-6 lg:-left-4 md:-left-2 -left-2 top-8 w-6 h-6 bg-gray-950 border-4 border-indigo-500 group-hover:border-indigo-700 transition-all duration-300 rounded-full shadow-lg hidden sm:flex items-center justify-center z-9">
-                                <span className={`block w-2.5 h-2.5 bg-indigo-500 group-hover:bg-indigo-700 rounded-full ${idx === 0 ? 'animate-pulse' : ''}`}></span>
-                            </span>
-                            <div className="sm:ml-8 bg-gray-900 rounded-2xl shadow-xl border-t-4 border-indigo-500 group-hover:border-indigo-700 transition-all duration-300 sm:p-8 p-6 hover:scale-[1.025] hover:shadow-2xl relative">
-                                {/* Company logo placeholder */}
-                                <div className="absolute -top-8 left-8 w-16 h-16  bg-indigo-950 rounded-full flex items-center justify-center shadow-md border-2 border-indigo-800 overflow-hidden">
-                                    {exp.logo && <img src={exp.logo} alt={exp.company} className="object-contain" />}
-                                </div>
-                                <div className="pt-8">
-                                    <h2 className="md:text-2xl text-xl font-bold  text-indigo-300 mb-1 flex items-center gap-2">
-                                        {exp.company}
-                                    </h2>
-                                    <div className="flex flex-col sm:flex-row sm:items-center sm:gap-4 mb-2">
-                                        <span className="md:text-lg text-base font-semibold  text-gray-200 whitespace-nowrap">{exp.role}</span>
-                                        <span className="md:text-sm text-xs  text-gray-400">{exp.team}</span>
-                                        <span className="md:text-sm text-xs text-gray-500">{exp.duration}</span>
-                                    </div>
-                                    <p className="text-gray-300 mb-4 leading-relaxed text-sm text-justify">{exp.description}</p>
-                                    <div className="flex flex-wrap gap-3 mt-2">
-                                        {exp.techStack.map((tech) => (
-                                            <span key={tech} className=" bg-indigo-900 text-indigo-200 px-4 py-1 rounded-full text-xs font-semibold shadow-sm border  border-indigo-800">
-                                                {tech}
-                                            </span>
-                                        ))}
-                                    </div>
-                                </div>
-                            </div>
-                        </motion.div>
-                    ))}
+        <div className='relative mt-10'>
+          <div
+            className='absolute left-4 top-0 hidden h-full w-px sm:block'
+            style={{ background: 'linear-gradient(180deg, transparent, var(--border-strong), transparent)' }}
+          />
+
+          {workExperience.map((experience, index) => (
+            <motion.article
+              key={experience.company}
+              initial={{ opacity: 0, y: 28 }}
+              whileInView={{ opacity: 1, y: 0 }}
+              viewport={{ once: true, margin: '-80px' }}
+              transition={{ duration: 0.45, delay: index * 0.08 }}
+              className='relative mb-8 sm:pl-14'
+            >
+              <div
+                className='absolute left-[0.38rem] top-8 hidden h-5 w-5 rounded-full sm:block'
+                style={{
+                  background: 'var(--bg)',
+                  border: '4px solid var(--accent)',
+                  boxShadow: '0 0 0 8px var(--accent-soft)',
+                }}
+              />
+
+              <div className='glass-panel rounded-4xl p-6 text-left sm:p-8'>
+                <div className='flex flex-col gap-5 md:flex-row md:items-start md:justify-between'>
+                  <div className='flex items-center gap-4'>
+                    {experience.logo && (
+                      <div
+                        className='flex h-14 w-14 shrink-0 items-center justify-center overflow-hidden rounded-2xl'
+                        style={{ background: 'var(--surface-soft)', border: '1px solid var(--border)' }}
+                      >
+                        <img src={experience.logo} alt={experience.company} className='h-full w-full object-cover' />
+                      </div>
+                    )}
+
+                    <div>
+                      <h3 className='font-poppins text-2xl font-semibold' style={{ color: 'var(--text-primary)' }}>
+                        {experience.role}
+                      </h3>
+                      <p className='mt-1 text-sm font-medium sm:text-base' style={{ color: 'var(--text-secondary)' }}>
+                        {experience.company}
+                      </p>
+                      <p className='mt-1 text-xs uppercase tracking-[0.2em] sm:text-sm' style={{ color: 'var(--text-soft)' }}>
+                        {experience.team}
+                      </p>
+                    </div>
+                  </div>
+
+                  <div className='tag-chip w-fit rounded-full px-4 py-2 text-xs font-semibold sm:text-sm'>
+                    {experience.duration}
+                  </div>
                 </div>
-            </div>
-        </section>
-    );
-};
 
-export default Experience; 
+                <p className='mt-6 text-sm leading-8 sm:text-base' style={{ color: 'var(--text-muted)' }}>
+                  {experience.description}
+                </p>
+
+                <div className='mt-6 flex flex-wrap gap-2'>
+                  {experience.techStack.map((tech) => (
+                    <span key={tech} className='tag-chip rounded-full px-3 py-1 text-xs font-medium sm:text-sm'>
+                      {tech}
+                    </span>
+                  ))}
+                </div>
+              </div>
+            </motion.article>
+          ))}
+        </div>
+      </div>
+    </section>
+  )
+}
+
+export default Experience
