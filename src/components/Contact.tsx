@@ -116,7 +116,7 @@ const Contact: React.FC = () => {
             whileInView={{ opacity: 1, y: 0 }}
             viewport={{ once: true, margin: '-80px' }}
             transition={{ duration: 0.45 }}
-            className='glass-panel rounded-[2rem] p-6 text-left sm:p-8'
+            className='glass-panel rounded-4xl p-6 text-left sm:p-8'
           >
             <div className='section-kicker'>Availability</div>
             <h3 className='mt-4 font-poppins text-2xl font-semibold' style={{ color: 'var(--text-primary)' }}>
@@ -176,7 +176,7 @@ const Contact: React.FC = () => {
             whileInView={{ opacity: 1, y: 0 }}
             viewport={{ once: true, margin: '-80px' }}
             transition={{ duration: 0.45, delay: 0.06 }}
-            className='glass-panel rounded-[2rem] p-6 text-left sm:p-8'
+            className='glass-panel rounded-4xl p-6 text-left sm:p-8'
           >
             <div className='grid gap-6 md:grid-cols-2'>
               <div>

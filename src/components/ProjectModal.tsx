@@ -124,7 +124,7 @@ const ProjectModal: React.FC<ProjectModalProps> = ({ project, onClose }) => {
           aria-modal='true'
           transition={{ layout: { duration: 0.28, ease: [0.22, 1, 0.36, 1] } }}
           onClick={(event) => event.stopPropagation()}
-          className='glass-panel animate-modal-pop relative max-h-[92vh] w-full max-w-5xl overflow-hidden rounded-[2rem] outline-none'
+          className='glass-panel animate-modal-pop relative max-h-[92vh] w-full max-w-5xl overflow-hidden rounded-4xl outline-none'
         >
           <button
             type='button'
@@ -249,7 +249,7 @@ const ProjectModal: React.FC<ProjectModalProps> = ({ project, onClose }) => {
                     animate={{ opacity: 1, scale: 1 }}
                     exit={{ opacity: 0, scale: 0.99 }}
                     transition={{ duration: 0.32, ease: [0.22, 1, 0.36, 1] }}
-                    className='h-[240px] w-full object-contain lg:object-fill sm:h-[320px] lg:h-[min(52vh,440px)]'
+                    className='h-60 w-full object-contain lg:object-fill sm:h-80 lg:h-[min(52vh,440px)]'
                   />
                 </AnimatePresence>
 
@@ -325,7 +325,7 @@ const ProjectModal: React.FC<ProjectModalProps> = ({ project, onClose }) => {
             initial={{ opacity: 0 }}
             animate={{ opacity: 1 }}
             exit={{ opacity: 0 }}
-            className='fixed inset-0 z-[60] flex items-center justify-center p-4'
+            className='fixed inset-0 z-60 flex items-center justify-center p-4'
             style={{ background: 'rgba(0, 0, 0, 0.88)', backdropFilter: 'blur(10px)' }}
             onClick={() => setIsImageModalOpen(false)}
           >
@@ -333,7 +333,7 @@ const ProjectModal: React.FC<ProjectModalProps> = ({ project, onClose }) => {
               type='button'
               onClick={() => setIsImageModalOpen(false)}
               aria-label='Close image preview'
-              className='fixed right-4 top-4 z-[70] inline-flex h-11 w-11 items-center justify-center rounded-full'
+              className='fixed right-4 top-4 z-70 inline-flex h-11 w-11 items-center justify-center rounded-full'
               style={{
                 background: 'rgba(255, 255, 255, 0.02)',
                 border: '1px solid rgba(255, 255, 255, 0.18)',

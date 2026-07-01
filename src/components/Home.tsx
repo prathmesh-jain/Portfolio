@@ -95,11 +95,11 @@ const Home: React.FC = () => {
                         initial={{ opacity: 0, scale: 0.96 }}
                         animate={{ opacity: 1, scale: 1 }}
                         transition={{ duration: 0.75, delay: 0.1 }}
-                        className='relative order-1 lg:order-2 mx-auto w-10/11 max-w-md lg:w-full lg:max-w-[30rem]'
+                        className='relative order-1 lg:order-2 mx-auto w-10/11 max-w-md lg:w-full lg:max-w-120'
                     >
                         <motion.div
                             style={{ rotateX, rotateY, transformStyle: 'preserve-3d' }}
-                            className='glass-panel relative rounded-[2rem] p-4 sm:p-5'
+                            className='glass-panel relative rounded-4xl p-4 sm:p-5'
                         >
                             <div
                                 className='pointer-events-none absolute -inset-10 rounded-[2.75rem] opacity-70 blur-3xl'
@@ -110,7 +110,7 @@ const Home: React.FC = () => {
                             />
 
                             <motion.div
-                                className='pointer-events-none absolute inset-0 rounded-[2rem]'
+                                className='pointer-events-none absolute inset-0 rounded-4xl'
                                 style={{
                                     background: useTransform(
                                         [backgroundX, backgroundY],
@@ -121,7 +121,7 @@ const Home: React.FC = () => {
                                 }}
                             />
 
-                            <div className='relative aspect-[10/11] overflow-hidden rounded-[1.6rem]' style={{ transform: 'translateZ(26px)' }}>
+                            <div className='relative aspect-10/11 overflow-hidden rounded-[1.6rem]' style={{ transform: 'translateZ(26px)' }}>
                                 <img
                                     src='/profile.jpg'
                                     alt='Prathmesh Jain portrait'

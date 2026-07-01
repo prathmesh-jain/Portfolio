@@ -123,7 +123,7 @@ const SkillChip: React.FC<{
           <img
             src={icon}
             alt={skill.name}
-            className="h-[18px] w-[18px] object-contain"
+            className="h-4.5 w-4.5 object-contain"
           />
         </span>
       )}
@@ -150,7 +150,7 @@ const SkillChip: React.FC<{
                   <img
                     src={icon}
                     alt={skill.name}
-                    className="h-[18px] w-[18px] object-contain"
+                    className="h-4.5 w-4.5 object-contain"
                   />
                 </span>
               )}
@@ -197,11 +197,11 @@ const TiltCard: React.FC<TiltCardProps> = ({
       onMouseMove={handleMouseMove}
       onMouseLeave={handleMouseLeave}
       style={{ rotateX, rotateY, transformStyle: 'preserve-3d' }}
-      className='glass-panel relative rounded-[2rem] p-6 text-left'
+      className='glass-panel relative rounded-4xl p-6 text-left'
       transition={{ type: 'spring', stiffness: 180, damping: 22 }}
     >
       <motion.div
-        className='pointer-events-none absolute inset-0 rounded-[2rem]'
+        className='pointer-events-none absolute inset-0 rounded-4xl'
         style={{
           background: useTransform(
             [backgroundX, backgroundY],
@@ -246,7 +246,7 @@ const Skills: React.FC<SkillsProps> = ({ theme }) => {
           </p>
         </div>
 
-        <div className='glass-panel mt-10 rounded-[2rem] p-5 text-left sm:p-6'>
+        <div className='glass-panel mt-10 rounded-4xl p-5 text-left sm:p-6'>
           <div className='section-kicker'>Core Stack</div>
           <div className='mt-4 flex flex-wrap gap-3'>
             {coreStack.map((skill) => (

@@ -112,7 +112,7 @@ const Projects: React.FC = () => {
               <motion.article
                 layoutId={`project-card-${project.title}`}
                 transition={{ layout: { duration: 0.28, ease: [0.22, 1, 0.36, 1] } }}
-                className='glass-panel project-card group h-full overflow-hidden rounded-[2rem]'
+                className='glass-panel project-card group h-full overflow-hidden rounded-4xl'
               >
                 <motion.div layoutId={`project-image-${project.title}`} className='relative h-56 overflow-hidden sm:h-60 lg:h-52 xl:h-56'>
                   <img src={project.image} alt={project.title} className='project-thumb h-full w-full object-cover' />

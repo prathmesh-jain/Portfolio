@@ -5,7 +5,7 @@ const Footer: React.FC = () => {
   return (
     <footer className='relative px-5 pb-8 pt-6 md:px-10 xl:px-20'>
       <div className='mx-auto max-w-7xl'>
-        <div className='glass-panel rounded-[2rem] px-6 py-6 sm:px-8'>
+        <div className='glass-panel rounded-4xl px-6 py-6 sm:px-8'>
           <div className='flex flex-col gap-5 text-left sm:flex-row sm:items-center sm:justify-between'>
             <div>
               <p className='font-poppins text-lg font-semibold' style={{ color: 'var(--text-primary)' }}>

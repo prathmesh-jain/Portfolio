@@ -53,7 +53,7 @@ const Experience: React.FC = () => {
 
         <div className='relative mt-10'>
           <div
-            className='absolute left-[1rem] top-0 hidden h-full w-px sm:block'
+            className='absolute left-4 top-0 hidden h-full w-px sm:block'
             style={{ background: 'linear-gradient(180deg, transparent, var(--border-strong), transparent)' }}
           />
 
@@ -75,7 +75,7 @@ const Experience: React.FC = () => {
                 }}
               />
 
-              <div className='glass-panel rounded-[2rem] p-6 text-left sm:p-8'>
+              <div className='glass-panel rounded-4xl p-6 text-left sm:p-8'>
                 <div className='flex flex-col gap-5 md:flex-row md:items-start md:justify-between'>
                   <div className='flex items-center gap-4'>
                     {experience.logo && (
