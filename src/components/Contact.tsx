@@ -120,7 +120,7 @@ const Contact: React.FC = () => {
           >
             <div className='section-kicker'>Availability</div>
             <h3 className='mt-4 font-poppins text-2xl font-semibold' style={{ color: 'var(--text-primary)' }}>
-              Based in Mumbai, working across full-stack and GenAI projects.
+              Based in Mumbai, working across full-stack and AI projects.
             </h3>
             <p className='mt-4 text-sm leading-8 sm:text-base' style={{ color: 'var(--text-muted)' }}>
               If you have a role, collaboration, or product idea in mind, send me a message. I enjoy building

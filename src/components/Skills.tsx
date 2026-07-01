@@ -47,7 +47,7 @@ const skillGroups: SkillGroup[] = [
   },
   {
     title: 'AI & LLM Systems',
-    description: 'Agentic workflows, RAG pipelines, and the tooling I use to build practical GenAI features.',
+    description: 'Agentic workflows, RAG pipelines, and the tooling I use to build practical AI features.',
     items: [
       { name: 'LangChain', icon: '/icons/langchain.png' },
       { name: 'LangGraph', icon: '/icons/langgraph.png' },

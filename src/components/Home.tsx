@@ -40,7 +40,7 @@ const Home: React.FC = () => {
                         transition={{ duration: 0.7 }}
                         className='text-left'
                     >
-                        <div className='section-kicker'>Full Stack Developer · GenAI Engineer</div>
+                        <div className='section-kicker'>Full Stack Developer · AI Engineer</div>
                         <h1 className='section-title mt-4 max-w-3xl font-poppins text-[clamp(2rem,4.5vw,4rem)] font-semibold leading-[0.98] tracking-[-0.04em]'>
                             Hi, I&apos;m Prathmesh Jain.
                             <span className='block' style={{ color: 'var(--text-secondary)' }}>
@@ -83,7 +83,7 @@ const Home: React.FC = () => {
                         </div>
 
                         <div className='mt-8 flex flex-wrap gap-3 text-xs sm:text-sm'>
-                            {['React + TypeScript', 'FastAPI + Python', 'GenAI workflows', 'Thoughtful motion'].map((item) => (
+                            {['React + TypeScript', 'FastAPI + Python', 'AI workflows', 'Thoughtful motion'].map((item) => (
                                 <span key={item} className='tag-chip rounded-full px-4 py-2 font-medium'>
                                     {item}
                                 </span>
@@ -136,7 +136,7 @@ const Home: React.FC = () => {
                                         Current Role
                                     </div>
                                     <div className='mt-1 font-poppins text-sm font-semibold sm:text-base' style={{ color: 'var(--text-primary)' }}>
-                                        Full Stack GenAI Engineer @ TCS
+                                        Full Stack AI Engineer @ TCS
                                     </div>
                                 </div>
 

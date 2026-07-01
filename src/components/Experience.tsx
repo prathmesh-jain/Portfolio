@@ -14,11 +14,11 @@ interface ExperienceItem {
 const workExperience: ExperienceItem[] = [
   {
     company: 'Tata Consultancy Services (TCS)',
-    role: 'Full Stack GenAI Engineer',
+    role: 'Full Stack AI Engineer',
     team: 'BFSI Americas · Research & Innovation',
     duration: 'Oct 2024 - Present',
     description:
-      'Building production-grade GenAI systems and full-stack applications within the BFSI Americas CTO team. I design stateful, multi-step agentic workflows with LangChain, LangGraph, and CrewAI, integrate real-time search and web automation exposed through MCP, and ship RAG-backed FastAPI services behind React frontends with strong reliability, monitoring, and cost controls.',
+      'Building production-grade AI systems and full-stack applications within the BFSI Americas CTO team. I design stateful, multi-step agentic workflows with LangChain, LangGraph, and CrewAI, integrate real-time search and web automation exposed through MCP, and ship RAG-backed FastAPI services behind React frontends with strong reliability, monitoring, and cost controls.',
     techStack: [
       'React.js',
       'TypeScript',
