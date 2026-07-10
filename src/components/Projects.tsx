@@ -18,28 +18,26 @@ export interface Project {
 
 const projectsData: Project[] = [
   {
-    title: 'Patronix',
-    subtitle: 'Ecommerce Website',
+    title: 'Transcribe',
+    subtitle: 'AI Lecture Transcription Workspace',
     description:
-      'Developed a feature-rich full-stack E-commerce platform from scratch using React.js for frontend, Node.js and Express.js for backend APIs, and MongoDB for database management. Used Redux Toolkit for state management and ensured a seamless user experience through responsive design and optimized performance.',
+      'Developed an AI-powered lecture transcription platform that converts long-form spiritual discourses into structured, searchable, and downloadable PDF transcripts. Built the complete application with a React.js frontend, FastAPI backend, Redis-powered asynchronous processing, and PostgreSQL for persistent storage. Implemented scalable audio processing, AI-powered transcript generation, and automated PDF creation while optimizing transcription quality for multilingual lectures and Sanskrit shlokas.',
     highlights: [
-      'Built the product end to end across frontend, backend APIs, and database design.',
-      'Used Redux Toolkit to keep cart, auth, and product flows manageable.',
-      'Focused on responsive UX and performance for a smoother shopping experience.',
+      'Built responsive interfaces for authentication, file uploads, transcription history, live processing status, and PDF downloads.',
+      'Designed an asynchronous transcription pipeline using Redis queues, FFmpeg media conversion, silence detection, and chunked processing for efficient long-form audio processing.',
+      'Improved transcription accuracy for multilingual pravachans and Sanskrit shlokas using Gemini, then generated structured HTML transcripts and downloadable PDFs for 50+ active users.',
     ],
-    image: '/images/patronix.png',
-    tech: ['React.js', 'Node.js', 'Express.js', 'MongoDB', 'Redux'],
+    image: '/images/transcribe.png',
+    tech: ['React.js', 'FastAPI', 'Redis', 'PostgreSQL', 'Gemini AI', 'FFmpeg'],
     links: {
-      live: 'https://patronix-ecommerce-website.onrender.com',
-      github: 'https://github.com/prathmesh-jain/Patronix-Ecommerce-Website',
+      live: 'https://transcribe.contextcrafter.in',
+      github: '',
     },
     gallery: [
-      '/images/patronix.png',
-      '/images/patronix1.png',
-      '/images/patronix2.png',
-      '/images/patronix3.png',
-      '/images/patronix4.png',
-      '/images/patronix5.png',
+      '/images/transcribe.png',
+      '/images/transcribe1.png',
+      '/images/transcribe2.png',
+      '/images/transcribe3.png',
     ],
   },
   {
@@ -127,8 +125,7 @@ const Projects: React.FC = () => {
 
                 <div className='space-y-4 p-5'>
                   <motion.div >
-                    <div className='section-kicker'>Case Study</div>
-                    <h3 className='mt-3 font-poppins text-2xl font-semibold' style={{ color: 'var(--text-primary)' }}>
+                    <h3 className='font-poppins text-2xl font-semibold' style={{ color: 'var(--text-primary)' }}>
                       {project.title}
                     </h3>
                     <p className='mt-2 text-sm font-medium' style={{ color: 'var(--text-muted)' }}>

@@ -239,6 +239,7 @@ const ProjectModal: React.FC<ProjectModalProps> = ({ project, onClose }) => {
                 style={{ background: 'var(--surface-soft)' }}
                 onTouchStart={handleTouchStart}
                 onTouchEnd={handleTouchEnd}
+                onClick={() => setIsImageModalOpen(true)}
               >
                 <AnimatePresence mode='wait'>
                   <motion.img
