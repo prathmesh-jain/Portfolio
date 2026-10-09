@@ -94,7 +94,7 @@ const projectsData: Project[] = [
       'NativeWind',
     ],
     links: {
-      live: 'https://expensegauge.vercel.app',
+      live: 'https://expensegauge.prathmeshjain.in',
       github: 'https://github.com/prathmesh-jain/expensegauge-app',
     },
     gallery: [
