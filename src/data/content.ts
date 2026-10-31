@@ -73,6 +73,8 @@ export interface Project {
   status: string
   /** short handwritten margin note */
   note: string
+  /** set for team projects so credit is shared honestly */
+  team?: { size: number; myPart: string }
   stack: string[]
   links: { live?: string; liveLabel?: string; github?: string }
   cover: string
@@ -89,69 +91,8 @@ export interface Project {
 
 export const projects: Project[] = [
   {
-    slug: 'transcribe',
-    index: '01',
-    title: 'Transcribe',
-    tagline: 'Turning hours-long spiritual discourses into searchable PDF transcripts.',
-    summary:
-      'General transcription tools break on long pravachans that switch between Hindi, English and Sanskrit shlokas. I built a service that handles them, and people use it every day.',
-    status: 'Live · 25+ daily users',
-    note: "25+ people use this every day!",
-    stack: ['React', 'FastAPI', 'Redis', 'PostgreSQL', 'Gemini', 'FFmpeg', 'Langfuse', 'Docker', 'Oracle Cloud', 'Cloudflare'],
-    links: { live: 'https://transcribe.contextcrafter.in' },
-    cover: '/images/transcribe.webp',
-    stats: [
-      { value: '50+', label: 'active users' },
-      { value: '200+', label: 'lectures transcribed' },
-      { value: '~1.5 h', label: 'average lecture length' },
-      { value: '90%+', label: 'accuracy (daily eval)' },
-      { value: '$0.10–0.15', label: 'cost per transcription' },
-    ],
-    problem: [
-      'Spiritual discourses (pravachans) are long, often 1–3 hours, and the speaker moves between Hindi, English and Sanskrit shlokas mid-sentence. Off-the-shelf transcription tools either mangle the shlokas or choke on the length, and the good ones are expensive at this volume.',
-      'People wanted something simple: upload the recording, come back later, download a clean, structured PDF they can read and search.',
-    ],
-    flowTitle: 'Three services talking over Redis queues',
-    flow: [
-      { title: 'Upload', detail: 'React app on Cloudflare Pages. Pick language, upload audio, watch live status.', tag: 'client' },
-      { title: 'Backend API', detail: 'FastAPI handles auth, job records in PostgreSQL, and pushes a job to Redis.', tag: 'api' },
-      { title: 'CPU worker', detail: 'FFmpeg converts audio and splits it into 20–25 min chunks on silence.', tag: 'cpu-bound' },
-      { title: 'IO worker', detail: 'Transcribes each chunk with Gemini, aggregates into structured HTML, renders the PDF.', tag: 'io-bound' },
-      { title: 'Eval', detail: 'A daily evaluation pipeline publishes accuracy metrics to self-hosted Langfuse.', tag: 'quality' },
-    ],
-    flowNotes: [
-      'Orphan-task recovery re-queues jobs that a crashed worker left behind.',
-      'If Redis goes down, the API fails over to the database so no upload is lost.',
-      'Dockerised on Oracle Cloud; Cloudflare DDoS protection in front of both tiers.',
-    ],
-    decisions: [
-      {
-        title: 'Split CPU work from IO work',
-        body: 'FFmpeg conversion and silence detection are CPU-heavy. Gemini calls mostly wait on the network. Putting them in separate workers means a long FFmpeg job never blocks transcription, and each side can be scaled on its own.',
-      },
-      {
-        title: 'Chunk on silence, not on a timer',
-        body: 'Cutting every N minutes can split a word or a shloka in half, and the model then garbles both sides. Splitting at natural pauses into 20–25 minute chunks keeps each chunk coherent while staying well inside the model’s limits.',
-      },
-      {
-        title: 'Measure accuracy every day',
-        body: 'Prompt tweaks for Sanskrit and mixed-language speech can quietly make things worse. A daily eval run publishing to Langfuse tells me if accuracy drifts, instead of finding out from users.',
-      },
-      {
-        title: 'Design for the cheap path',
-        body: 'Running on Oracle Cloud with Gemini keeps a 1.5-hour lecture at about $0.10–0.15, roughly 75% cheaper than leading alternatives. That matters for a tool used by a community, not a company.',
-      },
-    ],
-    gallery: [
-      { src: '/images/transcribe.webp', alt: 'Transcribe landing page' },
-      { src: '/images/transcribe1.webp', alt: 'Uploading a lecture with language selection' },
-      { src: '/images/transcribe2.webp', alt: 'Dashboard with transcription status and PDF downloads' },
-      { src: '/images/transcribe3.webp', alt: 'Transcribe admin view' },
-    ],
-  },
-  {
     slug: 'bizassist',
-    index: '02',
+    index: '01',
     title: 'BizAssist',
     tagline: 'A multi-agent business assistant that loads only the tools it needs.',
     summary:
@@ -209,7 +150,7 @@ export const projects: Project[] = [
   },
   {
     slug: 'smartkiranabot',
-    index: '03',
+    index: '02',
     title: 'SmartKiranaBot',
     tagline: 'Running a kirana store’s inventory, billing and khata from Telegram.',
     summary:
@@ -254,6 +195,71 @@ export const projects: Project[] = [
       },
     ],
     gallery: [],
+  },
+  {
+    slug: 'transcribe',
+    index: '03',
+    title: 'Transcribe',
+    tagline: 'Turning hours-long spiritual discourses into searchable PDF transcripts.',
+    summary:
+      'General transcription tools break on long pravachans that switch between Hindi, English and Sanskrit shlokas. Three of us built a service that handles them, and people use it every day.',
+    status: 'Live · 25+ daily users',
+    note: "25+ people use this every day!",
+    team: {
+      size: 3,
+      myPart: 'I built the whole React frontend (auth, uploads, live job status, history, PDF downloads) and helped out on the backend.',
+    },
+    stack: ['React', 'FastAPI', 'Redis', 'PostgreSQL', 'Gemini', 'FFmpeg', 'Langfuse', 'Docker', 'Oracle Cloud', 'Cloudflare'],
+    links: { live: 'https://transcribe.contextcrafter.in' },
+    cover: '/images/transcribe.webp',
+    stats: [
+      { value: '50+', label: 'active users' },
+      { value: '200+', label: 'lectures transcribed' },
+      { value: '~1.5 h', label: 'average lecture length' },
+      { value: '90%+', label: 'accuracy (daily eval)' },
+      { value: '$0.10–0.15', label: 'cost per transcription' },
+    ],
+    problem: [
+      'Spiritual discourses (pravachans) are long, often 1–3 hours, and the speaker moves between Hindi, English and Sanskrit shlokas mid-sentence. Off-the-shelf transcription tools either mangle the shlokas or choke on the length, and the good ones are expensive at this volume.',
+      'People wanted something simple: upload the recording, come back later, download a clean, structured PDF they can read and search.',
+    ],
+    flowTitle: 'Three services talking over Redis queues',
+    flow: [
+      { title: 'Upload', detail: 'React app on Cloudflare Pages. Pick language, upload audio, watch live status.', tag: 'client' },
+      { title: 'Backend API', detail: 'FastAPI handles auth, job records in PostgreSQL, and pushes a job to Redis.', tag: 'api' },
+      { title: 'CPU worker', detail: 'FFmpeg converts audio and splits it into 20–25 min chunks on silence.', tag: 'cpu-bound' },
+      { title: 'IO worker', detail: 'Transcribes each chunk with Gemini, aggregates into structured HTML, renders the PDF.', tag: 'io-bound' },
+      { title: 'Eval', detail: 'A daily evaluation pipeline publishes accuracy metrics to self-hosted Langfuse.', tag: 'quality' },
+    ],
+    flowNotes: [
+      'Orphan-task recovery re-queues jobs that a crashed worker left behind.',
+      'If Redis goes down, the API fails over to the database so no upload is lost.',
+      'Dockerised on Oracle Cloud; Cloudflare DDoS protection in front of both tiers.',
+    ],
+    decisions: [
+      {
+        title: 'Split CPU work from IO work',
+        body: 'FFmpeg conversion and silence detection are CPU-heavy. Gemini calls mostly wait on the network. Putting them in separate workers means a long FFmpeg job never blocks transcription, and each side can be scaled on its own.',
+      },
+      {
+        title: 'Chunk on silence, not on a timer',
+        body: 'Cutting every N minutes can split a word or a shloka in half, and the model then garbles both sides. Splitting at natural pauses into 20–25 minute chunks keeps each chunk coherent while staying well inside the model’s limits.',
+      },
+      {
+        title: 'Measure accuracy every day',
+        body: 'Prompt tweaks for Sanskrit and mixed-language speech can quietly make things worse. A daily eval run publishing to Langfuse tells us if accuracy drifts, instead of finding out from users.',
+      },
+      {
+        title: 'Design for the cheap path',
+        body: 'Running on Oracle Cloud with Gemini keeps a 1.5-hour lecture at about $0.10–0.15, roughly 75% cheaper than leading alternatives. That matters for a tool used by a community, not a company.',
+      },
+    ],
+    gallery: [
+      { src: '/images/transcribe.webp', alt: 'Transcribe landing page' },
+      { src: '/images/transcribe1.webp', alt: 'Uploading a lecture with language selection' },
+      { src: '/images/transcribe2.webp', alt: 'Dashboard with transcription status and PDF downloads' },
+      { src: '/images/transcribe3.webp', alt: 'Transcribe admin view' },
+    ],
   },
   {
     slug: 'expensegauge',

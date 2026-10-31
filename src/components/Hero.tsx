@@ -11,12 +11,8 @@ export default function Hero() {
           Prathmesh Jain.
         </h1>
         <p className='mt-7 max-w-xl text-[1.25rem] leading-[1.55] sm:text-[1.4rem]'>
-          I build AI agents for banks at TCS, and in my own time I build things that people{' '}
-          <span className='marker'>actually use</span>, like{' '}
-          <Link to='/work/transcribe' className='ink-link'>
-            Transcribe
-          </Link>
-          , which turns two-hour lectures into readable transcripts.
+          I build AI agents for banks at TCS, and outside work I keep shipping side projects that people{' '}
+          <span className='marker'>actually use</span>.
         </p>
         <p className='mt-5 max-w-xl text-[1.05rem] leading-relaxed text-pencil'>
           {profile.role} in {profile.location}. Mostly Python, TypeScript, LangGraph and React.

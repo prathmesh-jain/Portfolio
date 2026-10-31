@@ -39,16 +39,24 @@ export default function Work() {
               </div>
 
               <div className={`relative min-w-0 ${flip ? 'md:order-1' : ''}`}>
-                <div className='hand text-[1.5rem] text-pencil'>no. {i + 1}</div>
+                <div className='hand text-[1.5rem] text-pencil'>
+                  no. {i + 1}
+                  {p.team && <span className='ml-3 text-sky'>· team project, {p.team.size} of us</span>}
+                </div>
                 <h3 className='text-[2rem] font-semibold tracking-[-0.02em] sm:text-[2.4rem]'>{p.title}</h3>
                 <p className='mt-2 text-[1.15rem] leading-snug'>{p.tagline}</p>
                 <p className='mt-4 leading-relaxed text-pencil'>{p.summary}</p>
+                {p.team && (
+                  <p className='mt-3 border-l-2 border-sky pl-3 text-[0.98rem] leading-relaxed'>
+                    <span className='font-semibold'>My part:</span> {p.team.myPart.replace(/^I /, '')}
+                  </p>
+                )}
 
                 <p className='mt-5 text-[0.92rem] text-pencil'>{p.stack.slice(0, 5).join(' · ')}</p>
 
                 <div className='mt-6 flex flex-wrap items-center gap-x-6 gap-y-3'>
                   <Link to={`/work/${p.slug}`} className='font-semibold underline decoration-2 underline-offset-4 hover:text-pen'>
-                    how I built it →
+                    {p.team ? 'how we built it' : 'how I built it'} →
                   </Link>
                   {p.links.live && (
                     <a href={p.links.live} target='_blank' rel='noreferrer' className='text-pencil hover:text-ink'>

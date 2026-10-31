@@ -29,6 +29,12 @@ export default function CaseStudy({ project: p, next }: { project: Project; next
           </h1>
           <p className='mt-5 text-[1.3rem] leading-snug sm:text-[1.5rem]'>{p.tagline}</p>
           <p className='mt-4 text-pencil'>{p.status}</p>
+          {p.team && (
+            <div className='mt-5 max-w-md rotate-[-0.6deg] border-2 border-dashed border-sky p-4'>
+              <div className='hand text-[1.4rem] leading-none text-sky'>team project · {p.team.size} developers</div>
+              <p className='mt-2 text-[0.98rem] leading-relaxed'>{p.team.myPart}</p>
+            </div>
+          )}
           <div className='mt-7 flex flex-wrap gap-x-6 gap-y-3'>
             {p.links.live && (
               <a
@@ -69,7 +75,7 @@ export default function CaseStudy({ project: p, next }: { project: Project; next
       </ul>
 
       <div className='mt-24 space-y-24'>
-        <Part title='Why I built it'>
+        <Part title={p.team ? 'Why we built it' : 'Why I built it'}>
           <div className='max-w-2xl space-y-5 text-[1.15rem] leading-[1.7]'>
             {p.problem.map((para) => (
               <p key={para}>{para}</p>
@@ -111,7 +117,7 @@ export default function CaseStudy({ project: p, next }: { project: Project; next
           <p className='mt-8 text-[0.92rem] text-pencil'>Built with {p.stack.join(', ')}.</p>
         </Part>
 
-        <Part title='Decisions I made' note='and why'>
+        <Part title={p.team ? 'Decisions we made' : 'Decisions I made'} note='and why'>
           <ol className='grid grid-cols-1 gap-x-14 gap-y-10 md:grid-cols-2'>
             {p.decisions.map((d, i) => (
               <li key={d.title} className='min-w-0'>
