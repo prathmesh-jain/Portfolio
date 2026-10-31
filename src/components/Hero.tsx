@@ -1,47 +1,53 @@
 import Link from './Link'
+import { CurlyArrow, Star } from './Doodles'
 import { profile } from '../data/content'
 
 export default function Hero() {
   return (
-    <section className='wrap pb-16 pt-10 md:pb-24 md:pt-14'>
-      <h1 className='display text-[19vw] md:text-[13.2vw] xl:text-[11.5rem]'>
-        Prathmesh
-        <br />
-        Jain<span className='text-blue'>.</span>
-      </h1>
-
-      <div className='mt-10 grid grid-cols-1 gap-y-10 border-t border-rule pt-6 md:mt-14 md:grid-cols-12'>
-        <p className='text-[1.55rem] leading-[1.2] tracking-[-0.01em] sm:text-[2.1rem] md:col-span-7'>
-          I build AI agents for banks at TCS, and software that people{' '}
-          <span className='text-blue'>actually use</span>, like{' '}
-          <Link to='/work/transcribe' className='u-link'>
+    <section className='wrap grid grid-cols-1 items-center gap-14 pb-24 pt-10 md:grid-cols-[1.25fr_0.75fr] md:pt-16'>
+      <div className='min-w-0'>
+        <p className='hand text-[1.9rem] text-pen'>hey there, I’m</p>
+        <h1 className='mt-1 text-[3.1rem] font-semibold leading-[0.98] tracking-[-0.035em] sm:text-[4.6rem]'>
+          Prathmesh Jain.
+        </h1>
+        <p className='mt-7 max-w-xl text-[1.25rem] leading-[1.55] sm:text-[1.4rem]'>
+          I build AI agents for banks at TCS, and in my own time I build things that people{' '}
+          <span className='marker'>actually use</span>, like{' '}
+          <Link to='/work/transcribe' className='ink-link'>
             Transcribe
           </Link>
           , which turns two-hour lectures into readable transcripts.
         </p>
+        <p className='mt-5 max-w-xl text-[1.05rem] leading-relaxed text-pencil'>
+          {profile.role} in {profile.location}. Mostly Python, TypeScript, LangGraph and React.
+        </p>
 
-        <dl className='grid grid-cols-2 content-start gap-x-6 gap-y-5 text-[0.95rem] md:col-span-4 md:col-start-9'>
-          <div>
-            <dt className='text-grey'>Now</dt>
-            <dd>{profile.role}, TCS</dd>
-          </div>
-          <div>
-            <dt className='text-grey'>Based in</dt>
-            <dd>{profile.location}</dd>
-          </div>
-          <div>
-            <dt className='text-grey'>Works with</dt>
-            <dd>Python, TypeScript, LangGraph, React</dd>
-          </div>
-          <div className='col-span-2'>
-            <dt className='text-grey'>Write to</dt>
-            <dd>
-              <a href={`mailto:${profile.email}`} className='u-link'>
-                {profile.email}
-              </a>
-            </dd>
-          </div>
-        </dl>
+        <div className='mt-9 flex flex-wrap items-center gap-x-6 gap-y-4'>
+          <Link
+            to='/#work'
+            className='rounded-[255px_15px_225px_15px/15px_225px_15px_255px] border-2 border-ink px-5 py-2.5 font-semibold transition-transform hover:-rotate-1 hover:bg-ink hover:text-paper'
+          >
+            see what I’ve built
+          </Link>
+          <a href={`mailto:${profile.email}`} className='ink-link'>
+            {profile.email}
+          </a>
+        </div>
+      </div>
+
+      <div className='relative mx-auto w-[78%] max-w-[330px] md:w-full'>
+        <figure className='print relative rotate-[2.5deg]'>
+          <span className='tape -top-3 left-1/2 -translate-x-1/2 -rotate-3' />
+          <img
+            src='/profile.webp'
+            alt='Prathmesh in the mountains'
+            className='aspect-[4/5] w-full object-cover object-top'
+            fetchPriority='high'
+          />
+          <figcaption className='hand pt-2 text-center text-[1.45rem]'>me, up in the hills</figcaption>
+        </figure>
+        <CurlyArrow className='absolute -left-24 top-10 hidden h-16 w-28 -scale-x-100 rotate-[160deg] text-pen md:block' />
+        <Star className='absolute -right-5 -top-6 h-9 w-9 rotate-12 text-sky' />
       </div>
     </section>
   )

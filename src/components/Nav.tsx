@@ -3,27 +3,24 @@ import { profile } from '../data/content'
 
 export default function Nav() {
   return (
-    <header className='sticky top-0 z-40 border-b border-rule bg-paper'>
-      <nav className='wrap grid h-12 grid-cols-2 items-center text-[0.9rem] md:grid-cols-12'>
-        <Link to='/' className='font-semibold md:col-span-3'>
-          {profile.name}
-        </Link>
-        <span className='hidden text-grey md:col-span-5 md:block'>
-          {profile.role}, {profile.location}
-        </span>
-        <ul className='flex justify-end gap-4 md:col-span-4 md:gap-6'>
+    <header className='wrap flex h-16 items-center justify-between'>
+      <Link to='/' className='hand text-[1.9rem] font-bold leading-none'>
+        prathmesh<span className='text-pen'>.</span>
+      </Link>
+      <nav>
+        <ul className='flex items-center gap-4 text-[0.95rem] sm:gap-7'>
           <li>
-            <Link to='/#work' className='hover:text-blue'>Work</Link>
+            <Link to='/#work' className='hover:text-pen'>work</Link>
           </li>
           <li>
-            <Link to='/#about' className='hover:text-blue'>About</Link>
+            <Link to='/#about' className='hover:text-pen'>about</Link>
           </li>
           <li className='hidden sm:block'>
-            <Link to='/#contact' className='hover:text-blue'>Contact</Link>
+            <Link to='/#contact' className='hover:text-pen'>say hi</Link>
           </li>
           <li>
-            <a href={profile.resume} target='_blank' rel='noreferrer' className='text-blue hover:underline'>
-              Resume ↓
+            <a href={profile.resume} target='_blank' rel='noreferrer' className='ink-link'>
+              resume
             </a>
           </li>
         </ul>

@@ -1,13 +1,15 @@
 @import "tailwindcss";
 
 @theme {
-  --font-sans: 'Archivo Variable', 'Helvetica Neue', Arial, sans-serif;
-  --color-paper: #ffffff;
-  --color-ink: #0b0b0b;
-  --color-grey: #6d6d6d;
-  --color-rule: #0b0b0b;
-  --color-hair: #d9d9d9;
-  --color-blue: #1d3bff;
+  --font-sans: 'Instrument Sans Variable', system-ui, sans-serif;
+  --font-hand: 'Caveat Variable', 'Comic Sans MS', cursive;
+  --color-paper: #fdfdfb;
+  --color-ink: #1c2230;
+  --color-pencil: #6a7183;
+  --color-faint: #e6e7ea;
+  --color-pen: #d63b2a;
+  --color-marker: #ffe86b;
+  --color-sky: #2f55d4;
 }
 
 html {
@@ -21,73 +23,109 @@ body {
   color: var(--color-ink);
   font-family: var(--font-sans);
   -webkit-font-smoothing: antialiased;
-  font-feature-settings: 'ss01';
 }
 
 ::selection {
-  background: var(--color-blue);
-  color: #fff;
+  background: var(--color-marker);
+  color: var(--color-ink);
 }
 
 :focus-visible {
-  outline: 2px solid var(--color-blue);
-  outline-offset: 2px;
+  outline: 2px dashed var(--color-pen);
+  outline-offset: 3px;
 }
 
 button {
   cursor: pointer;
 }
 
-/* condensed display cut of Archivo */
-.display {
-  font-stretch: 72%;
-  font-weight: 800;
-  letter-spacing: -0.02em;
-  line-height: 0.86;
-  text-transform: uppercase;
+.hand {
+  font-family: var(--font-hand);
+  line-height: 1.05;
 }
 
-.u-link {
+/* highlighter stroke behind text: uneven, slightly tilted */
+.marker {
+  background-image: linear-gradient(
+    100deg,
+    transparent 0.4%,
+    color-mix(in srgb, var(--color-marker) 85%, transparent) 1.5%,
+    var(--color-marker) 60%,
+    color-mix(in srgb, var(--color-marker) 70%, transparent) 98.5%,
+    transparent 99.6%
+  );
+  background-size: 100% 62%;
+  background-position: 0 78%;
+  background-repeat: no-repeat;
+  padding-inline: 0.12em;
+  margin-inline: -0.12em;
+  -webkit-box-decoration-break: clone;
+  box-decoration-break: clone;
+}
+
+.ink-link {
   text-decoration: underline;
+  text-decoration-style: wavy;
+  text-decoration-color: color-mix(in srgb, var(--color-pen) 70%, transparent);
   text-decoration-thickness: 1px;
-  text-underline-offset: 0.2em;
+  text-underline-offset: 0.28em;
 }
 
-.u-link:hover {
-  color: var(--color-blue);
+.ink-link:hover {
+  color: var(--color-pen);
 }
 
-.wrap {
-  margin-inline: auto;
-  max-width: 1360px;
-  padding-inline: 1.25rem;
+/* masking-tape strip */
+.tape {
+  position: absolute;
+  width: 92px;
+  height: 26px;
+  background: rgba(214, 205, 170, 0.55);
+  box-shadow: 0 1px 2px rgba(0, 0, 0, 0.06);
+  backdrop-filter: blur(1px);
+  clip-path: polygon(3% 0, 97% 4%, 100% 50%, 96% 100%, 2% 96%, 0 45%);
 }
 
-@media (min-width: 768px) {
-  .wrap {
-    padding-inline: 2.5rem;
-  }
+/* polaroid-style print */
+.print {
+  background: #fff;
+  padding: 10px 10px 14px;
+  box-shadow:
+    0 1px 2px rgba(28, 34, 48, 0.08),
+    0 12px 28px -12px rgba(28, 34, 48, 0.28);
 }
 
 .field {
   width: 100%;
   background: transparent;
   border: 0;
-  border-bottom: 1px solid currentColor;
-  padding: 0.7rem 0;
+  border-bottom: 1.5px dashed var(--color-pencil);
+  padding: 0.6rem 0.1rem;
   font-size: 1.05rem;
-  color: inherit;
+  color: var(--color-ink);
   border-radius: 0;
 }
 
 .field::placeholder {
-  color: inherit;
-  opacity: 0.6;
+  color: var(--color-pencil);
 }
 
 .field:focus {
   outline: none;
-  border-bottom-width: 2px;
+  border-bottom-style: solid;
+  border-color: var(--color-ink);
+}
+
+.wrap {
+  margin-inline: auto;
+  max-width: 1120px;
+  padding-inline: 1.25rem;
+}
+
+@media (min-width: 768px) {
+  .wrap {
+    padding-inline: 2rem;
+  }
 }
 
 @media (prefers-reduced-motion: reduce) {

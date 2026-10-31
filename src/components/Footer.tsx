@@ -2,13 +2,14 @@ import { profile } from '../data/content'
 
 export default function Footer() {
   return (
-    <footer className='wrap grid grid-cols-2 gap-y-2 border-t border-rule py-5 text-[0.85rem] md:grid-cols-12'>
-      <div className='md:col-span-3'>© {new Date().getFullYear()} {profile.name}</div>
-      <div className='hidden text-grey md:col-span-5 md:block'>Designed and built in Mumbai.</div>
-      <div className='flex justify-end gap-5 md:col-span-4'>
-        <a href={profile.links.github} target='_blank' rel='noreferrer' className='hover:text-blue'>GitHub</a>
-        <a href={profile.links.linkedin} target='_blank' rel='noreferrer' className='hover:text-blue'>LinkedIn</a>
-        <a href='https://github.com/prathmesh-jain/Portfolio' target='_blank' rel='noreferrer' className='hover:text-blue'>
+    <footer className='wrap flex flex-col gap-3 border-t border-dashed border-faint py-8 text-[0.9rem] text-pencil sm:flex-row sm:items-center sm:justify-between'>
+      <p>
+        © {new Date().getFullYear()} {profile.name} · <span className='hand text-[1.25rem] text-ink'>made in Mumbai</span>
+      </p>
+      <div className='flex gap-5'>
+        <a href={profile.links.github} target='_blank' rel='noreferrer' className='hover:text-ink'>GitHub</a>
+        <a href={profile.links.linkedin} target='_blank' rel='noreferrer' className='hover:text-ink'>LinkedIn</a>
+        <a href='https://github.com/prathmesh-jain/Portfolio' target='_blank' rel='noreferrer' className='hover:text-ink'>
           Source
         </a>
       </div>

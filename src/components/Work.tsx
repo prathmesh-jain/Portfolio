@@ -1,64 +1,73 @@
 import Link from './Link'
 import ProjectCover from './ProjectCover'
 import SectionHead from './SectionHead'
+import { SwoopArrow } from './Doodles'
 import { otherWork, profile, projects } from '../data/content'
+
+const tilts = ['-rotate-[1.5deg]', 'rotate-[1.2deg]', '-rotate-[0.8deg]', 'rotate-[1.6deg]']
 
 export default function Work() {
   return (
-    <section id='work' className='wrap scroll-mt-12 pb-24'>
-      <SectionHead title='Selected work' aside={`${projects.length} projects`} />
+    <section id='work' className='wrap scroll-mt-6 pb-24'>
+      <SectionHead title='Things I’ve built' note='(and actually shipped)' />
 
-      <ol>
-        {projects.map((p) => (
-          <li key={p.slug} className='border-b border-rule'>
-            <Link to={`/work/${p.slug}`} className='group grid grid-cols-1 gap-x-6 gap-y-6 py-8 md:grid-cols-12 md:py-10'>
-              <div className='flex min-w-0 flex-col md:col-span-5'>
-                <div className='flex items-baseline gap-4'>
-                  <span className='text-[0.95rem] text-grey'>{p.index}</span>
-                  <h3 className='display min-w-0 break-words text-[2.3rem] transition-colors group-hover:text-blue sm:text-[3.6rem]'>
-                    {p.title}
-                  </h3>
+      <div className='mt-16 space-y-24 md:space-y-28'>
+        {projects.map((p, i) => {
+          const flip = i % 2 === 1
+          return (
+            <article key={p.slug} className='grid grid-cols-1 items-center gap-10 md:grid-cols-2 md:gap-14'>
+              <Link
+                to={`/work/${p.slug}`}
+                className={`print group relative block transition-transform duration-300 hover:rotate-0 ${tilts[i % tilts.length]} ${flip ? 'md:order-2' : ''}`}
+                aria-label={`${p.title} case study`}
+              >
+                <span className={`tape -top-3 ${flip ? 'right-8 rotate-6' : 'left-8 -rotate-6'}`} />
+                <ProjectCover project={p} />
+              </Link>
+
+              <div className={`relative min-w-0 ${flip ? 'md:order-1' : ''}`}>
+                <div className='hand text-[1.5rem] text-pencil'>no. {i + 1}</div>
+                <h3 className='text-[2rem] font-semibold tracking-[-0.02em] sm:text-[2.4rem]'>{p.title}</h3>
+                <p className='mt-2 text-[1.15rem] leading-snug'>{p.tagline}</p>
+                <p className='mt-4 leading-relaxed text-pencil'>{p.summary}</p>
+
+                <p className='mt-5 text-[0.92rem] text-pencil'>{p.stack.slice(0, 5).join(' · ')}</p>
+
+                <div className='mt-6 flex flex-wrap items-center gap-x-6 gap-y-3'>
+                  <Link to={`/work/${p.slug}`} className='font-semibold underline decoration-2 underline-offset-4 hover:text-pen'>
+                    how I built it →
+                  </Link>
+                  {p.links.live && (
+                    <a href={p.links.live} target='_blank' rel='noreferrer' className='text-pencil hover:text-ink'>
+                      {p.links.liveLabel?.toLowerCase() ?? 'try it'} ↗
+                    </a>
+                  )}
                 </div>
-                <p className='mt-4 max-w-md text-[1.15rem] leading-snug'>{p.tagline}</p>
 
-                <dl className='mt-6 grid max-w-md grid-cols-2 gap-x-6 gap-y-4 border-t border-hair pt-4 text-[0.9rem]'>
-                  {p.stats.slice(0, 2).map((s) => (
-                    <div key={s.label}>
-                      <dd className='text-[1.4rem] font-semibold tracking-tight'>{s.value}</dd>
-                      <dt className='text-grey'>{s.label}</dt>
-                    </div>
-                  ))}
-                </dl>
-
-                <div className='mt-auto flex items-center justify-between pt-8 text-[0.9rem]'>
-                  <span className='text-grey'>{p.status}</span>
-                  <span className='text-blue'>Case study →</span>
+                <div className={`mt-8 flex items-start gap-2 text-pen ${flip ? 'md:justify-end' : ''}`}>
+                  {!flip && <SwoopArrow className='hidden h-10 w-14 shrink-0 md:block' />}
+                  <span className='hand max-w-[16rem] -rotate-2 text-[1.6rem]'>{p.note}</span>
+                  {flip && <SwoopArrow className='hidden h-10 w-14 shrink-0 -scale-x-100 md:block' />}
                 </div>
               </div>
-
-              <ProjectCover
-                project={p}
-                className='aspect-[16/10] border border-hair md:col-span-7'
-              />
-            </Link>
-          </li>
-        ))}
-      </ol>
-
-      <div className='mt-6 flex flex-col justify-between gap-2 text-[0.95rem] sm:flex-row'>
-        <p>
-          <span className='text-grey'>Also: </span>
-          {otherWork.map((o) => (
-            <a key={o.title} href={o.href} target='_blank' rel='noreferrer' className='u-link'>
-              {o.title}
-            </a>
-          ))}
-          <span className='text-grey'>, a small React stepper component on npm.</span>
-        </p>
-        <a href={`${profile.links.github}?tab=repositories`} target='_blank' rel='noreferrer' className='u-link'>
-          Everything else on GitHub ↗
-        </a>
+            </article>
+          )
+        })}
       </div>
+
+      <p className='mt-24 text-[1.05rem] leading-relaxed text-pencil'>
+        Smaller things: I also published{' '}
+        {otherWork.map((o) => (
+          <a key={o.title} href={o.href} target='_blank' rel='noreferrer' className='ink-link text-ink'>
+            {o.title}
+          </a>
+        ))}{' '}
+        on npm, and the rest lives on{' '}
+        <a href={`${profile.links.github}?tab=repositories`} target='_blank' rel='noreferrer' className='ink-link text-ink'>
+          my GitHub
+        </a>
+        .
+      </p>
     </section>
   )
 }

@@ -1,124 +1,151 @@
 import type { ReactNode } from 'react'
 import Link from '../components/Link'
 import ProjectCover from '../components/ProjectCover'
+import SectionHead from '../components/SectionHead'
 import type { Project } from '../data/content'
 
-function Row({ label, children }: { label: string; children: ReactNode }) {
+function Part({ title, note, children }: { title: string; note?: string; children: ReactNode }) {
   return (
-    <section className='grid grid-cols-1 gap-x-6 gap-y-4 border-t border-rule pt-5 md:grid-cols-12'>
-      <h2 className='text-[0.95rem] font-semibold md:col-span-3'>{label}</h2>
-      <div className='md:col-span-9'>{children}</div>
+    <section>
+      <SectionHead title={title} note={note} />
+      <div className='mt-10'>{children}</div>
     </section>
   )
 }
 
 export default function CaseStudy({ project: p, next }: { project: Project; next: Project }) {
   return (
-    <article className='wrap pb-20'>
-      <div className='flex items-center justify-between py-5 text-[0.9rem]'>
-        <Link to='/#work' className='hover:text-blue'>
-          ← All work
-        </Link>
-        <span className='text-grey'>Case study {p.index} / 04</span>
-      </div>
+    <article className='wrap pb-24'>
+      <Link to='/#work' className='hand mt-4 inline-block text-[1.5rem] text-pencil hover:text-ink'>
+        ← back to all projects
+      </Link>
 
-      <h1 className='display break-words text-[12vw] md:text-[10vw] xl:text-[9rem]'>{p.title}</h1>
-
-      <div className='mt-8 grid grid-cols-1 gap-x-6 gap-y-8 border-t border-rule pt-6 md:grid-cols-12'>
-        <p className='text-[1.5rem] leading-[1.2] sm:text-[2rem] md:col-span-7'>{p.tagline}</p>
-        <dl className='grid grid-cols-1 content-start gap-y-4 text-[0.95rem] md:col-span-4 md:col-start-9'>
-          <div>
-            <dt className='text-grey'>Status</dt>
-            <dd>{p.status}</dd>
-          </div>
-          <div>
-            <dt className='text-grey'>Built with</dt>
-            <dd>{p.stack.join(', ')}</dd>
-          </div>
-          <div className='flex flex-wrap gap-x-5 gap-y-1'>
+      <header className='mt-8 grid grid-cols-1 items-center gap-12 md:grid-cols-[1fr_1fr]'>
+        <div className='min-w-0'>
+          <div className='hand text-[1.6rem] text-pen'>project no. {Number(p.index)}</div>
+          <h1 className='break-words text-[3rem] font-semibold leading-none tracking-[-0.035em] sm:text-[4.4rem]'>
+            {p.title}
+          </h1>
+          <p className='mt-5 text-[1.3rem] leading-snug sm:text-[1.5rem]'>{p.tagline}</p>
+          <p className='mt-4 text-pencil'>{p.status}</p>
+          <div className='mt-7 flex flex-wrap gap-x-6 gap-y-3'>
             {p.links.live && (
-              <a href={p.links.live} target='_blank' rel='noreferrer' className='u-link text-blue'>
-                {p.links.liveLabel ?? 'Open the app'} ↗
+              <a
+                href={p.links.live}
+                target='_blank'
+                rel='noreferrer'
+                className='rounded-[255px_15px_225px_15px/15px_225px_15px_255px] border-2 border-ink px-5 py-2 font-semibold hover:bg-ink hover:text-paper'
+              >
+                {p.links.liveLabel?.toLowerCase() ?? 'try it live'} ↗
               </a>
             )}
             {p.links.github && (
-              <a href={p.links.github} target='_blank' rel='noreferrer' className='u-link'>
-                Source code ↗
+              <a href={p.links.github} target='_blank' rel='noreferrer' className='ink-link self-center'>
+                read the code
               </a>
             )}
           </div>
-        </dl>
-      </div>
+        </div>
+        <div className='print relative min-w-0 rotate-[1.5deg]'>
+          <span className='tape -top-3 left-10 -rotate-6' />
+          <ProjectCover project={p} />
+          <p className='hand absolute -bottom-10 right-2 -rotate-2 text-[1.5rem] text-pen'>{p.note}</p>
+        </div>
+      </header>
 
-      <dl className='mt-12 grid grid-cols-2 border-t border-rule sm:grid-cols-3 lg:grid-cols-5'>
+      <ul className='mt-24 flex flex-wrap gap-x-10 gap-y-6'>
         {p.stats.map((s) => (
-          <div key={s.label} className='flex min-w-0 flex-col border-b border-hair py-5 pr-4'>
-            <dd className='break-words text-[1.4rem] font-semibold leading-none tracking-tight sm:text-[1.9rem]' style={{ fontStretch: '85%' }}>
-              {s.value}
-            </dd>
-            <dt className='order-last mt-2 text-[0.88rem] text-grey'>{s.label}</dt>
-          </div>
+          <li key={s.label} className='min-w-0'>
+            <div className='text-[1.6rem] font-semibold tracking-tight sm:text-[2rem]'>
+              <span className='marker'>{s.value}</span>
+            </div>
+            <div className='text-[0.92rem] text-pencil'>{s.label}</div>
+          </li>
         ))}
-      </dl>
+      </ul>
 
-      <ProjectCover project={p} className={`mt-12 border border-hair ${p.coverFit === 'contain' ? 'aspect-[16/9]' : ''}`} />
-
-      <div className='mt-16 space-y-16'>
-        <Row label='The problem'>
-          <div className='max-w-3xl space-y-4 text-[1.15rem] leading-relaxed'>
+      <div className='mt-24 space-y-24'>
+        <Part title='Why I built it'>
+          <div className='max-w-2xl space-y-5 text-[1.15rem] leading-[1.7]'>
             {p.problem.map((para) => (
               <p key={para}>{para}</p>
             ))}
           </div>
-        </Row>
+        </Part>
 
-        <Row label='How it works'>
-          <p className='text-[1.15rem]'>{p.flowTitle}</p>
-          <ol className='mt-6 grid grid-cols-1 gap-x-5 gap-y-6 sm:grid-cols-2 lg:grid-cols-5'>
+        <Part title='How it works' note={p.flowTitle.toLowerCase()}>
+          <ol className='flex flex-col items-stretch gap-3 lg:flex-row lg:items-start'>
             {p.flow.map((step, i) => (
-              <li key={step.title} className='border-t-2 border-blue pt-3'>
-                <div className='text-[0.85rem] text-blue'>Step {i + 1}</div>
-                <div className='mt-1 text-[1.05rem] font-semibold'>{step.title}</div>
-                <p className='mt-1 text-[0.92rem] leading-relaxed text-grey'>{step.detail}</p>
+              <li key={step.title} className='flex flex-col items-center gap-3 lg:flex-1 lg:flex-row lg:items-start'>
+                <div
+                  className={`w-full border-2 border-ink bg-paper p-4 ${i % 2 ? 'rotate-[0.6deg]' : '-rotate-[0.6deg]'}`}
+                  style={{ borderRadius: i % 2 ? '14px 6px 16px 5px' : '6px 15px 5px 14px' }}
+                >
+                  <div className='hand text-[1.4rem] leading-none text-pen'>{i + 1}.</div>
+                  <div className='mt-1 font-semibold'>{step.title}</div>
+                  <p className='mt-1 text-[0.92rem] leading-relaxed text-pencil'>{step.detail}</p>
+                </div>
+                {i < p.flow.length - 1 && (
+                  <span className='hand shrink-0 text-[1.8rem] leading-none text-pen lg:mt-10' aria-hidden='true'>
+                    <span className='lg:hidden'>↓</span>
+                    <span className='hidden lg:inline'>→</span>
+                  </span>
+                )}
               </li>
             ))}
           </ol>
           {p.flowNotes && (
-            <ul className='mt-8 max-w-3xl list-disc space-y-1 pl-5 text-[0.98rem] leading-relaxed'>
+            <ul className='mt-10 max-w-2xl space-y-2 text-[1.02rem] leading-relaxed'>
               {p.flowNotes.map((n) => (
-                <li key={n}>{n}</li>
+                <li key={n} className='flex gap-3'>
+                  <span className='hand text-[1.3rem] leading-none text-pen'>+</span>
+                  {n}
+                </li>
               ))}
             </ul>
           )}
-        </Row>
+          <p className='mt-8 text-[0.92rem] text-pencil'>Built with {p.stack.join(', ')}.</p>
+        </Part>
 
-        <Row label='Decisions'>
-          <div className='grid grid-cols-1 gap-x-10 gap-y-8 sm:grid-cols-2'>
-            {p.decisions.map((d) => (
-              <div key={d.title}>
-                <h3 className='text-[1.15rem] font-semibold'>{d.title}</h3>
-                <p className='mt-2 text-[1rem] leading-relaxed text-grey'>{d.body}</p>
-              </div>
+        <Part title='Decisions I made' note='and why'>
+          <ol className='grid grid-cols-1 gap-x-14 gap-y-10 md:grid-cols-2'>
+            {p.decisions.map((d, i) => (
+              <li key={d.title} className='min-w-0'>
+                <h3 className='text-[1.2rem] font-semibold'>
+                  <span className='hand mr-2 text-[1.6rem] text-pen'>{i + 1}.</span>
+                  {d.title}
+                </h3>
+                <p className='mt-2 leading-[1.7] text-pencil'>{d.body}</p>
+              </li>
             ))}
-          </div>
-        </Row>
+          </ol>
+        </Part>
 
         {p.gallery.length > 0 && (
-          <Row label='Screens'>
-            <div className={`grid gap-4 ${p.galleryLayout === 'phone' ? 'grid-cols-2 lg:grid-cols-4' : 'sm:grid-cols-2'}`}>
-              {p.gallery.map((g) => (
-                <a key={g.src} href={g.src} target='_blank' rel='noreferrer' className='block border border-hair'>
+          <Part title='Screens'>
+            <div className={`grid gap-8 ${p.galleryLayout === 'phone' ? 'grid-cols-2 lg:grid-cols-4' : 'grid-cols-1 sm:grid-cols-2'}`}>
+              {p.gallery.map((g, i) => (
+                <a
+                  key={g.src}
+                  href={g.src}
+                  target='_blank'
+                  rel='noreferrer'
+                  className={`print block transition-transform hover:rotate-0 ${i % 2 ? 'rotate-[1deg]' : '-rotate-[1deg]'}`}
+                >
                   <img src={g.src} alt={g.alt} loading='lazy' decoding='async' className='w-full' />
                 </a>
               ))}
             </div>
-          </Row>
+          </Part>
         )}
       </div>
 
-      <Link to={`/work/${next.slug}`} className='group mt-20 block border-t-2 border-rule pt-4'>
-        <div className='text-[0.9rem] text-grey'>Next project</div>
-        <div className='display mt-2 break-words text-[11vw] group-hover:text-blue sm:text-[4.5rem]'>{next.title} →</div>
+      <Link to={`/work/${next.slug}`} className='group mt-28 block border-t border-dashed border-faint pt-8'>
+        <div className='hand text-[1.5rem] text-pencil'>next up</div>
+        <div className='break-words text-[2.2rem] font-semibold tracking-[-0.02em] group-hover:text-pen sm:text-[3rem]'>
+          {next.title} →
+        </div>
+        <div className='text-pencil'>{next.tagline}</div>
       </Link>
     </article>
   )

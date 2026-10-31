@@ -1,5 +1,7 @@
 import { useRef, useState, type FormEvent } from 'react'
 import emailjs from '@emailjs/browser'
+import SectionHead from './SectionHead'
+import { Squiggle } from './Doodles'
 import { profile } from '../data/content'
 
 type Errors = Partial<Record<'firstName' | 'user_email' | 'message', string>>
@@ -44,42 +46,39 @@ export default function Contact() {
   }
 
   return (
-    <section id='contact' className='scroll-mt-12 bg-blue text-white'>
-      <div className='wrap grid grid-cols-1 gap-x-6 gap-y-12 py-16 md:grid-cols-12 md:py-24'>
-        <div className='md:col-span-7'>
-          <h2 className='display text-[3.4rem] sm:text-[5.5rem]'>Let’s talk.</h2>
-          <p className='mt-6 max-w-md text-[1.15rem] leading-snug'>
-            Open to full-time roles and interesting freelance work in applied AI and full stack.
+    <section id='contact' className='wrap scroll-mt-6 pb-24'>
+      <SectionHead title='Say hi' note='I read everything' />
+
+      <div className='mt-12 grid grid-cols-1 gap-14 md:grid-cols-[1.1fr_0.9fr]'>
+        <div className='min-w-0'>
+          <p className='max-w-lg text-[1.15rem] leading-[1.7]'>
+            I’m open to full-time roles and interesting freelance work in applied AI and full stack. Email is the
+            fastest way to reach me.
           </p>
           <a
             href={`mailto:${profile.email}`}
-            className='mt-8 inline-block break-all text-[1.5rem] font-semibold underline decoration-2 underline-offset-[0.2em] hover:no-underline sm:text-[2.2rem]'
+            className='relative mt-8 inline-block break-all text-[1.35rem] font-semibold hover:text-pen sm:text-[1.9rem]'
           >
             {profile.email}
+            <Squiggle className='absolute -bottom-3 left-0 h-3 w-full text-pen' />
           </a>
-          <div className='mt-8 flex gap-6 text-[0.95rem]'>
-            <a href={profile.links.linkedin} target='_blank' rel='noreferrer' className='underline underline-offset-4'>
-              LinkedIn
-            </a>
-            <a href={profile.links.github} target='_blank' rel='noreferrer' className='underline underline-offset-4'>
-              GitHub
-            </a>
-            <a href={profile.resume} target='_blank' rel='noreferrer' className='underline underline-offset-4'>
-              Resume
-            </a>
+          <div className='mt-10 flex gap-6'>
+            <a href={profile.links.linkedin} target='_blank' rel='noreferrer' className='ink-link'>LinkedIn</a>
+            <a href={profile.links.github} target='_blank' rel='noreferrer' className='ink-link'>GitHub</a>
+            <a href={profile.resume} target='_blank' rel='noreferrer' className='ink-link'>Resume</a>
           </div>
         </div>
 
-        <div className='md:col-span-4 md:col-start-9'>
+        <div className='min-w-0'>
           {status === 'sent' ? (
-            <p className='text-[1.3rem]'>Thanks, message received. I’ll reply soon.</p>
+            <p className='hand text-[2rem] text-pen'>got it, thank you! I’ll write back soon.</p>
           ) : (
             <form ref={form} onSubmit={onSubmit} noValidate className='space-y-6'>
-              <p className='text-[0.9rem] opacity-80'>Or send a note from here</p>
+              <p className='hand text-[1.6rem] text-pencil'>or leave a note here…</p>
               {(
                 [
-                  { name: 'firstName', label: 'Name', type: 'text', auto: 'name' },
-                  { name: 'user_email', label: 'Email', type: 'email', auto: 'email' },
+                  { name: 'firstName', label: 'your name', type: 'text', auto: 'name' },
+                  { name: 'user_email', label: 'your email', type: 'email', auto: 'email' },
                 ] as const
               ).map((f) => (
                 <div key={f.name}>
@@ -95,7 +94,7 @@ export default function Contact() {
                     aria-invalid={Boolean(errors[f.name])}
                     className='field'
                   />
-                  {errors[f.name] && <p className='mt-1 text-[0.85rem]'>{errors[f.name]}</p>}
+                  {errors[f.name] && <p className='hand mt-1 text-[1.2rem] text-pen'>{errors[f.name]}</p>}
                 </div>
               ))}
               <div>
@@ -106,22 +105,22 @@ export default function Contact() {
                   id='message'
                   name='message'
                   rows={3}
-                  placeholder='Message'
+                  placeholder='what’s on your mind?'
                   aria-invalid={Boolean(errors.message)}
                   className='field resize-none'
                 />
-                {errors.message && <p className='mt-1 text-[0.85rem]'>{errors.message}</p>}
+                {errors.message && <p className='hand mt-1 text-[1.2rem] text-pen'>{errors.message}</p>}
               </div>
               <button
                 type='submit'
                 disabled={status === 'sending'}
-                className='bg-white px-5 py-3 text-[0.95rem] font-semibold text-blue hover:bg-ink hover:text-white disabled:opacity-60'
+                className='rounded-[255px_15px_225px_15px/15px_225px_15px_255px] border-2 border-ink px-5 py-2.5 font-semibold transition-transform hover:rotate-1 hover:bg-ink hover:text-paper disabled:opacity-60'
               >
-                {status === 'sending' ? 'Sending…' : 'Send'}
+                {status === 'sending' ? 'sending…' : 'send it'}
               </button>
               {status === 'error' && (
-                <p className='text-[0.9rem]' role='alert'>
-                  Couldn’t send. Please email me directly.
+                <p className='hand text-[1.3rem] text-pen' role='alert'>
+                  hmm, that didn’t go through. Please email me directly.
                 </p>
               )}
             </form>

@@ -51,6 +51,8 @@ export interface Project {
   tagline: string
   summary: string
   status: string
+  /** short handwritten margin note */
+  note: string
   stack: string[]
   links: { live?: string; liveLabel?: string; github?: string }
   cover: string
@@ -74,6 +76,7 @@ export const projects: Project[] = [
     summary:
       'General transcription tools break on long pravachans that switch between Hindi, English and Sanskrit shlokas. I built a service that handles them, and people use it every day.',
     status: 'Live · 25+ daily users',
+    note: "25+ people use this every day!",
     stack: ['React', 'FastAPI', 'Redis', 'PostgreSQL', 'Gemini', 'FFmpeg', 'Langfuse', 'Docker', 'Oracle Cloud', 'Cloudflare'],
     links: { live: 'https://transcribe.contextcrafter.in' },
     cover: '/images/transcribe.webp',
@@ -134,6 +137,7 @@ export const projects: Project[] = [
     summary:
       'Document Q&A, file analysis and Google Sheets automation behind one chat. The interesting part is semantic tool discovery, which cut prompt context from ~3000 tokens to under 1000.',
     status: 'Live demo · Open source',
+    note: "~3000 → <1000 tokens of context",
     stack: ['React', 'FastAPI', 'LangGraph', 'Qdrant', 'MongoDB', 'Zustand', 'SSE'],
     links: { live: 'https://bizassist.prathmeshjain.in', github: 'https://github.com/prathmesh-jain/BizAssist' },
     cover: '/images/bizassist.webp',
@@ -191,6 +195,7 @@ export const projects: Project[] = [
     summary:
       'Small shop owners already live in chat apps. This agent handles stock, GST bills, customer credit (khata) and analytics through a Telegram conversation, with database guardrails so the AI can’t oversell.',
     status: 'Live on Telegram · Open source',
+    note: "the AI literally can’t oversell stock",
     stack: ['TypeScript', 'Node.js', 'Fastify', 'Vercel AI SDK', 'Zod', 'PostgreSQL', 'Drizzle'],
     links: {
       live: 'https://t.me/SmartKiranaBot',
@@ -238,6 +243,7 @@ export const projects: Project[] = [
     summary:
       'A React Native app built for patchy connectivity: every action works offline with optimistic updates, then a background queue reconciles with the server.',
     status: 'Android app · Open source',
+    note: "works with zero signal",
     stack: ['React Native', 'Expo', 'Node.js', 'Express', 'MongoDB', 'Zustand', 'NativeWind'],
     links: {
       live: 'https://expensegauge.vercel.app',
