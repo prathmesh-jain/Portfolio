@@ -12,90 +12,25 @@ export const profile = {
   },
 }
 
-export interface Metric {
-  value: string
-  from?: string
-  label: string
-  context: string
-}
-
-export const impact: Metric[] = [
-  {
-    from: '1–2 days',
-    value: '< 5 min',
-    label: 'Compliance investigation',
-    context: 'KYC, sanctions and adverse-media checks, automated with AI agents at TCS',
-  },
-  {
-    value: '< 30 s',
-    label: 'Payment message repair',
-    context: 'Multi-agent repair + validation of MT/MX messages, ~30% fewer review cycles',
-  },
-  {
-    value: '−50%',
-    label: 'Credit research time',
-    context: 'Credit memo generation, measured in a US bank’s environment, with 40% lower operating cost',
-  },
-  {
-    value: '$0.10',
-    label: 'Per transcription',
-    context: 'Transcribe, my side project: 200+ lectures of ~1.5 h each, ~75% cheaper than alternatives',
-  },
-]
-
-export interface WorkStream {
-  name: string
-  stack: string[]
-  problem: string
-  built: string[]
-  result: string
-}
-
 export const tcs = {
   company: 'Tata Consultancy Services',
-  team: 'Research & Innovation · CTO Team · BFSI Americas',
+  team: 'Research & Innovation, CTO team, BFSI Americas',
   role: 'Full Stack AI Engineer',
-  period: 'Oct 2024 – Present',
-  intro:
-    'I build AI systems for banks in the US: the agents, the FastAPI services around them, and the React apps that analysts actually use. Most of my work goes from first prototype to running inside a client environment.',
-  streams: [
-    {
-      name: 'AI compliance screening',
-      stack: ['FastAPI', 'React', 'LangChain', 'Playwright', 'FastMCP', 'AWS'],
-      problem:
-        'Onboarding a business customer meant an analyst manually running KYC, sanctions, embargo, association and adverse-media checks across dozens of sources. One investigation took 1–2 days.',
-      built: [
-        'Stateful agent workflows that combine Google Search, Playwright crawling, structured outputs and LLM reasoning.',
-        'Deterministic validation and fuzzy matching around the LLM, so names and entities are checked by code and not just judged by the model. This keeps hallucinations and false positives down.',
-        'Reusable FastMCP servers that expose search, crawling and document processing as tools to other teams’ workflows, with SSE streaming progress to the UI.',
-      ],
-      result: 'Investigation time dropped from 1–2 days to under 5 minutes.',
-    },
-    {
-      name: 'GenAI payment repair',
-      stack: ['FastAPI', 'CrewAI', 'LangChain', 'React', 'Langfuse'],
-      problem:
-        'Broken MT/MX payment messages went back and forth between makers and reviewers before they could be released.',
-      built: [
-        'A repair agent and a validation agent that loop over a message, run tools and validate against the schema until it passes, with a human review checkpoint at the end.',
-        'Production reliability: retries, fallbacks, persisted workflow state, rollback handling, and Langfuse tracing for latency and token cost.',
-      ],
-      result:
-        'Average repair time is under 30 seconds and maker–reviewer cycles are down ~30%. Expected to fully automate ~70% of repairs (straight-through processing).',
-    },
-    {
-      name: 'Commercial lending credit memos',
-      stack: ['CrewAI', 'LangChain', 'FastAPI', 'Azure OpenAI', 'PostgreSQL', 'Mistral OCR'],
-      problem:
-        'Credit analysts spent days reading 100+ page financial reports to fill a standard credit memo template.',
-      built: [
-        'Specialised agents for parsing, extraction, financial spreading and memo writing, validated across GPT-4o, GPT-5.1 and Gemini 2.5 Flash.',
-        'Parallel chunking + retrieval + section-wise synthesis over 300+ reports, with MCP tools for live web data and Mistral OCR for scanned pages.',
-        'A custom RAG evaluation pipeline: 97% faithfulness, 95% hallucination resistance, 95% answer relevance, published live to Langfuse with per-session cost.',
-      ],
-      result: 'Credit research time down 50% and operating cost down 40%, measured in a large US bank’s environment.',
-    },
-  ] as WorkStream[],
+  period: 'Oct 2024 – now',
+  summary:
+    'I build multi-agent AI systems, and the FastAPI + React apps around them, for US banking clients.',
+  highlights: [
+    { what: 'Compliance screening', result: '1–2 days → under 5 min' },
+    { what: 'Payment message repair', result: 'under 30 seconds' },
+    { what: 'Credit memo generation', result: '50% less research time' },
+  ],
+}
+
+export const education = {
+  degree: 'B.E. Computer Engineering',
+  school: 'Vidyalankar Institute of Technology, Mumbai',
+  year: '2024',
+  note: 'GPA 9.2 / 10',
 }
 
 export interface FlowStep {

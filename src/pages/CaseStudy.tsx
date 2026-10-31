@@ -1,151 +1,124 @@
-import { FaArrowLeft, FaArrowRight, FaArrowUp, FaGithub } from 'react-icons/fa'
-import { motion } from 'motion/react'
-import FlowDiagram from '../components/FlowDiagram'
-import ProjectCover from '../components/ProjectCover'
-import Reveal from '../components/Reveal'
+import type { ReactNode } from 'react'
 import Link from '../components/Link'
+import ProjectCover from '../components/ProjectCover'
 import type { Project } from '../data/content'
 
-const ease = [0.22, 1, 0.36, 1] as const
-
-function Block({ label, title, children }: { label: string; title: string; children: React.ReactNode }) {
+function Row({ label, children }: { label: string; children: ReactNode }) {
   return (
-    <section className='grid gap-4 border-t border-line pt-6 md:grid-cols-[180px_1fr] md:gap-8'>
-      <div className='label'>{label}</div>
-      <div>
-        <h2 className='font-display text-2xl font-semibold tracking-tight sm:text-3xl'>{title}</h2>
-        <div className='mt-6'>{children}</div>
-      </div>
+    <section className='grid grid-cols-1 gap-x-6 gap-y-4 border-t border-rule pt-5 md:grid-cols-12'>
+      <h2 className='text-[0.95rem] font-semibold md:col-span-3'>{label}</h2>
+      <div className='md:col-span-9'>{children}</div>
     </section>
   )
 }
 
-export default function CaseStudy({ project, next }: { project: Project; next: Project }) {
-  const p = project
+export default function CaseStudy({ project: p, next }: { project: Project; next: Project }) {
   return (
-    <article className='mx-auto max-w-6xl px-5 pb-24 md:px-8'>
-      <motion.header initial={{ opacity: 0, y: 12 }} animate={{ opacity: 1, y: 0 }} transition={{ duration: 0.55, ease }}>
-        <Link to='/#work' className='mt-8 inline-flex items-center gap-2 text-sm text-muted hover:text-ink'>
-          <FaArrowLeft size={11} /> All work
+    <article className='wrap pb-20'>
+      <div className='flex items-center justify-between py-5 text-[0.9rem]'>
+        <Link to='/#work' className='hover:text-blue'>
+          ← All work
         </Link>
+        <span className='text-grey'>Case study {p.index} / 04</span>
+      </div>
 
-        <div className='mt-10 label'>
-          <span className='text-accent'>Case study {p.index}</span> · {p.status}
-        </div>
-        <h1 className='mt-4 break-words font-display text-[2.6rem] font-semibold leading-[1.05] tracking-[-0.03em] sm:text-6xl'>{p.title}</h1>
-        <p className='mt-4 max-w-3xl text-xl leading-8 text-muted sm:text-2xl sm:leading-9'>{p.tagline}</p>
+      <h1 className='display break-words text-[12vw] md:text-[10vw] xl:text-[9rem]'>{p.title}</h1>
 
-        <div className='mt-8 flex flex-wrap gap-3'>
-          {p.links.live && (
-            <a href={p.links.live} target='_blank' rel='noreferrer' className='btn btn-primary'>
-              {p.links.liveLabel ?? 'Visit live app'} <FaArrowUp size={10} className='rotate-45' />
-            </a>
-          )}
-          {p.links.github && (
-            <a href={p.links.github} target='_blank' rel='noreferrer' className='btn btn-ghost'>
-              <FaGithub size={14} /> Source code
-            </a>
-          )}
-        </div>
-
-        <dl className='mt-12 grid grid-cols-2 gap-x-6 gap-y-6 border-y border-line py-6 sm:grid-cols-3 lg:grid-cols-5'>
-          {p.stats.map((s) => (
-            <div key={s.label} className='flex flex-col'>
-              <dt className='order-2 mt-1 text-xs leading-5 text-soft'>{s.label}</dt>
-              <dd className='order-1 font-display text-xl font-semibold tracking-tight sm:text-2xl'>{s.value}</dd>
-            </div>
-          ))}
-        </dl>
-      </motion.header>
-
-      <motion.div
-        initial={{ opacity: 0, y: 16 }}
-        animate={{ opacity: 1, y: 0 }}
-        transition={{ duration: 0.6, delay: 0.1, ease }}
-        className='mt-10'
-      >
-        <ProjectCover project={p} className='aspect-[16/9] rounded-xl border border-line sm:aspect-[16/8]' />
-      </motion.div>
-
-      <div className='mt-20 space-y-20'>
-        <Reveal>
-          <Block label='01 / Problem' title='Why it exists'>
-            <div className='max-w-3xl space-y-4 text-[1.02rem] leading-8 text-muted'>
-              {p.problem.map((para) => (
-                <p key={para}>{para}</p>
-              ))}
-            </div>
-          </Block>
-        </Reveal>
-
-        <Reveal>
-          <Block label='02 / Architecture' title={p.flowTitle}>
-            <FlowDiagram steps={p.flow} />
-            {p.flowNotes && (
-              <ul className='mt-6 space-y-2'>
-                {p.flowNotes.map((n) => (
-                  <li key={n} className='flex gap-3 text-[0.93rem] leading-7 text-muted'>
-                    <span className='text-accent' aria-hidden='true'>+</span>
-                    {n}
-                  </li>
-                ))}
-              </ul>
+      <div className='mt-8 grid grid-cols-1 gap-x-6 gap-y-8 border-t border-rule pt-6 md:grid-cols-12'>
+        <p className='text-[1.5rem] leading-[1.2] sm:text-[2rem] md:col-span-7'>{p.tagline}</p>
+        <dl className='grid grid-cols-1 content-start gap-y-4 text-[0.95rem] md:col-span-4 md:col-start-9'>
+          <div>
+            <dt className='text-grey'>Status</dt>
+            <dd>{p.status}</dd>
+          </div>
+          <div>
+            <dt className='text-grey'>Built with</dt>
+            <dd>{p.stack.join(', ')}</dd>
+          </div>
+          <div className='flex flex-wrap gap-x-5 gap-y-1'>
+            {p.links.live && (
+              <a href={p.links.live} target='_blank' rel='noreferrer' className='u-link text-blue'>
+                {p.links.liveLabel ?? 'Open the app'} ↗
+              </a>
             )}
-            <div className='mt-6 font-mono text-[0.72rem] text-soft'>{p.stack.join(' · ')}</div>
-          </Block>
-        </Reveal>
+            {p.links.github && (
+              <a href={p.links.github} target='_blank' rel='noreferrer' className='u-link'>
+                Source code ↗
+              </a>
+            )}
+          </div>
+        </dl>
+      </div>
 
-        <Reveal>
-          <Block label='03 / Decisions' title='Choices that shaped it'>
-            <div className='grid gap-px overflow-hidden rounded-xl border border-line bg-line sm:grid-cols-2'>
-              {p.decisions.map((d, i) => (
-                <div key={d.title} className='bg-bg p-6'>
-                  <div className='font-mono text-[0.7rem] text-accent'>{String(i + 1).padStart(2, '0')}</div>
-                  <h3 className='mt-3 font-display text-lg font-semibold'>{d.title}</h3>
-                  <p className='mt-2 text-[0.93rem] leading-7 text-muted'>{d.body}</p>
-                </div>
+      <dl className='mt-12 grid grid-cols-2 border-t border-rule sm:grid-cols-3 lg:grid-cols-5'>
+        {p.stats.map((s) => (
+          <div key={s.label} className='flex min-w-0 flex-col border-b border-hair py-5 pr-4'>
+            <dd className='break-words text-[1.4rem] font-semibold leading-none tracking-tight sm:text-[1.9rem]' style={{ fontStretch: '85%' }}>
+              {s.value}
+            </dd>
+            <dt className='order-last mt-2 text-[0.88rem] text-grey'>{s.label}</dt>
+          </div>
+        ))}
+      </dl>
+
+      <ProjectCover project={p} className={`mt-12 border border-hair ${p.coverFit === 'contain' ? 'aspect-[16/9]' : ''}`} />
+
+      <div className='mt-16 space-y-16'>
+        <Row label='The problem'>
+          <div className='max-w-3xl space-y-4 text-[1.15rem] leading-relaxed'>
+            {p.problem.map((para) => (
+              <p key={para}>{para}</p>
+            ))}
+          </div>
+        </Row>
+
+        <Row label='How it works'>
+          <p className='text-[1.15rem]'>{p.flowTitle}</p>
+          <ol className='mt-6 grid grid-cols-1 gap-x-5 gap-y-6 sm:grid-cols-2 lg:grid-cols-5'>
+            {p.flow.map((step, i) => (
+              <li key={step.title} className='border-t-2 border-blue pt-3'>
+                <div className='text-[0.85rem] text-blue'>Step {i + 1}</div>
+                <div className='mt-1 text-[1.05rem] font-semibold'>{step.title}</div>
+                <p className='mt-1 text-[0.92rem] leading-relaxed text-grey'>{step.detail}</p>
+              </li>
+            ))}
+          </ol>
+          {p.flowNotes && (
+            <ul className='mt-8 max-w-3xl list-disc space-y-1 pl-5 text-[0.98rem] leading-relaxed'>
+              {p.flowNotes.map((n) => (
+                <li key={n}>{n}</li>
               ))}
-            </div>
-          </Block>
-        </Reveal>
+            </ul>
+          )}
+        </Row>
+
+        <Row label='Decisions'>
+          <div className='grid grid-cols-1 gap-x-10 gap-y-8 sm:grid-cols-2'>
+            {p.decisions.map((d) => (
+              <div key={d.title}>
+                <h3 className='text-[1.15rem] font-semibold'>{d.title}</h3>
+                <p className='mt-2 text-[1rem] leading-relaxed text-grey'>{d.body}</p>
+              </div>
+            ))}
+          </div>
+        </Row>
 
         {p.gallery.length > 0 && (
-          <Reveal>
-            <Block label='04 / Screens' title='What it looks like'>
-              <div className={`grid gap-4 ${p.galleryLayout === 'phone' ? 'grid-cols-2 lg:grid-cols-4' : 'sm:grid-cols-2'}`}>
-                {p.gallery.map((g) => (
-                  <a
-                    key={g.src}
-                    href={g.src}
-                    target='_blank'
-                    rel='noreferrer'
-                    className='group block overflow-hidden rounded-lg border border-line'
-                  >
-                    <img
-                      src={g.src}
-                      alt={g.alt}
-                      loading='lazy'
-                      decoding='async'
-                      className='w-full transition-transform duration-500 group-hover:scale-[1.02]'
-                    />
-                  </a>
-                ))}
-              </div>
-            </Block>
-          </Reveal>
+          <Row label='Screens'>
+            <div className={`grid gap-4 ${p.galleryLayout === 'phone' ? 'grid-cols-2 lg:grid-cols-4' : 'sm:grid-cols-2'}`}>
+              {p.gallery.map((g) => (
+                <a key={g.src} href={g.src} target='_blank' rel='noreferrer' className='block border border-hair'>
+                  <img src={g.src} alt={g.alt} loading='lazy' decoding='async' className='w-full' />
+                </a>
+              ))}
+            </div>
+          </Row>
         )}
       </div>
 
-      <Link
-        to={`/work/${next.slug}`}
-        className='group mt-24 flex items-center justify-between gap-6 border-t border-line pt-8'
-      >
-        <div>
-          <div className='label'>Next case study</div>
-          <div className='mt-2 font-display text-2xl font-semibold tracking-tight sm:text-3xl'>{next.title}</div>
-          <div className='mt-1 text-muted'>{next.tagline}</div>
-        </div>
-        <FaArrowRight className='shrink-0 text-accent transition-transform group-hover:translate-x-1' />
+      <Link to={`/work/${next.slug}`} className='group mt-20 block border-t-2 border-rule pt-4'>
+        <div className='text-[0.9rem] text-grey'>Next project</div>
+        <div className='display mt-2 break-words text-[11vw] group-hover:text-blue sm:text-[4.5rem]'>{next.title} →</div>
       </Link>
     </article>
   )

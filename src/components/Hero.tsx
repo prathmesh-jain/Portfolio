@@ -1,83 +1,47 @@
-import { motion } from 'motion/react'
-import { FaArrowDown, FaGithub, FaLinkedin } from 'react-icons/fa'
-import PipelineLog from './PipelineLog'
 import Link from './Link'
 import { profile } from '../data/content'
 
-const ease = [0.22, 1, 0.36, 1] as const
-
 export default function Hero() {
   return (
-    <section id='top' className='relative'>
-      <div className='ruled pointer-events-none absolute inset-0 -top-16' aria-hidden='true' />
-      <div className='relative mx-auto grid max-w-6xl items-center gap-12 px-5 pb-20 pt-12 md:px-8 md:pt-20 lg:grid-cols-[1.2fr_0.8fr] lg:gap-14 lg:pb-28'>
-        <motion.div className='min-w-0' initial={{ opacity: 0, y: 14 }} animate={{ opacity: 1, y: 0 }} transition={{ duration: 0.6, ease }}>
-          <div className='flex items-center gap-3'>
-            <img
-              src='/profile.webp'
-              alt='Prathmesh Jain'
-              width={44}
-              height={44}
-              className='h-11 w-11 rounded-full object-cover object-top ring-1 ring-line-strong'
-            />
-            <div className='text-sm leading-5'>
-              <div className='font-medium'>{profile.name}</div>
-              <div className='flex items-center gap-2 text-muted'>
-                <span className='status-dot h-1.5 w-1.5 rounded-full bg-ok' aria-hidden='true' />
-                {profile.role} at {profile.company} · {profile.location}
-              </div>
-            </div>
+    <section className='wrap pb-16 pt-10 md:pb-24 md:pt-14'>
+      <h1 className='display text-[19vw] md:text-[13.2vw] xl:text-[11.5rem]'>
+        Prathmesh
+        <br />
+        Jain<span className='text-blue'>.</span>
+      </h1>
+
+      <div className='mt-10 grid grid-cols-1 gap-y-10 border-t border-rule pt-6 md:mt-14 md:grid-cols-12'>
+        <p className='text-[1.55rem] leading-[1.2] tracking-[-0.01em] sm:text-[2.1rem] md:col-span-7'>
+          I build AI agents for banks at TCS, and software that people{' '}
+          <span className='text-blue'>actually use</span>, like{' '}
+          <Link to='/work/transcribe' className='u-link'>
+            Transcribe
+          </Link>
+          , which turns two-hour lectures into readable transcripts.
+        </p>
+
+        <dl className='grid grid-cols-2 content-start gap-x-6 gap-y-5 text-[0.95rem] md:col-span-4 md:col-start-9'>
+          <div>
+            <dt className='text-grey'>Now</dt>
+            <dd>{profile.role}, TCS</dd>
           </div>
-
-          <h1 className='mt-8 font-display text-[2.35rem] font-semibold leading-[1.04] tracking-[-0.025em] sm:text-5xl lg:text-[3.3rem]'>
-            I build AI agents that do real work, <span className='text-muted'>and the products around them.</span>
-          </h1>
-
-          <p className='mt-6 max-w-xl text-base leading-7 text-muted sm:text-lg sm:leading-8'>
-            At TCS I build multi-agent systems for US banks. One of them cut compliance investigations from{' '}
-            <span className='text-ink'>1–2 days to under 5 minutes</span>. On the side I run{' '}
-            <Link to='/work/transcribe' className='link-underline text-ink'>Transcribe</Link>, which turns
-            1.5-hour multilingual lectures into searchable PDFs for <span className='text-ink'>50+ people</span>.
-          </p>
-
-          <div className='mt-8 flex flex-wrap items-center gap-3'>
-            <Link to='/#work' className='btn btn-primary'>
-              See the work <FaArrowDown size={11} />
-            </Link>
-            <a href={`mailto:${profile.email}`} className='btn btn-ghost'>
-              Email me
-            </a>
-            <div className='ml-1 flex items-center gap-1'>
-              <a
-                href={profile.links.github}
-                target='_blank'
-                rel='noreferrer'
-                aria-label='GitHub'
-                className='grid h-10 w-10 place-items-center rounded-md text-muted hover:text-ink'
-              >
-                <FaGithub size={18} />
-              </a>
-              <a
-                href={profile.links.linkedin}
-                target='_blank'
-                rel='noreferrer'
-                aria-label='LinkedIn'
-                className='grid h-10 w-10 place-items-center rounded-md text-muted hover:text-ink'
-              >
-                <FaLinkedin size={18} />
-              </a>
-            </div>
+          <div>
+            <dt className='text-grey'>Based in</dt>
+            <dd>{profile.location}</dd>
           </div>
-        </motion.div>
-
-        <motion.div
-          className='min-w-0'
-          initial={{ opacity: 0, y: 20 }}
-          animate={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.7, delay: 0.15, ease }}
-        >
-          <PipelineLog />
-        </motion.div>
+          <div>
+            <dt className='text-grey'>Works with</dt>
+            <dd>Python, TypeScript, LangGraph, React</dd>
+          </div>
+          <div className='col-span-2'>
+            <dt className='text-grey'>Write to</dt>
+            <dd>
+              <a href={`mailto:${profile.email}`} className='u-link'>
+                {profile.email}
+              </a>
+            </dd>
+          </div>
+        </dl>
       </div>
     </section>
   )

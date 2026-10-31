@@ -2,17 +2,15 @@ import { profile } from '../data/content'
 
 export default function Footer() {
   return (
-    <footer className='border-t border-line'>
-      <div className='mx-auto flex max-w-6xl flex-col gap-3 px-5 py-8 text-sm text-soft sm:flex-row sm:items-center sm:justify-between md:px-8'>
-        <div>© {new Date().getFullYear()} {profile.name} · {profile.location}</div>
-        <div className='flex gap-5'>
-          <a href={profile.links.github} target='_blank' rel='noreferrer' className='hover:text-ink'>GitHub</a>
-          <a href={profile.links.linkedin} target='_blank' rel='noreferrer' className='hover:text-ink'>LinkedIn</a>
-          <a href={profile.links.leetcode} target='_blank' rel='noreferrer' className='hover:text-ink'>LeetCode</a>
-          <a href='https://github.com/prathmesh-jain/Portfolio' target='_blank' rel='noreferrer' className='hover:text-ink'>
-            Source
-          </a>
-        </div>
+    <footer className='wrap grid grid-cols-2 gap-y-2 border-t border-rule py-5 text-[0.85rem] md:grid-cols-12'>
+      <div className='md:col-span-3'>© {new Date().getFullYear()} {profile.name}</div>
+      <div className='hidden text-grey md:col-span-5 md:block'>Designed and built in Mumbai.</div>
+      <div className='flex justify-end gap-5 md:col-span-4'>
+        <a href={profile.links.github} target='_blank' rel='noreferrer' className='hover:text-blue'>GitHub</a>
+        <a href={profile.links.linkedin} target='_blank' rel='noreferrer' className='hover:text-blue'>LinkedIn</a>
+        <a href='https://github.com/prathmesh-jain/Portfolio' target='_blank' rel='noreferrer' className='hover:text-blue'>
+          Source
+        </a>
       </div>
     </footer>
   )

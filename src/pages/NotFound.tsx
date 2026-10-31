@@ -2,11 +2,10 @@ import Link from '../components/Link'
 
 export default function NotFound() {
   return (
-    <section className='mx-auto max-w-6xl px-5 py-32 md:px-8'>
-      <div className='label'>404</div>
-      <h1 className='mt-4 font-display text-4xl font-semibold tracking-tight'>Nothing here.</h1>
-      <p className='mt-3 text-muted'>That page doesn’t exist, or it moved.</p>
-      <Link to='/' className='btn btn-primary mt-8'>Back home</Link>
+    <section className='wrap py-24'>
+      <h1 className='display text-[6rem] sm:text-[10rem]'>404</h1>
+      <p className='mt-6 text-[1.3rem]'>That page doesn’t exist.</p>
+      <Link to='/' className='u-link mt-4 inline-block text-blue'>Back to the homepage</Link>
     </section>
   )
 }
