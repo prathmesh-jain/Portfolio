@@ -5,25 +5,22 @@ interface DoodleProps {
   style?: React.CSSProperties
 }
 
-export function CurlyArrow({ className, style }: DoodleProps) {
+/** Curved arrow whose head points up and to the left. Mirror with -scale-x-100 for up-right. */
+export function ArrowUpLeft({ className, style }: DoodleProps) {
   return (
-    <svg viewBox='0 0 120 80' fill='none' className={className} style={style} aria-hidden='true'>
-      <path
-        d='M6 10c18 -6 44 -4 56 14c10 15 -4 30 -16 22c-10 -7 4 -24 24 -20c20 4 34 22 40 42'
-        stroke='currentColor'
-        strokeWidth='2.4'
-        strokeLinecap='round'
-      />
-      <path d='M100 56l11 13l3 -17' stroke='currentColor' strokeWidth='2.4' strokeLinecap='round' strokeLinejoin='round' />
+    <svg viewBox='0 0 80 60' fill='none' className={className} style={style} aria-hidden='true'>
+      <path d='M76 54C56 50 26 40 12 10' stroke='currentColor' strokeWidth='2.4' strokeLinecap='round' />
+      <path d='M11 22L12 10L22 17' stroke='currentColor' strokeWidth='2.4' strokeLinecap='round' strokeLinejoin='round' />
     </svg>
   )
 }
 
-export function SwoopArrow({ className, style }: DoodleProps) {
+/** Wavy arrow whose head points left. */
+export function ArrowLeft({ className, style }: DoodleProps) {
   return (
-    <svg viewBox='0 0 90 60' fill='none' className={className} style={style} aria-hidden='true'>
-      <path d='M84 6C60 4 24 12 10 48' stroke='currentColor' strokeWidth='2.4' strokeLinecap='round' />
-      <path d='M4 36l6 14l13 -8' stroke='currentColor' strokeWidth='2.4' strokeLinecap='round' strokeLinejoin='round' />
+    <svg viewBox='0 0 76 30' fill='none' className={className} style={style} aria-hidden='true'>
+      <path d='M72 20C50 30 32 6 8 18' stroke='currentColor' strokeWidth='2.4' strokeLinecap='round' />
+      <path d='M19 19L8 18L14 9' stroke='currentColor' strokeWidth='2.4' strokeLinecap='round' strokeLinejoin='round' />
     </svg>
   )
 }
@@ -41,16 +38,11 @@ export function Squiggle({ className, style }: DoodleProps) {
   )
 }
 
-export function Scribble({ className, style }: DoodleProps) {
-  // loose circle, for circling a word
+/** small hand-drawn ring used as a timeline marker */
+export function Ring({ className, style }: DoodleProps) {
   return (
-    <svg viewBox='0 0 200 80' preserveAspectRatio='none' fill='none' className={className} style={style} aria-hidden='true'>
-      <path
-        d='M30 14C70 2 160 4 186 26c22 20 -20 46 -86 48C40 76 6 62 10 40C14 20 60 8 120 10'
-        stroke='currentColor'
-        strokeWidth='2.2'
-        strokeLinecap='round'
-      />
+    <svg viewBox='0 0 24 24' fill='none' className={className} style={style} aria-hidden='true'>
+      <path d='M12 3c5 0 9 3.5 8.6 8.7C20.2 17 16 21 11.5 20.6C6.4 20.2 3 16.5 3.4 11.6C3.8 6.7 7.5 3.4 13 3.6' stroke='currentColor' strokeWidth='2.2' strokeLinecap='round' />
     </svg>
   )
 }

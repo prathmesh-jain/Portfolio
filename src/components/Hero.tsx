@@ -1,5 +1,5 @@
 import Link from './Link'
-import { CurlyArrow, Star } from './Doodles'
+import { Star } from './Doodles'
 import { profile } from '../data/content'
 
 export default function Hero() {
@@ -46,7 +46,6 @@ export default function Hero() {
           />
           <figcaption className='hand pt-2 text-center text-[1.45rem]'>me, up in the hills</figcaption>
         </figure>
-        <CurlyArrow className='absolute -left-24 top-10 hidden h-16 w-28 -scale-x-100 rotate-[160deg] text-pen md:block' />
         <Star className='absolute -right-5 -top-6 h-9 w-9 rotate-12 text-sky' />
       </div>
     </section>

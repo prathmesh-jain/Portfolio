@@ -1,7 +1,7 @@
 import Link from './Link'
 import ProjectCover from './ProjectCover'
 import SectionHead from './SectionHead'
-import { SwoopArrow } from './Doodles'
+import { ArrowUpLeft } from './Doodles'
 import { otherWork, profile, projects } from '../data/content'
 
 const tilts = ['-rotate-[1.5deg]', 'rotate-[1.2deg]', '-rotate-[0.8deg]', 'rotate-[1.6deg]']
@@ -16,14 +16,27 @@ export default function Work() {
           const flip = i % 2 === 1
           return (
             <article key={p.slug} className='grid grid-cols-1 items-center gap-10 md:grid-cols-2 md:gap-14'>
-              <Link
-                to={`/work/${p.slug}`}
-                className={`print group relative block transition-transform duration-300 hover:rotate-0 ${tilts[i % tilts.length]} ${flip ? 'md:order-2' : ''}`}
-                aria-label={`${p.title} case study`}
-              >
-                <span className={`tape -top-3 ${flip ? 'right-8 rotate-6' : 'left-8 -rotate-6'}`} />
-                <ProjectCover project={p} />
-              </Link>
+              <div className={`relative pb-16 ${flip ? 'md:order-2' : ''}`}>
+                <Link
+                  to={`/work/${p.slug}`}
+                  className={`print group relative block transition-transform duration-300 hover:rotate-0 ${tilts[i % tilts.length]}`}
+                  aria-label={`${p.title} case study`}
+                >
+                  <span className={`tape -top-3 ${flip ? 'right-8 rotate-6' : 'left-8 -rotate-6'}`} />
+                  <ProjectCover project={p} />
+                </Link>
+                {/* margin note under the print; the arrow points back up into the screenshot */}
+                <div
+                  className={`absolute bottom-0 flex items-start gap-1 text-pen ${
+                    flip ? 'left-2 flex-row-reverse' : 'right-2'
+                  }`}
+                >
+                  <ArrowUpLeft className={`mt-[-14px] h-9 w-12 shrink-0 ${flip ? '-scale-x-100' : ''}`} />
+                  <span className={`hand text-[1.5rem] leading-tight sm:text-[1.6rem] ${flip ? '-rotate-1' : 'rotate-[-2deg]'}`}>
+                    {p.note}
+                  </span>
+                </div>
+              </div>
 
               <div className={`relative min-w-0 ${flip ? 'md:order-1' : ''}`}>
                 <div className='hand text-[1.5rem] text-pencil'>no. {i + 1}</div>
@@ -44,11 +57,6 @@ export default function Work() {
                   )}
                 </div>
 
-                <div className={`mt-8 flex items-start gap-2 text-pen ${flip ? 'md:justify-end' : ''}`}>
-                  {!flip && <SwoopArrow className='hidden h-10 w-14 shrink-0 md:block' />}
-                  <span className='hand max-w-[16rem] -rotate-2 text-[1.6rem]'>{p.note}</span>
-                  {flip && <SwoopArrow className='hidden h-10 w-14 shrink-0 -scale-x-100 md:block' />}
-                </div>
               </div>
             </article>
           )

@@ -12,19 +12,39 @@ export const profile = {
   },
 }
 
-export const tcs = {
-  company: 'Tata Consultancy Services',
-  team: 'Research & Innovation, CTO team, BFSI Americas',
-  role: 'Full Stack AI Engineer',
-  period: 'Oct 2024 – now',
-  summary:
-    'I build multi-agent AI systems, and the FastAPI + React apps around them, for US banking clients.',
-  highlights: [
-    { what: 'Compliance screening', result: '1–2 days → under 5 min' },
-    { what: 'Payment message repair', result: 'under 30 seconds' },
-    { what: 'Credit memo generation', result: '50% less research time' },
-  ],
+export interface Job {
+  company: string
+  role: string
+  team?: string
+  location: string
+  start: string
+  /** leave undefined while it's your current job */
+  end?: string
+  logo?: string
+  summary: string
+  highlights: { what: string; result: string }[]
 }
+
+/**
+ * Work history, newest first. When you join a new company, add it at the top
+ * and set `end` on the previous job (e.g. end: 'Jan 2027').
+ */
+export const experience: Job[] = [
+  {
+    company: 'Tata Consultancy Services',
+    role: 'Full Stack AI Engineer',
+    team: 'Research & Innovation, CTO team, BFSI Americas',
+    location: 'Mumbai',
+    start: 'Oct 2024',
+    logo: '/images/tcs.webp',
+    summary: 'Built multi-agent AI systems, and the FastAPI + React apps around them, for US banking clients.',
+    highlights: [
+      { what: 'Compliance screening', result: '1–2 days → under 5 min' },
+      { what: 'Payment message repair', result: 'under 30 seconds' },
+      { what: 'Credit memo generation', result: '50% less research time' },
+    ],
+  },
+]
 
 export const education = {
   degree: 'B.E. Computer Engineering',

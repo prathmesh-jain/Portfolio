@@ -2,6 +2,7 @@ import type { ReactNode } from 'react'
 import Link from '../components/Link'
 import ProjectCover from '../components/ProjectCover'
 import SectionHead from '../components/SectionHead'
+import { ArrowUpLeft } from '../components/Doodles'
 import type { Project } from '../data/content'
 
 function Part({ title, note, children }: { title: string; note?: string; children: ReactNode }) {
@@ -49,7 +50,10 @@ export default function CaseStudy({ project: p, next }: { project: Project; next
         <div className='print relative min-w-0 rotate-[1.5deg]'>
           <span className='tape -top-3 left-10 -rotate-6' />
           <ProjectCover project={p} />
-          <p className='hand absolute -bottom-10 right-2 -rotate-2 text-[1.5rem] text-pen'>{p.note}</p>
+          <div className='absolute -bottom-12 right-2 flex items-start gap-1 text-pen'>
+            <ArrowUpLeft className='mt-[-14px] h-9 w-12 shrink-0' />
+            <span className='hand -rotate-2 text-[1.5rem]'>{p.note}</span>
+          </div>
         </div>
       </header>
 

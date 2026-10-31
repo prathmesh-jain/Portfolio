@@ -1,6 +1,5 @@
 import SectionHead from './SectionHead'
-import { CurlyArrow } from './Doodles'
-import { education, profile, tcs, toolbox } from '../data/content'
+import { toolbox } from '../data/content'
 
 export default function About() {
   return (
@@ -15,27 +14,8 @@ export default function About() {
             that real people can use without a manual.
           </p>
           <p>
-            At <strong className='font-semibold'>{tcs.company}</strong> I’m a {tcs.role} in the {tcs.team} team, since{' '}
-            {tcs.period.replace(' – now', '')}. {tcs.summary}
-          </p>
-
-          <ul className='space-y-2 border-l-2 border-dashed border-faint pl-5 text-[1.05rem]'>
-            {tcs.highlights.map((h) => (
-              <li key={h.what}>
-                {h.what}: <span className='marker font-semibold'>{h.result}</span>
-              </li>
-            ))}
-          </ul>
-
-          <div className='relative flex items-center gap-3 pt-2'>
-            <a href={profile.resume} target='_blank' rel='noreferrer' className='ink-link font-semibold'>
-              the full story is in my resume (PDF)
-            </a>
-            <CurlyArrow className='hidden h-8 w-14 rotate-[200deg] text-pen sm:block' />
-          </div>
-
-          <p className='text-[1rem] text-pencil'>
-            Before that: {education.degree} at {education.school}, {education.year} ({education.note}).
+            When I’m not at work I’m usually building something on the side, which is where most of the projects above
+            came from. I’d rather ship a small tool people rely on than a flashy demo.
           </p>
         </div>
 
