@@ -74,7 +74,9 @@ export interface Project {
   /** short handwritten margin note */
   note: string
   /** set for team projects so credit is shared honestly */
-  team?: { size: number; myPart: string }
+  team?: { size: number }
+  /** illustration used when there is no screenshot */
+  mock?: 'telegram' | 'memory'
   stack: string[]
   links: { live?: string; liveLabel?: string; github?: string }
   cover: string
@@ -91,8 +93,64 @@ export interface Project {
 
 export const projects: Project[] = [
   {
-    slug: 'bizassist',
+    slug: 'memory-dump',
     index: '01',
+    title: 'Memory Dump',
+    tagline: 'A private memory library that never confuses an AI guess with a fact.',
+    summary:
+      'Upload photos and documents, answer a few optional questions like “Is this Mummy?”, then ask “photos of me with Rohan”. Faces, scenes and documents are read in the background, every answer links to its source, and nothing a model suggests becomes true until you confirm it.',
+    status: 'In development',
+    note: 'AI guesses never become facts',
+    mock: 'memory',
+    stack: ['Next.js', 'FastAPI', 'PostgreSQL', 'pgvector', 'Better Auth', 'Hindsight', 'YuNet + AuraFace', 'OpenAI', 'Oracle Object Storage', 'Docker'],
+    links: {},
+    cover: '',
+    stats: [
+      { value: 'Suggestions only', label: 'no face is auto-assigned to a person' },
+      { value: '512-D', label: 'face embeddings, never sent to an LLM' },
+      { value: '1 bank / user', label: 'isolated long-term memory' },
+      { value: '0 brokers', label: 'Postgres is the job queue' },
+    ],
+    problem: [
+      'Photo apps can find faces, but they don’t know that this face is “Mummy” or that “bhai” and “elder brother” mean the same person. And AI tools that “remember” things mix up what you told them with what they guessed, so you can’t tell which answers to trust. Reject a wrong guess and it comes back next week.',
+      'I wanted a memory app where what you confirmed, what was only suggested and what you rejected stay separate all the way from upload to search.',
+    ],
+    flowTitle: 'Upload once, the worker does the rest',
+    flow: [
+      { title: 'Upload', detail: 'Next.js app; files stream through FastAPI into Oracle object storage, hashed on the way in.', tag: 'client' },
+      { title: 'Job queue', detail: 'Every change and its follow-up job commit in one Postgres transaction; workers claim jobs with SKIP LOCKED.', tag: 'postgres' },
+      { title: 'Worker', detail: 'EXIF + thumbnail, faces (YuNet + AuraFace), pgvector matching, scene descriptions, document text.', tag: 'pipeline' },
+      { title: 'Questions', detail: '“Is this Mummy?” Answers are stored as confirmed, rejected or skipped, never merged.', tag: 'review' },
+      { title: 'Memory & search', detail: 'One Hindsight document per file and person, rendered from the database; results are re-checked before showing.', tag: 'recall' },
+    ],
+    flowNotes: [
+      'Sign-in with Better Auth (Google + email codes); FastAPI only trusts short-lived JWTs it verifies against the JWKS.',
+      'Every table carries user_id and child rows use composite (id, user_id) keys, so the database itself refuses cross-user references.',
+      'Each worker stage is independent: a failed scene description never loses the faces found in the same photo.',
+    ],
+    decisions: [
+      {
+        title: 'Guesses stay guesses',
+        body: 'Unknown isn’t false, skipped isn’t rejected, inferred isn’t confirmed. Face matches are only ever suggestions, and a rejected fact is kept as a tombstone so it can’t be suggested again.',
+      },
+      {
+        title: 'The database is the truth, memory is a projection',
+        body: 'Hindsight never sees raw events. It gets one document per file and person, re-rendered from current state. Search results from stale or deleted documents are dropped, and a generated answer is shown only if every memory behind it still checks out.',
+      },
+      {
+        title: 'Postgres as the queue',
+        body: 'Jobs are enqueued in the same transaction as the change that needs them, so nothing is ever saved without its follow-up work. No extra broker to run or lose messages.',
+      },
+      {
+        title: 'Understand how people actually talk',
+        body: 'Relationship words like “bhai”, “jiju” and “Mummy” map to canonical relations, so “who is my bhai?” is answered straight from your records, even when the memory engine is down.',
+      },
+    ],
+    gallery: [],
+  },
+  {
+    slug: 'bizassist',
+    index: '02',
     title: 'BizAssist',
     tagline: 'A multi-agent business assistant that loads only the tools it needs.',
     summary:
@@ -150,7 +208,7 @@ export const projects: Project[] = [
   },
   {
     slug: 'smartkiranabot',
-    index: '02',
+    index: '03',
     title: 'SmartKiranaBot',
     tagline: 'Running a kirana store’s inventory, billing and khata from Telegram.',
     summary:
@@ -163,6 +221,7 @@ export const projects: Project[] = [
       liveLabel: 'Open in Telegram',
       github: 'https://github.com/prathmesh-jain/SmartKiranaBot',
     },
+    mock: 'telegram',
     cover: '',
     stats: [
       { value: 'Zod', label: 'validated tool calls for every action' },
@@ -198,17 +257,14 @@ export const projects: Project[] = [
   },
   {
     slug: 'transcribe',
-    index: '03',
+    index: '04',
     title: 'Transcribe',
     tagline: 'Turning hours-long spiritual discourses into searchable PDF transcripts.',
     summary:
       'General transcription tools break on long pravachans that switch between Hindi, English and Sanskrit shlokas. Three of us built a service that handles them, and people use it every day.',
     status: 'Live · 25+ daily users',
     note: "25+ people use this every day!",
-    team: {
-      size: 3,
-      myPart: 'I built the whole React frontend (auth, uploads, live job status, history, PDF downloads) and helped out on the backend.',
-    },
+    team: { size: 3 },
     stack: ['React', 'FastAPI', 'Redis', 'PostgreSQL', 'Gemini', 'FFmpeg', 'Langfuse', 'Docker', 'Oracle Cloud', 'Cloudflare'],
     links: { live: 'https://transcribe.contextcrafter.in' },
     cover: '/images/transcribe.webp',
@@ -263,14 +319,14 @@ export const projects: Project[] = [
   },
   {
     slug: 'expensegauge',
-    index: '04',
+    index: '05',
     title: 'ExpenseGauge',
-    tagline: 'An offline-first expense tracker that syncs when the network comes back.',
+    tagline: 'A money tracker that keeps working when the network doesn’t.',
     summary:
-      'A React Native app built for patchy connectivity: every action works offline with optimistic updates, then a background queue reconciles with the server.',
+      'An Expo app for tracking spending across accounts. Writes queue up on the phone and sync when the connection comes back, the server quietly drops duplicates, and balances stay correct because every change runs in a transaction.',
     status: 'Android app · Open source',
-    note: "works with zero signal",
-    stack: ['React Native', 'Expo', 'Node.js', 'Express', 'MongoDB', 'Zustand', 'NativeWind'],
+    note: 'works with zero signal',
+    stack: ['React Native', 'Expo Router', 'TypeScript', 'Zustand', 'Node.js', 'Express 5', 'MongoDB', 'PDFKit', 'Brevo'],
     links: {
       live: 'https://expensegauge.vercel.app',
       github: 'https://github.com/prathmesh-jain/expensegauge-mobile',
@@ -278,28 +334,48 @@ export const projects: Project[] = [
     cover: '/images/expensegauge.webp',
     coverFit: 'contain',
     stats: [
-      { value: 'Offline-first', label: 'local store + background sync queue' },
-      { value: 'JWT', label: 'short-lived access + rotating refresh tokens' },
-      { value: 'Multi-account', label: 'bookkeeping with analytics' },
+      { value: 'Offline queue', label: 'survives restarts, retries with backoff' },
+      { value: 'clientId', label: 'idempotent sync, no duplicate expenses' },
+      { value: 'AES-256-GCM', label: 'expense details encrypted at rest' },
+      { value: 'On-device ML', label: 'Naive Bayes category suggestions' },
     ],
     problem: [
-      'Expense apps that need the network to save a transaction lose entries exactly when you’re out spending: in shops, on trains, in basements.',
+      'Expense apps that need the network to save a transaction lose entries exactly when you’re out spending: in shops, on trains, in basements. And the naive fix, “retry later”, creates a new problem: the same expense saved twice, and balances that slowly drift.',
+      'It also had to handle a second kind of user: an admin who creates accounts for other people, assigns them balances and sees where the money went.',
     ],
-    flowTitle: 'Write locally, sync later',
+    flowTitle: 'Write on the phone, settle on the server',
     flow: [
-      { title: 'Local write', detail: 'Transaction saved on device; UI updates optimistically.', tag: 'device' },
-      { title: 'Sync queue', detail: 'Pending changes queued while offline.', tag: 'queue' },
-      { title: 'Reconcile', detail: 'On reconnect, the queue replays against the API and resolves state.', tag: 'sync' },
-      { title: 'API', detail: 'Express + MongoDB with transactional balance updates.', tag: 'server' },
+      { title: 'Local write', detail: 'The expense is saved on the device and shown at once, tagged with a client-generated ID.', tag: 'device' },
+      { title: 'Offline queue', detail: 'Persisted in AsyncStorage, survives app restarts, retries 5xx / 408 / 429 with backoff and jitter.', tag: 'queue' },
+      { title: 'Express API', detail: 'A unique index on clientId turns a retried request into a no-op instead of a duplicate.', tag: 'idempotent' },
+      { title: 'Transaction', detail: 'Expense, account balance and running balance are written together in one MongoDB transaction.', tag: 'consistent' },
+      { title: 'Reports', detail: 'Monthly stats are cached per user; PDF reports are built with PDFKit and emailed through Brevo.', tag: 'output' },
+    ],
+    flowNotes: [
+      'If a queued expense points at an account deleted in the meantime, it falls back to the Primary account instead of failing the sync.',
+      'Google Sign-In and email login, short-lived access tokens with rotating refresh tokens kept in Secure Store.',
+      'The backend tells the app about updates: OTA, APK or Play Store, optional or forced.',
     ],
     decisions: [
       {
-        title: 'Optimistic by default',
-        body: 'The app never waits for the server to show a change. The sync queue is responsible for eventually making the server agree.',
+        title: 'Make retries harmless',
+        body: 'Offline sync means the same request can arrive twice. Every expense carries a clientId with a unique index behind it, so the server can accept retries forever without creating duplicates.',
       },
       {
-        title: 'Rotating refresh tokens',
-        body: 'Short-lived access tokens with automatic refresh keep sessions secure without logging people out mid-week.',
+        title: 'Store the running balance',
+        body: 'Each transaction saves the balance after it (afterBalance). The app can draw balance history immediately instead of replaying every past transaction.',
+      },
+      {
+        title: 'Refresh the token once',
+        body: 'When the access token expires, only one refresh request goes out. Every other request waits for it and then retries, and the user is logged out only if the refresh itself fails.',
+      },
+      {
+        title: 'Guess categories on the phone, carefully',
+        body: 'A small Naive Bayes model bundled with the app suggests a category as you type, even offline. When it isn’t confident it says “Other” instead of guessing.',
+      },
+      {
+        title: 'Encrypt what’s personal',
+        body: 'Expense details are encrypted with AES-256-GCM in a schema setter, so controllers never deal with it. An idempotent migration encrypted old rows while the app stayed live.',
       },
     ],
     gallery: [

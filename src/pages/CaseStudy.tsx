@@ -30,10 +30,7 @@ export default function CaseStudy({ project: p, next }: { project: Project; next
           <p className='mt-5 text-[1.3rem] leading-snug sm:text-[1.5rem]'>{p.tagline}</p>
           <p className='mt-4 text-pencil'>{p.status}</p>
           {p.team && (
-            <div className='mt-5 max-w-md rotate-[-0.6deg] border-2 border-dashed border-sky p-4'>
-              <div className='hand text-[1.4rem] leading-none text-sky'>team project · {p.team.size} developers</div>
-              <p className='mt-2 text-[0.98rem] leading-relaxed'>{p.team.myPart}</p>
-            </div>
+            <p className='hand mt-3 text-[1.45rem] text-sky'>a team project, built by {p.team.size} of us</p>
           )}
           <div className='mt-7 flex flex-wrap gap-x-6 gap-y-3'>
             {p.links.live && (

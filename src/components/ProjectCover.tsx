@@ -1,11 +1,12 @@
 import ChatMock from './ChatMock'
+import MemoryMock from './MemoryMock'
 import type { Project } from '../data/content'
 
 export default function ProjectCover({ project, className = '' }: { project: Project; className?: string }) {
   if (!project.cover) {
     return (
       <div className={`overflow-hidden ${className}`}>
-        <ChatMock />
+        {project.mock === 'memory' ? <MemoryMock /> : <ChatMock />}
       </div>
     )
   }

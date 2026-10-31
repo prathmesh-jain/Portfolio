@@ -46,11 +46,6 @@ export default function Work() {
                 <h3 className='text-[2rem] font-semibold tracking-[-0.02em] sm:text-[2.4rem]'>{p.title}</h3>
                 <p className='mt-2 text-[1.15rem] leading-snug'>{p.tagline}</p>
                 <p className='mt-4 leading-relaxed text-pencil'>{p.summary}</p>
-                {p.team && (
-                  <p className='mt-3 border-l-2 border-sky pl-3 text-[0.98rem] leading-relaxed'>
-                    <span className='font-semibold'>My part:</span> {p.team.myPart.replace(/^I /, '')}
-                  </p>
-                )}
 
                 <p className='mt-5 text-[0.92rem] text-pencil'>{p.stack.slice(0, 5).join(' · ')}</p>
 
