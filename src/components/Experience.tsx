@@ -1,128 +1,77 @@
-import React from 'react'
-import { motion } from 'motion/react'
+import { FaChevronDown } from 'react-icons/fa'
+import Reveal from './Reveal'
+import SectionHeader from './SectionHeader'
+import { tcs } from '../data/content'
 
-interface ExperienceItem {
-  company: string
-  role: string
-  team: string
-  duration: string
-  description: string
-  techStack: string[]
-  logo?: string
-}
-
-const workExperience: ExperienceItem[] = [
-  {
-    company: 'Tata Consultancy Services (TCS)',
-    role: 'Full Stack AI Engineer',
-    team: 'BFSI Americas · Research & Innovation',
-    duration: 'Oct 2024 - Present',
-    description:
-      'Building production-grade AI systems and full-stack applications within the BFSI Americas CTO team. I design stateful, multi-step agentic workflows with LangChain, LangGraph, and CrewAI, integrate real-time search and web automation exposed through MCP, and ship RAG-backed FastAPI services behind React frontends with strong reliability, monitoring, and cost controls.',
-    techStack: [
-      'React.js',
-      'TypeScript',
-      'Python',
-      'FastAPI',
-      'LangChain',
-      'LangGraph',
-      'CrewAI',
-      'RAG',
-      'MCP',
-      'Playwright',
-      'SSE',
-    ],
-    logo: '/images/tcs.webp',
-  },
-]
-
-const Experience: React.FC = () => {
+export default function Experience() {
   return (
-    <section id='experience' className='relative px-5 pb-12 pt-18 md:px-10 xl:px-20'>
-      <div className='mx-auto max-w-7xl'>
-        <div className='max-w-3xl text-left'>
-          <div className='section-kicker'>Experience</div>
-          <h2 className='section-title mt-4 font-poppins text-4xl font-semibold tracking-[-0.03em] sm:text-5xl'>
-            Experience grounded in shipping usable systems.
-          </h2>
-          <p className='section-copy mt-5 text-base leading-8 sm:text-lg'>
-            My current role combines full-stack product development, applied AI systems, and the UX details that make
-            complex tools easier to use.
-          </p>
-        </div>
+    <section id='experience' className='mx-auto max-w-6xl scroll-mt-20 px-5 py-24 md:px-8'>
+      <SectionHeader
+        index='02'
+        label='Experience'
+        title='Agents for banks, built to survive an audit.'
+        intro={tcs.intro}
+      />
 
-        <div className='relative mt-10'>
-          <div
-            className='absolute left-4 top-0 hidden h-full w-px sm:block'
-            style={{ background: 'linear-gradient(180deg, transparent, var(--border-strong), transparent)' }}
-          />
-
-          {workExperience.map((experience, index) => (
-            <motion.article
-              key={experience.company}
-              initial={{ opacity: 0, y: 28 }}
-              whileInView={{ opacity: 1, y: 0 }}
-              viewport={{ once: true, margin: '-80px' }}
-              transition={{ duration: 0.45, delay: index * 0.08 }}
-              className='relative mb-8 sm:pl-14'
-            >
-              <div
-                className='absolute left-[0.38rem] top-8 hidden h-5 w-5 rounded-full sm:block'
-                style={{
-                  background: 'var(--bg)',
-                  border: '4px solid var(--accent)',
-                  boxShadow: '0 0 0 8px var(--accent-soft)',
-                }}
-              />
-
-              <div className='glass-panel rounded-4xl p-6 text-left sm:p-8'>
-                <div className='flex flex-col gap-5 md:flex-row md:items-start md:justify-between'>
-                  <div className='flex items-center gap-4'>
-                    {experience.logo && (
-                      <div
-                        className='flex h-14 w-14 shrink-0 items-center justify-center overflow-hidden rounded-2xl'
-                        style={{ background: 'var(--surface-soft)', border: '1px solid var(--border)' }}
-                      >
-                        <img src={experience.logo} alt={experience.company} className='h-full w-full object-cover' />
-                      </div>
-                    )}
-
-                    <div>
-                      <h3 className='font-poppins text-2xl font-semibold' style={{ color: 'var(--text-primary)' }}>
-                        {experience.role}
-                      </h3>
-                      <p className='mt-1 text-sm font-medium sm:text-base' style={{ color: 'var(--text-secondary)' }}>
-                        {experience.company}
-                      </p>
-                      <p className='mt-1 text-xs uppercase tracking-[0.2em] sm:text-sm' style={{ color: 'var(--text-soft)' }}>
-                        {experience.team}
-                      </p>
-                    </div>
-                  </div>
-
-                  <div className='tag-chip w-fit rounded-full px-4 py-2 text-xs font-semibold sm:text-sm'>
-                    {experience.duration}
-                  </div>
-                </div>
-
-                <p className='mt-6 text-sm leading-8 sm:text-base' style={{ color: 'var(--text-muted)' }}>
-                  {experience.description}
-                </p>
-
-                <div className='mt-6 flex flex-wrap gap-2'>
-                  {experience.techStack.map((tech) => (
-                    <span key={tech} className='tag-chip rounded-full px-3 py-1 text-xs font-medium sm:text-sm'>
-                      {tech}
-                    </span>
-                  ))}
-                </div>
+      <div className='mt-12 md:ml-[212px]'>
+        <Reveal className='flex flex-col gap-4 sm:flex-row sm:items-center sm:justify-between'>
+          <div className='flex items-center gap-4'>
+            <img src='/images/tcs.webp' alt='' className='h-11 w-11 rounded-lg border border-line object-cover' />
+            <div>
+              <div className='font-display text-xl font-semibold'>{tcs.role}</div>
+              <div className='text-sm text-muted'>
+                {tcs.company} · <span className='text-soft'>{tcs.team}</span>
               </div>
-            </motion.article>
+            </div>
+          </div>
+          <div className='font-mono text-xs text-soft'>{tcs.period}</div>
+        </Reveal>
+
+        <div className='mt-8 divide-y divide-line border-y border-line'>
+          {tcs.streams.map((s, i) => (
+            <Reveal key={s.name} delay={i * 0.05}>
+              <details className='group py-6' open={i === 0}>
+                <summary className='flex cursor-pointer list-none items-start justify-between gap-6 [&::-webkit-details-marker]:hidden'>
+                  <div>
+                    <h3 className='font-display text-lg font-semibold sm:text-xl'>{s.name}</h3>
+                    <p className='mt-2 max-w-2xl text-[0.95rem] leading-7 text-muted'>{s.problem}</p>
+                    <p className='mt-3 flex gap-2 text-[0.95rem] font-medium leading-7 text-ink'>
+                      <span className='text-accent' aria-hidden='true'>→</span>
+                      {s.result}
+                    </p>
+                  </div>
+                  <span className='mt-1.5 grid h-7 w-7 shrink-0 place-items-center rounded-full border border-line text-soft transition-transform group-open:rotate-180'>
+                    <FaChevronDown size={10} />
+                    <span className='sr-only'>Toggle details</span>
+                  </span>
+                </summary>
+                <div className='mt-5 rounded-lg border border-line bg-surface p-5'>
+                  <div className='label'>How it works</div>
+                  <ul className='mt-3 space-y-2.5'>
+                    {s.built.map((b) => (
+                      <li key={b} className='flex gap-3 text-[0.92rem] leading-7 text-muted'>
+                        <span className='mt-[0.7rem] h-1 w-1 shrink-0 rounded-full bg-soft' aria-hidden='true' />
+                        {b}
+                      </li>
+                    ))}
+                  </ul>
+                  <div className='mt-4 font-mono text-[0.72rem] text-soft'>{s.stack.join(' · ')}</div>
+                </div>
+              </details>
+            </Reveal>
           ))}
         </div>
+
+        <Reveal className='mt-10 flex flex-col gap-1 sm:flex-row sm:items-baseline sm:justify-between'>
+          <div>
+            <div className='label'>Education</div>
+            <div className='mt-2 text-[0.95rem]'>
+              B.E. Computer Engineering · Vidyalankar Institute of Technology, Mumbai
+            </div>
+          </div>
+          <div className='font-mono text-xs text-soft'>2024 · GPA 9.2 / 10</div>
+        </Reveal>
       </div>
     </section>
   )
 }
-
-export default Experience

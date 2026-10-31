@@ -11,6 +11,17 @@
   <link rel="manifest" href="/site.webmanifest">
   <!-- Viewport -->
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="theme-color" content="#0e0d0c" />
+  <!-- Set theme before first paint to avoid a flash -->
+  <script>
+    (function () {
+      try {
+        var t = localStorage.getItem('portfolio-theme');
+        if (t !== 'dark' && t !== 'light') t = matchMedia('(prefers-color-scheme: light)').matches ? 'light' : 'dark';
+        document.documentElement.dataset.theme = t;
+      } catch (e) { document.documentElement.dataset.theme = 'dark'; }
+    })();
+  </script>
   <!-- Google Search Console -->
   <meta name="google-site-verification" content="RWrPO7WG-LDISpreKckarFqVZmnP21yuca7B9q-E_D0" />
   <!-- Basic SEO -->
