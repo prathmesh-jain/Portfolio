@@ -29,7 +29,7 @@ const App = () => {
     if (!greeted) {
       greeted = true
       console.log(
-        '%chey, you opened devtools.%c\nThe source is on GitHub: https://github.com/prathmesh-jain/Portfolio\nOr skip the inspecting and just email me: ' + profile.email,
+        '%chey, you opened devtools.%c\nSkip the inspecting and just email me: ' + profile.email,
         'font: 600 16px sans-serif; color: #d63b2a',
         'font: 13px sans-serif',
       )

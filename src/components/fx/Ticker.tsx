@@ -14,7 +14,7 @@ export default function Ticker({ items, reverse = false, tilt = -1.5 }: { items:
           {row.map((item, i) => (
             <span key={i} className='hand flex items-center gap-8 text-[1.7rem] leading-none text-ink'>
               {item}
-              <span className='text-pen'>✳</span>
+              <span className='h-1.5 w-1.5 rounded-full bg-pen' />
             </span>
           ))}
         </motion.div>

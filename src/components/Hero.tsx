@@ -5,7 +5,7 @@ import HandWrite from './fx/HandWrite'
 import Words from './fx/Words'
 import Print from './fx/Print'
 import Link from './Link'
-import { ArrowLeft, Star } from './Doodles'
+import { Star } from './Doodles'
 import { profile } from '../data/content'
 
 const rise = (delay: number) => ({
@@ -54,7 +54,7 @@ export default function Hero() {
             </Link>
           </Magnetic>
           <a href={`mailto:${profile.email}`} className='ink-link'>
-            or just email me, I don’t bite
+            or just email me
           </a>
         </motion.div>
       </div>
@@ -78,13 +78,6 @@ export default function Hero() {
             <HandWrite delay={1.3}>me, up in the hills</HandWrite>
           </figcaption>
         </Print>
-        {/* margin joke pointing at the photo */}
-        <div className='absolute -left-40 bottom-16 hidden items-center gap-1 text-pen lg:flex'>
-          <span className='hand -rotate-6 text-[1.45rem] leading-tight'>
-            <HandWrite onView={false} delay={1.9}>proof I touch grass</HandWrite>
-          </span>
-          <ArrowLeft delay={2.4} className='h-6 w-12 -scale-x-100' />
-        </div>
         <motion.div
           className='absolute -right-5 -top-6 h-9 w-9 text-sky'
           initial={{ rotate: 12 }}
