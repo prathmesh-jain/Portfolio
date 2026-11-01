@@ -5,7 +5,7 @@ export default function Ticker({ items, reverse = false, tilt = -1.5 }: { items:
   const row = [...items, ...items]
   return (
     <div className='relative -mx-4 overflow-hidden py-6' style={{ transform: `rotate(${tilt}deg)` }} aria-hidden='true'>
-      <div className='border-y-2 border-dashed border-ink/15 bg-[#efe7cf]/70 py-3'>
+      <div className='border-y-2 border-dashed border-ink/15 bg-strip py-3'>
         <motion.div
           className='flex w-max gap-8 whitespace-nowrap'
           animate={{ x: reverse ? ['-50%', '0%'] : ['0%', '-50%'] }}

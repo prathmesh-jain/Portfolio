@@ -12,6 +12,16 @@
   <!-- Viewport -->
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <meta name="theme-color" content="#fdfdfb" />
+  <!-- pick the theme before the first paint (saved choice, else the OS setting) so there's no flash -->
+  <script>
+    (function () {
+      var t
+      try { t = localStorage.getItem('theme') } catch (e) {}
+      if (t !== 'dark' && t !== 'light') t = matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light'
+      document.documentElement.dataset.theme = t
+      if (t === 'dark') document.querySelector('meta[name="theme-color"]').setAttribute('content', '#15171c')
+    })()
+  </script>
   <!-- Google Search Console -->
   <meta name="google-site-verification" content="RWrPO7WG-LDISpreKckarFqVZmnP21yuca7B9q-E_D0" />
   <meta name="author" content="Prathmesh Jain" />

@@ -1,12 +1,13 @@
 import { useEffect, useState } from 'react'
 import { motion } from 'motion/react'
 import Link from './Link'
+import ThemeToggle from './ThemeToggle'
 import { useLocation } from 'react-router'
 import { profile } from '../data/content'
 
-const sections = [
+const sections: { id: string; label: string; hideOnMobile?: boolean; hideOnTiny?: boolean }[] = [
   { id: 'work', label: 'work' },
-  { id: 'experience', label: 'experience' },
+  { id: 'experience', label: 'experience', hideOnTiny: true },
   { id: 'about', label: 'about', hideOnMobile: true },
   { id: 'contact', label: 'say hi', hideOnMobile: true },
 ]
@@ -50,7 +51,7 @@ export default function Nav() {
         <nav aria-label='Main'>
           <ul className='flex items-center gap-0.5 text-[0.88rem] sm:gap-3 sm:text-[0.95rem]'>
             {sections.map((s) => (
-              <li key={s.id} className={s.hideOnMobile ? 'hidden sm:block' : ''}>
+              <li key={s.id} className={s.hideOnMobile ? 'hidden sm:block' : s.hideOnTiny ? 'hidden min-[360px]:block' : ''}>
                 <Link
                   to={`/#${s.id}`}
                   aria-current={active === s.id ? 'true' : undefined}
@@ -84,6 +85,9 @@ export default function Nav() {
               <a href={profile.resume} target='_blank' rel='noreferrer' className='ink-link ml-0.5 block px-1 py-1 sm:ml-1'>
                 resume
               </a>
+            </li>
+            <li>
+              <ThemeToggle />
             </li>
           </ul>
         </nav>
