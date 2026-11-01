@@ -1,326 +1,146 @@
-import React, { useRef, useState } from 'react'
+import { useRef, useState, type FormEvent } from 'react'
 import emailjs from '@emailjs/browser'
-import { motion } from 'motion/react'
-import { FaGithub, FaHome, FaLinkedin } from 'react-icons/fa'
+import SectionHead from './SectionHead'
+import Magnetic from './fx/Magnetic'
+import HandWrite from './fx/HandWrite'
+import { Squiggle } from './Doodles'
+import { profile } from '../data/content'
 
-type ContactFormErrors = Partial<Record<'firstName' | 'user_email' | 'phone' | 'message', string>>
-type SubmissionResult = 'success' | 'error' | null
+type Errors = Partial<Record<'firstName' | 'user_email' | 'message', string>>
+type Status = 'idle' | 'sending' | 'sent' | 'error'
 
-const socialLinks = [
-  {
-    label: 'LinkedIn',
-    href: 'https://www.linkedin.com/in/prathmeshjain22',
-    icon: <FaLinkedin size={16} />,
-  },
-  {
-    label: 'GitHub',
-    href: 'https://github.com/prathmesh-jain',
-    icon: <FaGithub size={16} />,
-  },
-  {
-    label: 'LeetCode',
-    href: 'https://leetcode.com/spider_22/',
-    icon: <img src='/icons/leetcode.png' alt='' className='h-4 w-4 rounded-sm object-cover' />,
-  },
-]
+const EMAILJS_SERVICE_ID = import.meta.env.VITE_EMAILJS_SERVICE_ID
+const EMAILJS_TEMPLATE_ID = import.meta.env.VITE_EMAILJS_TEMPLATE_ID
+const EMAILJS_PUBLIC_KEY = import.meta.env.VITE_EMAILJS_PUBLIC_KEY
 
-const Contact: React.FC = () => {
+const validate = (form: HTMLFormElement): Errors => {
+  const data = new FormData(form)
+  const errors: Errors = {}
+  if (!String(data.get('firstName') ?? '').trim()) errors.firstName = 'a name would be nice. even a fake one.'
+  if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(String(data.get('user_email') ?? '').trim()))
+    errors.user_email = 'that email looks… creative. try again?'
+  if (String(data.get('message') ?? '').trim().length < 4) errors.message = 'a few more words, please. I can’t read minds (yet).'
+  return errors
+}
+
+export default function Contact() {
   const form = useRef<HTMLFormElement>(null)
-  const [submissionResult, setSubmissionResult] = useState<SubmissionResult>(null)
-  const [errors, setErrors] = useState<ContactFormErrors>({})
-  const [loading, setLoading] = useState(false)
+  const [errors, setErrors] = useState<Errors>({})
+  const [status, setStatus] = useState<Status>('idle')
 
-  const EMAILJS_SERVICE_ID = import.meta.env.VITE_EMAILJS_SERVICE_ID
-  const EMAILJS_TEMPLATE_ID = import.meta.env.VITE_EMAILJS_TEMPLATE_ID
-  const EMAILJS_PUBLIC_KEY = import.meta.env.VITE_EMAILJS_PUBLIC_KEY
-
-  const validateForm = (formElement: HTMLFormElement): ContactFormErrors => {
-    const formData = new FormData(formElement)
-    const firstName = String(formData.get('firstName') ?? '').trim()
-    const email = String(formData.get('user_email') ?? '').trim()
-    const phone = String(formData.get('phone') ?? '').trim()
-    const message = String(formData.get('message') ?? '').trim()
-    const nextErrors: ContactFormErrors = {}
-    const emailPattern = /^[^\s@]+@[^\s@]+\.[^\s@]+$/
-    const phoneCharactersPattern = /^\+?\d+$/
-    const phoneDigits = phone.replace(/^\+/, '')
-
-    if (!firstName) {
-      nextErrors.firstName = 'Please enter your first name.'
-    }
-
-    if (!emailPattern.test(email)) {
-      nextErrors.user_email = 'Please enter a valid email address.'
-    }
-
-    if (phone && !phoneCharactersPattern.test(phone)) {
-      nextErrors.phone = 'Use digits only, with an optional + at the start.'
-    } else if (phone && phoneDigits.length < 7) {
-      nextErrors.phone = 'Phone number should have at least 7 digits.'
-    } else if (phone && phoneDigits.length > 15) {
-      nextErrors.phone = 'Phone number should not be longer than 15 digits.'
-    }
-
-    if (message.length <= 3) {
-      nextErrors.message = 'Message should be longer than 3 characters.'
-    }
-
-    return nextErrors
-  }
-
-  const sendEmail = (e: React.FormEvent<HTMLFormElement>) => {
+  const onSubmit = (e: FormEvent<HTMLFormElement>) => {
     e.preventDefault()
     if (!form.current) return
-
-    const validationErrors = validateForm(form.current)
-    setErrors(validationErrors)
-
-    if (Object.keys(validationErrors).length > 0) {
-      return
-    }
-
-    setLoading(true)
+    const next = validate(form.current)
+    setErrors(next)
+    if (Object.keys(next).length) return
+    setStatus('sending')
     emailjs
       .sendForm(EMAILJS_SERVICE_ID, EMAILJS_TEMPLATE_ID, form.current, EMAILJS_PUBLIC_KEY)
       .then(() => {
-        if (form.current) form.current.reset()
-        setErrors({})
-        setSubmissionResult('success')
+        form.current?.reset()
+        setStatus('sent')
       })
-      .catch((error) => {
-        console.error('Email sending failed:', error)
-        setSubmissionResult('error')
-      })
-      .finally(() => {
-        setLoading(false)
+      .catch((err) => {
+        console.error('Email sending failed:', err)
+        setStatus('error')
       })
   }
 
   return (
-    <section id='contact' className='relative px-5 pb-16 pt-18 md:px-10 xl:px-20'>
-      <div className='mx-auto max-w-7xl'>
-        <div className='max-w-3xl text-left'>
-          <div className='section-kicker'>Contact</div>
-          <h2 className='section-title mt-4 font-poppins text-4xl font-semibold tracking-[-0.03em] sm:text-5xl'>
-            Let&apos;s build something useful together.
-          </h2>
-          <p className='section-copy mt-5 text-base leading-8 sm:text-lg'>
-            I&apos;m open to full-time opportunities, freelance work, and conversations around product, frontend, and
-            applied AI.
+    <section id='contact' className='wrap scroll-mt-20 pb-24'>
+      <SectionHead title='Say hi' note='I read everything. yes, even the long ones.' />
+
+      <div className='mt-12 grid grid-cols-1 gap-14 md:grid-cols-[1.1fr_0.9fr]'>
+        <div className='min-w-0'>
+          <p className='max-w-lg text-[1.15rem] leading-[1.7]'>
+            I’m open to full-time roles and interesting freelance work in applied AI and full stack. Email is the
+            fastest way to reach me. Carrier pigeons are slower, but I’ll still reply.
           </p>
+          <a
+            href={`mailto:${profile.email}`}
+            className='relative mt-8 inline-block break-all text-[1.35rem] font-semibold hover:text-pen sm:text-[1.9rem]'
+          >
+            {profile.email}
+            <Squiggle className='absolute -bottom-3 left-0 h-3 w-full text-pen' />
+          </a>
+          <div className='mt-10 flex gap-6'>
+            <a href={profile.links.linkedin} target='_blank' rel='noreferrer' className='ink-link'>LinkedIn</a>
+            <a href={profile.links.github} target='_blank' rel='noreferrer' className='ink-link'>GitHub</a>
+            <a href={profile.resume} target='_blank' rel='noreferrer' className='ink-link'>Resume</a>
+          </div>
         </div>
 
-        <div className='mt-10 grid gap-6 lg:grid-cols-[0.9fr_1.1fr]'>
-          <motion.div
-            initial={{ opacity: 0, y: 24 }}
-            whileInView={{ opacity: 1, y: 0 }}
-            viewport={{ once: true, margin: '-80px' }}
-            transition={{ duration: 0.45 }}
-            className='glass-panel rounded-4xl p-6 text-left sm:p-8'
-          >
-            <div className='section-kicker'>Availability</div>
-            <h3 className='mt-4 font-poppins text-2xl font-semibold' style={{ color: 'var(--text-primary)' }}>
-              Based in Mumbai, working across full-stack and AI projects.
-            </h3>
-            <p className='mt-4 text-sm leading-8 sm:text-base' style={{ color: 'var(--text-muted)' }}>
-              If you have a role, collaboration, or product idea in mind, send me a message. I enjoy building
-              interfaces that feel polished and backend systems that stay dependable in production.
+        <div className='min-w-0'>
+          {status === 'sent' ? (
+            <p className='hand text-[2rem] text-pen'>
+              <HandWrite onView={false} duration={1.2}>
+                got it! I’ll write back soon. probably before you refresh.
+              </HandWrite>
             </p>
-
-            <div className='soft-panel mt-6 rounded-[1.6rem] p-5'>
-              <div className='flex items-start gap-3'>
-                <div
-                  className='inline-flex h-11 w-11 items-center justify-center rounded-2xl'
-                  style={{ background: 'var(--chip-bg)', color: 'var(--text-primary)' }}
+          ) : (
+            <form ref={form} onSubmit={onSubmit} noValidate className='space-y-6'>
+              <p className='hand text-[1.6rem] text-pencil'>or leave a note here…</p>
+              {(
+                [
+                  { name: 'firstName', label: 'your name (the real one)', type: 'text', auto: 'name' },
+                  { name: 'user_email', label: 'your email (I actually reply)', type: 'email', auto: 'email' },
+                ] as const
+              ).map((f) => (
+                <div key={f.name}>
+                  <label htmlFor={f.name} className='sr-only'>
+                    {f.label}
+                  </label>
+                  <input
+                    id={f.name}
+                    name={f.name}
+                    type={f.type}
+                    autoComplete={f.auto}
+                    placeholder={f.label}
+                    aria-invalid={Boolean(errors[f.name])}
+                    className='field'
+                  />
+                  {errors[f.name] && <p className='hand mt-1 text-[1.2rem] text-pen'>{errors[f.name]}</p>}
+                </div>
+              ))}
+              <div>
+                <label htmlFor='message' className='sr-only'>
+                  Message
+                </label>
+                <textarea
+                  id='message'
+                  name='message'
+                  rows={3}
+                  placeholder='what’s on your mind? job offers go to the top of the pile'
+                  aria-invalid={Boolean(errors.message)}
+                  className='field resize-none'
+                />
+                {errors.message && <p className='hand mt-1 text-[1.2rem] text-pen'>{errors.message}</p>}
+              </div>
+              <Magnetic>
+                <button
+                  type='submit'
+                  disabled={status === 'sending'}
+                  className='group/btn relative overflow-hidden rounded-[255px_15px_225px_15px/15px_225px_15px_255px] border-2 border-ink px-5 py-2.5 font-semibold disabled:opacity-60'
                 >
-                  <FaHome size={16} />
-                </div>
-                <div>
-                  <div className='text-sm font-semibold' style={{ color: 'var(--text-primary)' }}>
-                    Location
-                  </div>
-                  <div className='mt-1 text-sm leading-7' style={{ color: 'var(--text-muted)' }}>
-                    Mumbai, Maharashtra, India
-                  </div>
-                </div>
-              </div>
-            </div>
-
-            <div className='mt-6'>
-              <div className='section-kicker'>Socials</div>
-              <div className='mt-4 flex flex-wrap gap-3'>
-                {socialLinks.map((social) => (
-                  <motion.a
-                    key={social.label}
-                    href={social.href}
-                    target='_blank'
-                    rel='noopener noreferrer'
-                    whileHover={{ y: -2 }}
-                    whileTap={{ scale: 0.98 }}
-                    transition={{ type: 'spring', stiffness: 320, damping: 22 }}
-                    className='secondary-button inline-flex items-center gap-2 rounded-full px-4 py-2 text-sm font-medium'
-                  >
-                    <span className='icon-shell icon-shell--sm'>{social.icon}</span>
-                    {social.label}
-                  </motion.a>
-                ))}
-              </div>
-            </div>
-          </motion.div>
-
-          <motion.form
-            ref={form}
-            onSubmit={sendEmail}
-            noValidate
-            initial={{ opacity: 0, y: 24 }}
-            whileInView={{ opacity: 1, y: 0 }}
-            viewport={{ once: true, margin: '-80px' }}
-            transition={{ duration: 0.45, delay: 0.06 }}
-            className='glass-panel rounded-4xl p-6 text-left sm:p-8'
-          >
-            <div className='grid gap-6 md:grid-cols-2'>
-              <div>
-                <label htmlFor='firstName' className='mb-2 block pl-1 text-sm font-semibold' style={{ color: 'var(--text-secondary)' }}>
-                  First name
-                </label>
-                <input
-                  type='text'
-                  id='firstName'
-                  name='firstName'
-                  autoComplete='given-name'
-                  aria-invalid={Boolean(errors.firstName)}
-                  aria-describedby={errors.firstName ? 'firstName-error' : undefined}
-                  className='field-input w-full rounded-2xl px-4 py-3'
-                />
-                {errors.firstName && (
-                  <p id='firstName-error' className='mt-2 pl-1 text-xs' style={{ color: '#f87171' }}>
-                    {errors.firstName}
-                  </p>
-                )}
-              </div>
-
-              <div>
-                <label htmlFor='lastName' className='mb-2 block pl-1 text-sm font-semibold' style={{ color: 'var(--text-secondary)' }}>
-                  Last name
-                </label>
-                <input
-                  type='text'
-                  id='lastName'
-                  name='lastName'
-                  autoComplete='family-name'
-                  className='field-input w-full rounded-2xl px-4 py-3'
-                />
-              </div>
-            </div>
-
-            <div className='mt-6'>
-              <label htmlFor='user_email' className='mb-2 block pl-1 text-sm font-semibold' style={{ color: 'var(--text-secondary)' }}>
-                Email
-              </label>
-              <input
-                type='email'
-                id='user_email'
-                name='user_email'
-                autoComplete='email'
-                aria-invalid={Boolean(errors.user_email)}
-                aria-describedby={errors.user_email ? 'user_email-error' : undefined}
-                className='field-input w-full rounded-2xl px-4 py-3'
-              />
-              {errors.user_email && (
-                <p id='user_email-error' className='mt-2 pl-1 text-xs' style={{ color: '#f87171' }}>
-                  {errors.user_email}
+                  <span
+                    aria-hidden='true'
+                    className='absolute inset-0 translate-y-full bg-ink transition-transform duration-300 ease-out group-hover/btn:translate-y-0'
+                  />
+                  <span className='relative transition-colors duration-300 group-hover/btn:text-paper'>
+                    {status === 'sending' ? 'sending…' : 'send it ✈'}
+                  </span>
+                </button>
+              </Magnetic>
+              {status === 'error' && (
+                <p className='hand text-[1.3rem] text-pen' role='alert'>
+                  well, that broke. ironic, for a developer’s site. please email me directly.
                 </p>
               )}
-            </div>
-
-            <div className='mt-6'>
-              <label htmlFor='phone' className='mb-2 block pl-1 text-sm font-semibold' style={{ color: 'var(--text-secondary)' }}>
-                Phone number
-              </label>
-              <input
-                type='tel'
-                id='phone'
-                name='phone'
-                autoComplete='tel'
-                inputMode='tel'
-                placeholder='+919876543210'
-                aria-invalid={Boolean(errors.phone)}
-                aria-describedby={errors.phone ? 'phone-error' : undefined}
-                className='field-input w-full rounded-2xl px-4 py-3'
-              />
-              {errors.phone && (
-                <p id='phone-error' className='mt-2 pl-1 text-xs' style={{ color: '#f87171' }}>
-                  {errors.phone}
-                </p>
-              )}
-            </div>
-
-            <div className='mt-6'>
-              <label htmlFor='message' className='mb-2 block pl-1 text-sm font-semibold' style={{ color: 'var(--text-secondary)' }}>
-                Message
-              </label>
-              <textarea
-                id='message'
-                name='message'
-                rows={5}
-                autoComplete='off'
-                aria-invalid={Boolean(errors.message)}
-                aria-describedby={errors.message ? 'message-error' : undefined}
-                className='field-input w-full resize-none rounded-2xl px-4 py-3'
-              />
-              {errors.message && (
-                <p id='message-error' className='mt-2 pl-1 text-xs' style={{ color: '#f87171' }}>
-                  {errors.message}
-                </p>
-              )}
-            </div>
-
-            <div className='mt-8 flex justify-end'>
-              <motion.button
-                whileHover={{ y: -2 }}
-                whileTap={{ scale: 0.98 }}
-                type='submit'
-                disabled={loading}
-                className='accent-button rounded-2xl px-6 py-3 text-sm font-semibold disabled:cursor-not-allowed disabled:opacity-60'
-              >
-                {loading ? 'Sending...' : 'Send message'}
-              </motion.button>
-            </div>
-          </motion.form>
+            </form>
+          )}
         </div>
       </div>
-
-      {submissionResult && (
-        <div className='fixed inset-0 z-50 flex items-center justify-center px-4' role='presentation'>
-          <div className='absolute inset-0' style={{ background: 'var(--overlay)', backdropFilter: 'blur(14px)' }} />
-          <motion.div
-            initial={{ opacity: 0, scale: 0.96, y: 12 }}
-            animate={{ opacity: 1, scale: 1, y: 0 }}
-            className='glass-panel relative w-full max-w-md rounded-[1.8rem] p-6 text-center sm:p-7'
-            role='dialog'
-            aria-modal='true'
-            aria-labelledby='contact-result-title'
-          >
-            <h3 id='contact-result-title' className='font-poppins text-2xl font-semibold' style={{ color: 'var(--text-primary)' }}>
-              {submissionResult === 'success' ? 'Message received' : 'Message not sent'}
-            </h3>
-            <p className='mt-3 text-sm leading-7' style={{ color: 'var(--text-muted)' }}>
-              {submissionResult === 'success'
-                ? 'Thanks for reaching out. I have your message and will get back to you soon.'
-                : 'Something went wrong while sending your message. Please try again in a moment.'}
-            </p>
-            <button
-              type='button'
-              onClick={() => setSubmissionResult(null)}
-              className='accent-button mt-6 rounded-2xl px-5 py-3 text-sm font-semibold'
-            >
-              Close
-            </button>
-          </motion.div>
-        </div>
-      )}
     </section>
   )
 }
-
-export default Contact

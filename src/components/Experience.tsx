@@ -1,128 +1,114 @@
-import React from 'react'
-import { motion } from 'motion/react'
+import Marker from './fx/Marker'
+import { useRef } from 'react'
+import { motion, useScroll, useSpring } from 'motion/react'
+import SectionHead from './SectionHead'
+import Reveal from './fx/Reveal'
+import HandWrite from './fx/HandWrite'
+import { ArrowLeft, Ring } from './Doodles'
+import { education, experience, profile } from '../data/content'
 
-interface ExperienceItem {
-  company: string
-  role: string
-  team: string
-  duration: string
-  description: string
-  techStack: string[]
-  logo?: string
+function Entry({
+  when,
+  current,
+  children,
+}: {
+  when: string
+  current?: boolean
+  children: React.ReactNode
+}) {
+  return (
+    <li className='relative grid grid-cols-1 gap-x-10 gap-y-2 pb-14 pl-9 last:pb-0 md:grid-cols-[170px_1fr] md:pl-0'>
+      {/* marker sits on the dashed line */}
+      <motion.span
+        className='absolute left-0 top-1 z-10 h-5 w-5 rounded-full bg-paper md:left-[178px]'
+        initial={{ scale: 0.4 }}
+        whileInView={{ scale: 1 }}
+        viewport={{ once: true, margin: '-120px' }}
+        transition={{ type: 'spring', stiffness: 300, damping: 12 }}
+      >
+        <Ring className={`h-5 w-5 ${current ? 'text-pen' : 'text-pencil'}`} />
+        {current && (
+          <span className='absolute inset-0 animate-ping rounded-full border border-pen/40' aria-hidden='true' />
+        )}
+      </motion.span>
+      <motion.div
+        className='hand text-[1.45rem] leading-tight text-pencil md:pt-0.5 md:text-right'
+        initial={{ opacity: 0, x: -12 }}
+        whileInView={{ opacity: 1, x: 0 }}
+        viewport={{ once: true, margin: '-80px' }}
+        transition={{ duration: 0.5 }}
+      >
+        {when}
+        {current && <span className='ml-2 text-pen md:ml-0 md:block'>(current)</span>}
+      </motion.div>
+      <Reveal className='min-w-0 md:pl-14'>{children}</Reveal>
+    </li>
+  )
 }
 
-const workExperience: ExperienceItem[] = [
-  {
-    company: 'Tata Consultancy Services (TCS)',
-    role: 'Full Stack AI Engineer',
-    team: 'BFSI Americas · Research & Innovation',
-    duration: 'Oct 2024 - Present',
-    description:
-      'Building production-grade AI systems and full-stack applications within the BFSI Americas CTO team. I design stateful, multi-step agentic workflows with LangChain, LangGraph, and CrewAI, integrate real-time search and web automation exposed through MCP, and ship RAG-backed FastAPI services behind React frontends with strong reliability, monitoring, and cost controls.',
-    techStack: [
-      'React.js',
-      'TypeScript',
-      'Python',
-      'FastAPI',
-      'LangChain',
-      'LangGraph',
-      'CrewAI',
-      'RAG',
-      'MCP',
-      'Playwright',
-      'SSE',
-    ],
-    logo: '/images/tcs.webp',
-  },
-]
+export default function Experience() {
+  const listRef = useRef<HTMLOListElement>(null)
+  const { scrollYProgress } = useScroll({ target: listRef, offset: ['start 75%', 'end 55%'] })
+  const progress = useSpring(scrollYProgress, { stiffness: 120, damping: 24 })
 
-const Experience: React.FC = () => {
   return (
-    <section id='experience' className='relative px-5 pb-12 pt-18 md:px-10 xl:px-20'>
-      <div className='mx-auto max-w-7xl'>
-        <div className='max-w-3xl text-left'>
-          <div className='section-kicker'>Experience</div>
-          <h2 className='section-title mt-4 font-poppins text-4xl font-semibold tracking-[-0.03em] sm:text-5xl'>
-            Experience grounded in shipping usable systems.
-          </h2>
-          <p className='section-copy mt-5 text-base leading-8 sm:text-lg'>
-            My current role combines full-stack product development, applied AI systems, and the UX details that make
-            complex tools easier to use.
-          </p>
-        </div>
+    <section id='experience' className='wrap scroll-mt-20 pb-24'>
+      <SectionHead title='Work experience' note='the part recruiters scroll to first' />
 
-        <div className='relative mt-10'>
-          <div
-            className='absolute left-4 top-0 hidden h-full w-px sm:block'
-            style={{ background: 'linear-gradient(180deg, transparent, var(--border-strong), transparent)' }}
-          />
+      <ol ref={listRef} className='relative mt-14'>
+        <span
+          aria-hidden='true'
+          className='absolute bottom-2 left-[9px] top-3 border-l-2 border-dashed border-faint md:left-[187px]'
+        />
+        {/* red pen line that follows your scroll down the timeline */}
+        <motion.span
+          aria-hidden='true'
+          className='absolute bottom-2 left-[9px] top-3 w-[2px] origin-top bg-pen/70 md:left-[187px]'
+          style={{ scaleY: progress }}
+        />
 
-          {workExperience.map((experience, index) => (
-            <motion.article
-              key={experience.company}
-              initial={{ opacity: 0, y: 28 }}
-              whileInView={{ opacity: 1, y: 0 }}
-              viewport={{ once: true, margin: '-80px' }}
-              transition={{ duration: 0.45, delay: index * 0.08 }}
-              className='relative mb-8 sm:pl-14'
-            >
-              <div
-                className='absolute left-[0.38rem] top-8 hidden h-5 w-5 rounded-full sm:block'
-                style={{
-                  background: 'var(--bg)',
-                  border: '4px solid var(--accent)',
-                  boxShadow: '0 0 0 8px var(--accent-soft)',
-                }}
-              />
-
-              <div className='glass-panel rounded-4xl p-6 text-left sm:p-8'>
-                <div className='flex flex-col gap-5 md:flex-row md:items-start md:justify-between'>
-                  <div className='flex items-center gap-4'>
-                    {experience.logo && (
-                      <div
-                        className='flex h-14 w-14 shrink-0 items-center justify-center overflow-hidden rounded-2xl'
-                        style={{ background: 'var(--surface-soft)', border: '1px solid var(--border)' }}
-                      >
-                        <img src={experience.logo} alt={experience.company} className='h-full w-full object-cover' />
-                      </div>
-                    )}
-
-                    <div>
-                      <h3 className='font-poppins text-2xl font-semibold' style={{ color: 'var(--text-primary)' }}>
-                        {experience.role}
-                      </h3>
-                      <p className='mt-1 text-sm font-medium sm:text-base' style={{ color: 'var(--text-secondary)' }}>
-                        {experience.company}
-                      </p>
-                      <p className='mt-1 text-xs uppercase tracking-[0.2em] sm:text-sm' style={{ color: 'var(--text-soft)' }}>
-                        {experience.team}
-                      </p>
-                    </div>
-                  </div>
-
-                  <div className='tag-chip w-fit rounded-full px-4 py-2 text-xs font-semibold sm:text-sm'>
-                    {experience.duration}
-                  </div>
-                </div>
-
-                <p className='mt-6 text-sm leading-8 sm:text-base' style={{ color: 'var(--text-muted)' }}>
-                  {experience.description}
+        {experience.map((job) => (
+          <Entry key={job.company + job.start} when={`${job.start} – ${job.end ?? 'now'}`} current={!job.end}>
+            <div className='flex items-center gap-3'>
+              {job.logo && <img src={job.logo} alt='' className='h-9 w-9 rounded-md object-cover ring-1 ring-faint' />}
+              <div>
+                <h3 className='text-[1.3rem] font-semibold leading-tight'>{job.role}</h3>
+                <p className='text-pencil'>
+                  {job.company} · {job.location}
                 </p>
-
-                <div className='mt-6 flex flex-wrap gap-2'>
-                  {experience.techStack.map((tech) => (
-                    <span key={tech} className='tag-chip rounded-full px-3 py-1 text-xs font-medium sm:text-sm'>
-                      {tech}
-                    </span>
-                  ))}
-                </div>
               </div>
-            </motion.article>
-          ))}
-        </div>
+            </div>
+            {job.team && <p className='mt-2 text-[0.92rem] text-pencil'>{job.team}</p>}
+            <p className='mt-4 max-w-2xl text-[1.08rem] leading-[1.7]'>{job.summary}</p>
+            {job.highlights.length > 0 && (
+              <ul className='mt-4 space-y-1.5 text-[1rem]'>
+                {job.highlights.map((h) => (
+                  <li key={h.what}>
+                    {h.what}: <Marker className='font-semibold'>{h.result}</Marker>
+                  </li>
+                ))}
+              </ul>
+            )}
+          </Entry>
+        ))}
+
+        <Entry when={education.year}>
+          <h3 className='text-[1.15rem] font-semibold leading-tight'>{education.degree}</h3>
+          <p className='text-pencil'>
+            {education.school} · {education.note}
+          </p>
+        </Entry>
+      </ol>
+
+      <div className='mt-14 flex items-center gap-2 md:pl-[242px]'>
+        <a href={profile.resume} target='_blank' rel='noreferrer' className='ink-link font-semibold'>
+          full details in my resume (PDF)
+        </a>
+        <ArrowLeft delay={0.2} className='h-6 w-14 shrink-0 text-pen' />
+        <span className='hand hidden text-[1.35rem] text-pen sm:inline'>
+          <HandWrite delay={0.6}>projects, numbers, all of it</HandWrite>
+        </span>
       </div>
     </section>
   )
 }
-
-export default Experience
