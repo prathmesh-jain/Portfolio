@@ -2,9 +2,12 @@ import Link from './Link'
 import ProjectCover from './ProjectCover'
 import SectionHead from './SectionHead'
 import { ArrowUpLeft } from './Doodles'
+import Print from './fx/Print'
+import HandWrite from './fx/HandWrite'
+import Reveal from './fx/Reveal'
 import { otherWork, profile, projects } from '../data/content'
 
-const tilts = ['-rotate-[1.5deg]', 'rotate-[1.2deg]', '-rotate-[0.8deg]', 'rotate-[1.6deg]']
+const tilts = [-1.5, 1.2, -0.8, 1.6]
 
 export default function Work() {
   return (
@@ -17,28 +20,26 @@ export default function Work() {
           return (
             <article key={p.slug} className='grid grid-cols-1 items-center gap-10 md:grid-cols-2 md:gap-14'>
               <div className={`relative pb-16 ${flip ? 'md:order-2' : ''}`}>
-                <Link
-                  to={`/work/${p.slug}`}
-                  className={`print group relative block transition-transform duration-300 hover:rotate-0 ${tilts[i % tilts.length]}`}
-                  aria-label={`${p.title} case study`}
-                >
-                  <span className={`tape -top-3 ${flip ? 'right-8 rotate-6' : 'left-8 -rotate-6'}`} />
-                  <ProjectCover project={p} />
-                </Link>
+                <Print tilt={tilts[i % tilts.length]}>
+                  <Link to={`/work/${p.slug}`} className='block' aria-label={`${p.title} case study`}>
+                    <span className={`tape z-10 -top-3 ${flip ? 'right-8 rotate-6' : 'left-8 -rotate-6'}`} />
+                    <ProjectCover project={p} />
+                  </Link>
+                </Print>
                 {/* margin note under the print; the arrow points back up into the screenshot */}
                 <div
                   className={`absolute bottom-0 flex items-start gap-1 text-pen ${
                     flip ? 'left-2 flex-row-reverse' : 'right-2'
                   }`}
                 >
-                  <ArrowUpLeft className={`mt-[-14px] h-9 w-12 shrink-0 ${flip ? '-scale-x-100' : ''}`} />
+                  <ArrowUpLeft delay={0.5} className={`mt-[-14px] h-9 w-12 shrink-0 ${flip ? '-scale-x-100' : ''}`} />
                   <span className={`hand text-[1.5rem] leading-tight sm:text-[1.6rem] ${flip ? '-rotate-1' : 'rotate-[-2deg]'}`}>
-                    {p.note}
+                    <HandWrite delay={0.9}>{p.note}</HandWrite>
                   </span>
                 </div>
               </div>
 
-              <div className={`relative min-w-0 ${flip ? 'md:order-1' : ''}`}>
+              <Reveal className={`relative min-w-0 ${flip ? 'md:order-1' : ''}`}>
                 <div className='hand text-[1.5rem] text-pencil'>
                   no. {i + 1}
                   {p.team && <span className='ml-3 text-sky'>· team project, {p.team.size} of us</span>}
@@ -50,8 +51,12 @@ export default function Work() {
                 <p className='mt-5 text-[0.92rem] text-pencil'>{p.stack.slice(0, 5).join(' · ')}</p>
 
                 <div className='mt-6 flex flex-wrap items-center gap-x-6 gap-y-3'>
-                  <Link to={`/work/${p.slug}`} className='font-semibold underline decoration-2 underline-offset-4 hover:text-pen'>
-                    {p.team ? 'how we built it' : 'how I built it'} →
+                  <Link
+                    to={`/work/${p.slug}`}
+                    className='group/cta inline-flex items-center gap-1.5 font-semibold underline decoration-2 underline-offset-4 hover:text-pen'
+                  >
+                    {p.team ? 'how we built it' : 'how I built it'}
+                    <span className='inline-block transition-transform duration-300 group-hover/cta:translate-x-1.5'>→</span>
                   </Link>
                   {p.links.live && (
                     <a href={p.links.live} target='_blank' rel='noreferrer' className='text-pencil hover:text-ink'>
@@ -59,8 +64,7 @@ export default function Work() {
                     </a>
                   )}
                 </div>
-
-              </div>
+              </Reveal>
             </article>
           )
         })}

@@ -1,4 +1,6 @@
 import { useEffect } from 'react'
+import { MotionConfig, motion } from 'motion/react'
+import ScrollProgress from './components/fx/ScrollProgress'
 import Nav from './components/Nav'
 import Footer from './components/Footer'
 import HomePage from './pages/HomePage'
@@ -28,11 +30,19 @@ const App = () => {
     page = <CaseStudy key={project.slug} project={project} next={projects[(projectIndex + 1) % projects.length]} />
 
   return (
-    <>
+    <MotionConfig reducedMotion='user'>
+      <ScrollProgress />
       <Nav />
-      <main>{page}</main>
+      <motion.main
+        key={path}
+        initial={{ opacity: 0, y: 14 }}
+        animate={{ opacity: 1, y: 0 }}
+        transition={{ duration: 0.45, ease: [0.22, 1, 0.36, 1] }}
+      >
+        {page}
+      </motion.main>
       <Footer />
-    </>
+    </MotionConfig>
   )
 }
 

@@ -1,6 +1,8 @@
 import { useRef, useState, type FormEvent } from 'react'
 import emailjs from '@emailjs/browser'
 import SectionHead from './SectionHead'
+import Magnetic from './fx/Magnetic'
+import HandWrite from './fx/HandWrite'
 import { Squiggle } from './Doodles'
 import { profile } from '../data/content'
 
@@ -71,7 +73,11 @@ export default function Contact() {
 
         <div className='min-w-0'>
           {status === 'sent' ? (
-            <p className='hand text-[2rem] text-pen'>got it, thank you! I’ll write back soon.</p>
+            <p className='hand text-[2rem] text-pen'>
+              <HandWrite onView={false} duration={1.2}>
+                got it, thank you! I’ll write back soon.
+              </HandWrite>
+            </p>
           ) : (
             <form ref={form} onSubmit={onSubmit} noValidate className='space-y-6'>
               <p className='hand text-[1.6rem] text-pencil'>or leave a note here…</p>
@@ -111,13 +117,21 @@ export default function Contact() {
                 />
                 {errors.message && <p className='hand mt-1 text-[1.2rem] text-pen'>{errors.message}</p>}
               </div>
-              <button
-                type='submit'
-                disabled={status === 'sending'}
-                className='rounded-[255px_15px_225px_15px/15px_225px_15px_255px] border-2 border-ink px-5 py-2.5 font-semibold transition-transform hover:rotate-1 hover:bg-ink hover:text-paper disabled:opacity-60'
-              >
-                {status === 'sending' ? 'sending…' : 'send it'}
-              </button>
+              <Magnetic>
+                <button
+                  type='submit'
+                  disabled={status === 'sending'}
+                  className='group/btn relative overflow-hidden rounded-[255px_15px_225px_15px/15px_225px_15px_255px] border-2 border-ink px-5 py-2.5 font-semibold disabled:opacity-60'
+                >
+                  <span
+                    aria-hidden='true'
+                    className='absolute inset-0 translate-y-full bg-ink transition-transform duration-300 ease-out group-hover/btn:translate-y-0'
+                  />
+                  <span className='relative transition-colors duration-300 group-hover/btn:text-paper'>
+                    {status === 'sending' ? 'sending…' : 'send it ✈'}
+                  </span>
+                </button>
+              </Magnetic>
               {status === 'error' && (
                 <p className='hand text-[1.3rem] text-pen' role='alert'>
                   hmm, that didn’t go through. Please email me directly.
