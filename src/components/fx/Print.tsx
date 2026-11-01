@@ -10,13 +10,15 @@ interface PrintProps {
   delay?: number
   /** small hand-written label that follows the cursor while hovering */
   cursorLabel?: string
+  /** fade in from transparent (off for above-the-fold images so they paint immediately) */
+  fade?: boolean
 }
 
 /**
  * A photo print that drops onto the page and settles at its tilt,
  * then leans in 3D towards the cursor while hovered.
  */
-export default function Print({ children, tilt, className = '', delay = 0, cursorLabel }: PrintProps) {
+export default function Print({ children, tilt, className = '', delay = 0, cursorLabel, fade = true }: PrintProps) {
   const [hovering, setHovering] = useState(false)
   const cx = useMotionValue(0)
   const cy = useMotionValue(0)
@@ -57,7 +59,7 @@ export default function Print({ children, tilt, className = '', delay = 0, curso
       <motion.div
         className={`print group relative ${className}`}
         style={{ rotateX, rotateY, transformStyle: 'preserve-3d' }}
-        initial={{ opacity: 0, y: -50, rotate: tilt * 5, scale: 1.04 }}
+        initial={{ opacity: fade ? 0 : 1, y: -50, rotate: tilt * 5, scale: 1.04 }}
         whileInView={{ opacity: 1, y: 0, rotate: tilt, scale: 1 }}
         whileHover={{ rotate: 0, scale: 1.015, y: -4 }}
         viewport={{ once: true, margin: '-80px' }}

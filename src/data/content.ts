@@ -3,6 +3,7 @@ export const profile = {
   role: 'Full Stack AI Engineer',
   company: 'TCS',
   location: 'Mumbai, India',
+  site: 'https://prathmeshjain.in',
   email: 'prathmeshjain42@gmail.com',
   resume: '/Prathmesh_Jain_Resume.pdf',
   links: {
@@ -68,6 +69,10 @@ export interface Project {
   slug: string
   index: string
   title: string
+  /** search-result title; keep it under ~60 characters */
+  seoTitle: string
+  /** what kind of product it is, for structured data */
+  platform: 'Web' | 'Android' | 'Telegram'
   tagline: string
   summary: string
   status: string
@@ -96,6 +101,8 @@ export const projects: Project[] = [
     slug: 'memory-dump',
     index: '01',
     title: 'Memory Dump',
+    seoTitle: 'Memory Dump – private AI photo & memory library',
+    platform: 'Web',
     tagline: 'A private memory library that never confuses an AI guess with a fact.',
     summary:
       'Upload photos and documents, answer a few optional questions like “Is this Mummy?”, then ask “photos of me with Rohan”. Faces, scenes and documents are read in the background, every answer links to its source, and nothing a model suggests becomes true until you confirm it.',
@@ -152,6 +159,8 @@ export const projects: Project[] = [
     slug: 'bizassist',
     index: '02',
     title: 'BizAssist',
+    seoTitle: 'BizAssist – multi-agent AI business assistant',
+    platform: 'Web',
     tagline: 'A multi-agent business assistant that loads only the tools it needs.',
     summary:
       'Document Q&A, file analysis and Google Sheets automation behind one chat. The interesting part is semantic tool discovery, which cut prompt context from ~3000 tokens to under 1000.',
@@ -210,6 +219,8 @@ export const projects: Project[] = [
     slug: 'smartkiranabot',
     index: '03',
     title: 'SmartKiranaBot',
+    seoTitle: 'SmartKiranaBot – Telegram AI agent for kirana stores',
+    platform: 'Telegram',
     tagline: 'Running a kirana store’s inventory, billing and khata from Telegram.',
     summary:
       'Small shop owners already live in chat apps. This agent handles stock, GST bills, customer credit (khata) and analytics through a Telegram conversation, with database guardrails so the AI can’t oversell.',
@@ -259,6 +270,8 @@ export const projects: Project[] = [
     slug: 'transcribe',
     index: '04',
     title: 'Transcribe',
+    seoTitle: 'Transcribe – AI transcription for spiritual lectures',
+    platform: 'Web',
     tagline: 'Turning hours-long spiritual discourses into searchable PDF transcripts.',
     summary:
       'General transcription tools break on long pravachans that switch between Hindi, English and Sanskrit shlokas. Three of us built a service that handles them, and people use it every day.',
@@ -321,6 +334,8 @@ export const projects: Project[] = [
     slug: 'expensegauge',
     index: '05',
     title: 'ExpenseGauge',
+    seoTitle: 'ExpenseGauge – offline-first expense tracker app',
+    platform: 'Android',
     tagline: 'A money tracker that keeps working when the network doesn’t.',
     summary:
       'An Expo app for tracking spending across accounts. Writes queue up on the phone and sync when the connection comes back, the server quietly drops duplicates, and balances stay correct because every change runs in a transaction.',

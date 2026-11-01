@@ -60,7 +60,7 @@ export default function Hero() {
       </div>
 
       <div className='relative mx-auto w-[78%] max-w-[330px] md:w-full'>
-        <Print tilt={2.5} delay={0.35}>
+        <Print tilt={2.5} delay={0.35} fade={false}>
           <motion.span
             className='tape z-10 -top-3 left-1/2 -translate-x-1/2 -rotate-3'
             initial={{ scaleX: 0, opacity: 0 }}

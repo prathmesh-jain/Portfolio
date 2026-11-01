@@ -1,16 +1,21 @@
 import type { AnchorHTMLAttributes, MouseEvent } from 'react'
-import { navigate } from '../lib/router'
+import { Link as RouterLink, useLocation } from 'react-router'
+import { scrollToHash } from '../lib/scroll'
 
 type LinkProps = AnchorHTMLAttributes<HTMLAnchorElement> & { to: string }
 
+/** Router link that also scrolls when you click the same #section twice. */
 const Link = ({ to, onClick, ...rest }: LinkProps) => {
+  const location = useLocation()
   const handleClick = (e: MouseEvent<HTMLAnchorElement>) => {
     onClick?.(e)
-    if (e.defaultPrevented || e.button !== 0 || e.metaKey || e.ctrlKey || e.shiftKey || e.altKey) return
-    e.preventDefault()
-    navigate(to)
+    const [path, hash] = to.split('#')
+    if (hash && (path || '/') === location.pathname && `#${hash}` === location.hash) {
+      e.preventDefault()
+      scrollToHash(hash)
+    }
   }
-  return <a href={to} onClick={handleClick} {...rest} />
+  return <RouterLink to={to} onClick={handleClick} {...rest} />
 }
 
 export default Link

@@ -7,23 +7,33 @@ import Footer from './components/Footer'
 import HomePage from './pages/HomePage'
 import CaseStudy from './pages/CaseStudy'
 import NotFound from './pages/NotFound'
-import { usePath, useScrollOnRouteChange } from './lib/router'
+import { Route, Routes, useLocation, useParams } from 'react-router'
+import { useScrollOnNavigate } from './lib/scroll'
+import useSeo from './lib/useSeo'
 import { profile, projects } from './data/content'
 
-const DEFAULT_TITLE = `${profile.name} · ${profile.role}`
+function CaseStudyRoute() {
+  const { slug } = useParams()
+  const index = projects.findIndex((p) => p.slug === slug)
+  if (index < 0) return <NotFound />
+  const project = projects[index]
+  return <CaseStudy key={project.slug} project={project} next={projects[(index + 1) % projects.length]} />
+}
 
 // small jokes for people who switch tabs or open devtools
 const AWAY_TITLE = 'come back, the agents miss you 👀'
 let greeted = false
+// the first page arrives prerendered and visible; only later navigations fade in
+let navigated = false
 
 const App = () => {
-  const path = usePath()
-  useScrollOnRouteChange(path)
-
-  const match = path.match(/^\/work\/([\w-]+)\/?$/)
-  const projectIndex = match ? projects.findIndex((p) => p.slug === match[1]) : -1
-  const project = projectIndex >= 0 ? projects[projectIndex] : null
-  const isHome = path === '/' || path === ''
+  const { pathname } = useLocation()
+  useScrollOnNavigate()
+  useSeo(pathname)
+  const firstPage = !navigated
+  useEffect(() => {
+    navigated = true
+  }, [pathname])
 
   useEffect(() => {
     if (!greeted) {
@@ -50,28 +60,23 @@ const App = () => {
     return () => document.removeEventListener('visibilitychange', onVis)
   }, [])
 
-  useEffect(() => {
-    document.title = project ? `${project.title} · ${profile.name}` : DEFAULT_TITLE
-  }, [project])
-
-  let page = <NotFound />
-  if (isHome) page = <HomePage />
-  else if (project)
-    page = <CaseStudy key={project.slug} project={project} next={projects[(projectIndex + 1) % projects.length]} />
-
   return (
     <MotionConfig reducedMotion='user'>
       <ScrollProgress />
       <Nav />
       {/* clip sideways spill from tilted/dropping prints so phones never scroll horizontally */}
       <motion.main
-        key={path}
+        key={pathname}
         className='overflow-x-clip'
-        initial={{ opacity: 0, y: 14 }}
+        initial={firstPage ? false : { opacity: 0, y: 14 }}
         animate={{ opacity: 1, y: 0 }}
         transition={{ duration: 0.45, ease: [0.22, 1, 0.36, 1] }}
       >
-        {page}
+        <Routes>
+          <Route path='/' element={<HomePage />} />
+          <Route path='/work/:slug' element={<CaseStudyRoute />} />
+          <Route path='*' element={<NotFound />} />
+        </Routes>
       </motion.main>
       <Footer />
       <BackToTop />

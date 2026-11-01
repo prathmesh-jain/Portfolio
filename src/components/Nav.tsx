@@ -1,7 +1,7 @@
 import { useEffect, useState } from 'react'
 import { motion } from 'motion/react'
 import Link from './Link'
-import { usePath } from '../lib/router'
+import { useLocation } from 'react-router'
 import { profile } from '../data/content'
 
 const sections = [
@@ -36,8 +36,8 @@ function useActiveSection(enabled: boolean) {
 }
 
 export default function Nav() {
-  const path = usePath()
-  const active = useActiveSection(path === '/')
+  const { pathname } = useLocation()
+  const active = useActiveSection(pathname === '/')
 
   return (
     <header className='sticky top-0 z-40 bg-paper/85 backdrop-blur-sm'>
