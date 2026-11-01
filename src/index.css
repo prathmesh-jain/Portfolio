@@ -116,6 +116,41 @@ button {
   border-color: var(--color-ink);
 }
 
+.project {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr);
+  grid-template-areas: 'head' 'media' 'body';
+  row-gap: 1.5rem;
+}
+.project-head { grid-area: head; }
+.project-media { grid-area: media; }
+.project-body { grid-area: body; }
+
+/* phones: a dashed rule and room between projects, so a screenshot never looks like it belongs to the one above */
+.project + .project {
+  margin-top: 3.5rem;
+  padding-top: 3.5rem;
+  border-top: 2px dashed var(--color-faint);
+}
+
+@media (min-width: 768px) {
+  .project {
+    grid-template-columns: minmax(0, 1fr) minmax(0, 1fr);
+    grid-template-rows: 1fr auto auto 1fr;
+    grid-template-areas: 'media .' 'media head' 'media body' 'media .';
+    column-gap: 3.5rem;
+    row-gap: 0;
+    align-items: center;
+  }
+  .project.flip {
+    grid-template-areas: '. media' 'head media' 'body media' '. media';
+  }
+  .project + .project {
+    margin-top: 5rem;
+    padding-top: 5rem;
+  }
+}
+
 .wrap {
   margin-inline: auto;
   max-width: 1120px;
