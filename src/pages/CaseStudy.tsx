@@ -10,9 +10,9 @@ import SectionHead from '../components/SectionHead'
 import { ArrowUpLeft } from '../components/Doodles'
 import type { Project } from '../data/content'
 
-function Part({ title, note, children }: { title: string; note?: string; children: ReactNode }) {
+function Part({ id, title, note, children }: { id: string; title: string; note?: string; children: ReactNode }) {
   return (
-    <section>
+    <section id={id} className='scroll-mt-24'>
       <SectionHead title={title} note={note} />
       <div className='mt-10'>{children}</div>
     </section>
@@ -82,8 +82,53 @@ export default function CaseStudy({ project: p, next }: { project: Project; next
         ))}
       </ul>
 
-      <div className='mt-24 space-y-24'>
-        <Part title={p.team ? 'Why we built it' : 'Why I built it'}>
+      {/* for skimmers: the whole page in three lines, plus shortcuts */}
+      <motion.aside
+        className='relative mt-20 max-w-3xl -rotate-[0.4deg] border-2 border-dashed border-ink/60 p-6 sm:p-7'
+        initial={{ opacity: 0, y: 20 }}
+        whileInView={{ opacity: 1, y: 0 }}
+        viewport={{ once: true, margin: '-60px' }}
+        transition={{ type: 'spring', stiffness: 140, damping: 18 }}
+      >
+        <div className='hand absolute -top-5 left-5 bg-paper px-2 text-[1.6rem] leading-none text-pen'>
+          tl;dr <span className='text-pencil'>(for the 6-second skim)</span>
+        </div>
+        <ul className='space-y-2 text-[1.02rem] leading-relaxed'>
+          <li>
+            <span className='font-semibold'>What:</span> {p.tagline}
+          </li>
+          <li>
+            <span className='font-semibold'>Hard part:</span> {p.decisions[0].title.toLowerCase()}.
+          </li>
+          <li>
+            <span className='font-semibold'>Built with:</span> {p.stack.slice(0, 5).join(', ')}.
+          </li>
+        </ul>
+        <nav aria-label='On this page' className='mt-5 flex flex-wrap items-center gap-x-4 gap-y-2 text-[0.95rem]'>
+          <span className='hand text-[1.3rem] text-pencil'>jump to:</span>
+          {[
+            ['why', 'why'],
+            ['how', 'how it works'],
+            ['decisions', 'decisions'],
+            ...(p.gallery.length ? [['screens', 'screens']] : []),
+          ].map(([id, label]) => (
+            <a
+              key={id}
+              href={`#${id}`}
+              onClick={(e) => {
+                e.preventDefault()
+                document.getElementById(id)?.scrollIntoView({ behavior: 'smooth', block: 'start' })
+              }}
+              className='ink-link'
+            >
+              {label}
+            </a>
+          ))}
+        </nav>
+      </motion.aside>
+
+      <div className='mt-20 space-y-24'>
+        <Part id='why' title={p.team ? 'Why we built it' : 'Why I built it'} note='the problem, minus the buzzwords'>
           <div className='max-w-2xl space-y-5 text-[1.15rem] leading-[1.7]'>
             {p.problem.map((para) => (
               <p key={para}>{para}</p>
@@ -91,7 +136,7 @@ export default function CaseStudy({ project: p, next }: { project: Project; next
           </div>
         </Part>
 
-        <Part title='How it works' note={p.flowTitle.toLowerCase()}>
+        <Part id='how' title='How it works' note={p.flowTitle.toLowerCase()}>
           <ol className='flex flex-col items-stretch gap-3 lg:flex-row lg:items-start'>
             {p.flow.map((step, i) => (
               <li key={step.title} className='flex flex-col items-center gap-3 lg:flex-1 lg:flex-row lg:items-start'>
@@ -137,7 +182,7 @@ export default function CaseStudy({ project: p, next }: { project: Project; next
           <p className='mt-8 text-[0.92rem] text-pencil'>Built with {p.stack.join(', ')}.</p>
         </Part>
 
-        <Part title={p.team ? 'Decisions we made' : 'Decisions I made'} note='and why'>
+        <Part id='decisions' title={p.team ? 'Decisions we made' : 'Decisions I made'} note='and why. mostly why.'>
           <ol className='grid grid-cols-1 gap-x-14 gap-y-10 md:grid-cols-2'>
             {p.decisions.map((d, i) => (
               <motion.li
@@ -159,7 +204,7 @@ export default function CaseStudy({ project: p, next }: { project: Project; next
         </Part>
 
         {p.gallery.length > 0 && (
-          <Part title='Screens'>
+          <Part id='screens' title='Screens' note='proof it exists'>
             <div className={`grid gap-8 ${p.galleryLayout === 'phone' ? 'grid-cols-2 lg:grid-cols-4' : 'grid-cols-1 sm:grid-cols-2'}`}>
               {p.gallery.map((g, i) => (
                 <Print key={g.src} tilt={i % 2 ? 1 : -1} delay={i * 0.08}>
@@ -174,7 +219,7 @@ export default function CaseStudy({ project: p, next }: { project: Project; next
       </div>
 
       <Link to={`/work/${next.slug}`} className='group mt-28 block border-t border-dashed border-faint pt-8'>
-        <div className='hand text-[1.5rem] text-pencil'>next up</div>
+        <div className='hand text-[1.5rem] text-pencil'>next up <span className='text-pen'>(you’ve come this far)</span></div>
         <div className='break-words text-[2.2rem] font-semibold tracking-[-0.02em] group-hover:text-pen sm:text-[3rem]'>
           {next.title} →
         </div>

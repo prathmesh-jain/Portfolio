@@ -52,8 +52,8 @@ export default function Experience() {
   const progress = useSpring(scrollYProgress, { stiffness: 120, damping: 24 })
 
   return (
-    <section id='experience' className='wrap scroll-mt-6 pb-24'>
-      <SectionHead title='Work experience' />
+    <section id='experience' className='wrap scroll-mt-20 pb-24'>
+      <SectionHead title='Work experience' note='the part recruiters scroll to first' />
 
       <ol ref={listRef} className='relative mt-14'>
         <span

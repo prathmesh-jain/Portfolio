@@ -5,8 +5,8 @@ import { toolbox } from '../data/content'
 
 export default function About() {
   return (
-    <section id='about' className='wrap scroll-mt-6 pb-24'>
-      <SectionHead title='About me' />
+    <section id='about' className='wrap scroll-mt-20 pb-24'>
+      <SectionHead title='About me' note='the part nobody reads. hi, you’re different.' />
 
       <div className='mt-12 grid grid-cols-1 gap-14 md:grid-cols-[1.2fr_0.8fr]'>
         <div className='min-w-0 max-w-2xl space-y-5 text-[1.15rem] leading-[1.7]'>

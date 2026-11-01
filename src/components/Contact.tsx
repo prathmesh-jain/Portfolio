@@ -16,10 +16,10 @@ const EMAILJS_PUBLIC_KEY = import.meta.env.VITE_EMAILJS_PUBLIC_KEY
 const validate = (form: HTMLFormElement): Errors => {
   const data = new FormData(form)
   const errors: Errors = {}
-  if (!String(data.get('firstName') ?? '').trim()) errors.firstName = 'Please add your name.'
+  if (!String(data.get('firstName') ?? '').trim()) errors.firstName = 'a name would be nice. even a fake one.'
   if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(String(data.get('user_email') ?? '').trim()))
-    errors.user_email = 'That email doesn’t look right.'
-  if (String(data.get('message') ?? '').trim().length < 4) errors.message = 'A few more words, please.'
+    errors.user_email = 'that email looks… creative. try again?'
+  if (String(data.get('message') ?? '').trim().length < 4) errors.message = 'a few more words, please. I can’t read minds (yet).'
   return errors
 }
 
@@ -48,14 +48,14 @@ export default function Contact() {
   }
 
   return (
-    <section id='contact' className='wrap scroll-mt-6 pb-24'>
-      <SectionHead title='Say hi' note='I read everything' />
+    <section id='contact' className='wrap scroll-mt-20 pb-24'>
+      <SectionHead title='Say hi' note='I read everything. yes, even the long ones.' />
 
       <div className='mt-12 grid grid-cols-1 gap-14 md:grid-cols-[1.1fr_0.9fr]'>
         <div className='min-w-0'>
           <p className='max-w-lg text-[1.15rem] leading-[1.7]'>
             I’m open to full-time roles and interesting freelance work in applied AI and full stack. Email is the
-            fastest way to reach me.
+            fastest way to reach me. Carrier pigeons are slower, but I’ll still reply.
           </p>
           <a
             href={`mailto:${profile.email}`}
@@ -75,7 +75,7 @@ export default function Contact() {
           {status === 'sent' ? (
             <p className='hand text-[2rem] text-pen'>
               <HandWrite onView={false} duration={1.2}>
-                got it, thank you! I’ll write back soon.
+                got it! I’ll write back soon. probably before you refresh.
               </HandWrite>
             </p>
           ) : (
@@ -83,8 +83,8 @@ export default function Contact() {
               <p className='hand text-[1.6rem] text-pencil'>or leave a note here…</p>
               {(
                 [
-                  { name: 'firstName', label: 'your name', type: 'text', auto: 'name' },
-                  { name: 'user_email', label: 'your email', type: 'email', auto: 'email' },
+                  { name: 'firstName', label: 'your name (the real one)', type: 'text', auto: 'name' },
+                  { name: 'user_email', label: 'your email (I actually reply)', type: 'email', auto: 'email' },
                 ] as const
               ).map((f) => (
                 <div key={f.name}>
@@ -111,7 +111,7 @@ export default function Contact() {
                   id='message'
                   name='message'
                   rows={3}
-                  placeholder='what’s on your mind?'
+                  placeholder='what’s on your mind? job offers go to the top of the pile'
                   aria-invalid={Boolean(errors.message)}
                   className='field resize-none'
                 />
@@ -134,7 +134,7 @@ export default function Contact() {
               </Magnetic>
               {status === 'error' && (
                 <p className='hand text-[1.3rem] text-pen' role='alert'>
-                  hmm, that didn’t go through. Please email me directly.
+                  well, that broke. ironic, for a developer’s site. please email me directly.
                 </p>
               )}
             </form>

@@ -5,7 +5,7 @@ import HandWrite from './fx/HandWrite'
 import Words from './fx/Words'
 import Print from './fx/Print'
 import Link from './Link'
-import { Star } from './Doodles'
+import { ArrowLeft, Star } from './Doodles'
 import { profile } from '../data/content'
 
 const rise = (delay: number) => ({
@@ -26,12 +26,17 @@ export default function Hero() {
         <h1 className='mt-1 text-[3.1rem] font-semibold leading-[0.98] tracking-[-0.035em] sm:text-[4.6rem]'>
           <Words text='Prathmesh Jain.' delay={0.45} stagger={0.12} />
         </h1>
+        <p className='hand mt-1 text-[1.35rem] text-pencil sm:text-[1.5rem]'>
+          <HandWrite onView={false} delay={1.1} duration={0.9}>
+            (yes, another developer portfolio. bear with me.)
+          </HandWrite>
+        </p>
         <motion.p {...rise(0.8)} className='mt-7 max-w-xl text-[1.25rem] leading-[1.55] sm:text-[1.4rem]'>
           I build AI agents for banks at TCS, and outside work I keep shipping side projects that people{' '}
           <Marker delay={1.4}>actually use</Marker>.
         </motion.p>
         <motion.p {...rise(0.95)} className='mt-5 max-w-xl text-[1.05rem] leading-relaxed text-pencil'>
-          {profile.role} in {profile.location}. Mostly Python, TypeScript, LangGraph and React.
+          {profile.role} in {profile.location}. Mostly Python, TypeScript, LangGraph and React. Occasionally, sleep.
         </motion.p>
 
         <motion.div {...rise(1.1)} className='mt-9 flex flex-wrap items-center gap-x-6 gap-y-4'>
@@ -49,7 +54,7 @@ export default function Hero() {
             </Link>
           </Magnetic>
           <a href={`mailto:${profile.email}`} className='ink-link'>
-            {profile.email}
+            or just email me, I don’t bite
           </a>
         </motion.div>
       </div>
@@ -73,6 +78,13 @@ export default function Hero() {
             <HandWrite delay={1.3}>me, up in the hills</HandWrite>
           </figcaption>
         </Print>
+        {/* margin joke pointing at the photo */}
+        <div className='absolute -left-40 bottom-16 hidden items-center gap-1 text-pen lg:flex'>
+          <span className='hand -rotate-6 text-[1.45rem] leading-tight'>
+            <HandWrite onView={false} delay={1.9}>proof I touch grass</HandWrite>
+          </span>
+          <ArrowLeft delay={2.4} className='h-6 w-12 -scale-x-100' />
+        </div>
         <motion.div
           className='absolute -right-5 -top-6 h-9 w-9 text-sky'
           initial={{ rotate: 12 }}

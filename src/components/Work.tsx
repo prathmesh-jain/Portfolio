@@ -8,11 +8,12 @@ import Reveal from './fx/Reveal'
 import { otherWork, profile, projects } from '../data/content'
 
 const tilts = [-1.5, 1.2, -0.8, 1.6]
+const cursorLabels = ['click, it’s worth it →', 'read the story →', 'go on, peek inside →', 'yes, it’s clickable →', 'one more? sure →']
 
 export default function Work() {
   return (
-    <section id='work' className='wrap scroll-mt-6 pb-24'>
-      <SectionHead title='Things I’ve built' note='(and actually shipped)' />
+    <section id='work' className='wrap scroll-mt-20 pb-24'>
+      <SectionHead title='Things I’ve built' note='(shipped, not just another todo app)' />
 
       <div className='mt-16 space-y-24 md:space-y-28'>
         {projects.map((p, i) => {
@@ -20,7 +21,7 @@ export default function Work() {
           return (
             <article key={p.slug} className='grid grid-cols-1 items-center gap-10 md:grid-cols-2 md:gap-14'>
               <div className={`relative pb-16 ${flip ? 'md:order-2' : ''}`}>
-                <Print tilt={tilts[i % tilts.length]}>
+                <Print tilt={tilts[i % tilts.length]} cursorLabel={cursorLabels[i % cursorLabels.length]}>
                   <Link to={`/work/${p.slug}`} className='block' aria-label={`${p.title} case study`}>
                     <span className={`tape z-10 -top-3 ${flip ? 'right-8 rotate-6' : 'left-8 -rotate-6'}`} />
                     <ProjectCover project={p} />

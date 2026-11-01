@@ -1,4 +1,4 @@
-import { type ReactNode } from 'react'
+import { useState, type ReactNode } from 'react'
 import { motion, useMotionValue, useSpring, useTransform } from 'motion/react'
 
 interface PrintProps {
@@ -8,13 +8,20 @@ interface PrintProps {
   className?: string
   /** drop-in delay */
   delay?: number
+  /** small hand-written label that follows the cursor while hovering */
+  cursorLabel?: string
 }
 
 /**
  * A photo print that drops onto the page and settles at its tilt,
  * then leans in 3D towards the cursor while hovered.
  */
-export default function Print({ children, tilt, className = '', delay = 0 }: PrintProps) {
+export default function Print({ children, tilt, className = '', delay = 0, cursorLabel }: PrintProps) {
+  const [hovering, setHovering] = useState(false)
+  const cx = useMotionValue(0)
+  const cy = useMotionValue(0)
+  const chipX = useSpring(cx, { stiffness: 500, damping: 35 })
+  const chipY = useSpring(cy, { stiffness: 500, damping: 35 })
   const mx = useMotionValue(0.5)
   const my = useMotionValue(0.5)
   const sx = useSpring(mx, { stiffness: 160, damping: 18 })
@@ -30,14 +37,23 @@ export default function Print({ children, tilt, className = '', delay = 0 }: Pri
     const r = e.currentTarget.getBoundingClientRect()
     mx.set((e.clientX - r.left) / r.width)
     my.set((e.clientY - r.top) / r.height)
+    cx.set(e.clientX - r.left)
+    cy.set(e.clientY - r.top)
+    if (!hovering) setHovering(true)
   }
   const reset = () => {
     mx.set(0.5)
     my.set(0.5)
+    setHovering(false)
   }
 
   return (
-    <div style={{ perspective: 1100 }} onPointerMove={onMove} onPointerLeave={reset}>
+    <div
+      className={`relative ${cursorLabel ? 'md:cursor-none' : ''}`}
+      style={{ perspective: 1100 }}
+      onPointerMove={onMove}
+      onPointerLeave={reset}
+    >
       <motion.div
         className={`print group relative ${className}`}
         style={{ rotateX, rotateY, transformStyle: 'preserve-3d' }}
@@ -54,6 +70,18 @@ export default function Print({ children, tilt, className = '', delay = 0 }: Pri
           style={{ background: glare, mixBlendMode: 'soft-light' }}
         />
       </motion.div>
+      {cursorLabel && (
+        <motion.div
+          aria-hidden='true'
+          className='hand pointer-events-none absolute left-0 top-0 z-20 whitespace-nowrap rounded-full bg-ink px-3 py-1 text-[1.2rem] leading-none text-paper shadow-lg'
+          style={{ x: chipX, y: chipY, translateX: '-50%', translateY: '-140%' }}
+          initial={false}
+          animate={{ opacity: hovering ? 1 : 0, scale: hovering ? 1 : 0.6, rotate: hovering ? -3 : 0 }}
+          transition={{ type: 'spring', stiffness: 400, damping: 25 }}
+        >
+          {cursorLabel}
+        </motion.div>
+      )}
     </div>
   )
 }
