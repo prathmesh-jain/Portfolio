@@ -22,26 +22,7 @@ export default function ThemeToggle() {
 
   useEffect(() => {
     const id = requestAnimationFrame(() => setTheme(current()))
-    // follow the OS setting until the visitor picks a theme themselves
-    const media = window.matchMedia('(prefers-color-scheme: dark)')
-    const onChange = (e: MediaQueryListEvent) => {
-      let saved: string | null = null
-      try {
-        saved = localStorage.getItem(KEY)
-      } catch {
-        /* storage blocked */
-      }
-      if (!saved) {
-        const next = e.matches ? 'dark' : 'light'
-        apply(next)
-        setTheme(next)
-      }
-    }
-    media.addEventListener('change', onChange)
-    return () => {
-      cancelAnimationFrame(id)
-      media.removeEventListener('change', onChange)
-    }
+    return () => cancelAnimationFrame(id)
   }, [])
 
   const toggle = () => {
@@ -72,7 +53,7 @@ export default function ThemeToggle() {
           initial={{ rotate: -90, scale: 0.4, opacity: 0 }}
           animate={{ rotate: 0, scale: 1, opacity: 1 }}
           exit={{ rotate: 90, scale: 0.4, opacity: 0 }}
-          transition={{ type: 'spring', stiffness: 300, damping: 18 }}
+          transition={{ duration: 0.18, ease: 'easeOut' }}
           aria-hidden='true'
         >
           {dark ? (
