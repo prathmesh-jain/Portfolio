@@ -15,12 +15,23 @@ export default function Work() {
     <section id='work' className='wrap scroll-mt-20 pb-24'>
       <SectionHead title='Things I’ve built' note='(shipped, not just another todo app)' />
 
-      <div className='mt-16 space-y-24 md:space-y-28'>
+      <div className='mt-16'>
         {projects.map((p, i) => {
           const flip = i % 2 === 1
           return (
-            <article key={p.slug} className='grid grid-cols-1 items-center gap-10 md:grid-cols-2 md:gap-14'>
-              <div className={`relative pb-16 ${flip ? 'md:order-2' : ''}`}>
+            <article key={p.slug} className={`project ${flip ? 'flip' : ''}`} aria-labelledby={`project-${p.slug}`}>
+              {/* title first, so on phones it sits above its own screenshot */}
+              <Reveal className='project-head min-w-0'>
+                <div className='hand text-[1.5rem] text-pencil'>
+                  no. {i + 1}
+                  {p.team && <span className='ml-3 text-sky'>· team project, {p.team.size} of us</span>}
+                </div>
+                <h3 id={`project-${p.slug}`} className='text-[2rem] font-semibold tracking-[-0.02em] sm:text-[2.4rem]'>
+                  {p.title}
+                </h3>
+              </Reveal>
+
+              <div className='project-media relative pb-14 md:pb-16'>
                 <Print tilt={tilts[i % tilts.length]} cursorLabel={cursorLabels[i % cursorLabels.length]}>
                   <Link to={`/work/${p.slug}`} className='block' aria-label={`${p.title} case study`}>
                     <span className={`tape z-10 -top-3 ${flip ? 'right-8 rotate-6' : 'left-8 -rotate-6'}`} />
@@ -29,24 +40,19 @@ export default function Work() {
                 </Print>
                 {/* margin note under the print; the arrow points back up into the screenshot */}
                 <div
-                  className={`absolute bottom-0 flex items-start gap-1 text-pen ${
+                  className={`absolute bottom-0 flex max-w-[calc(100%-1rem)] items-start gap-1 text-pen ${
                     flip ? 'left-2 flex-row-reverse' : 'right-2'
                   }`}
                 >
                   <ArrowUpLeft delay={0.5} className={`mt-[-14px] h-9 w-12 shrink-0 ${flip ? '-scale-x-100' : ''}`} />
-                  <span className={`hand text-[1.5rem] leading-tight sm:text-[1.6rem] ${flip ? '-rotate-1' : 'rotate-[-2deg]'}`}>
+                  <span className={`hand min-w-0 text-[1.45rem] leading-tight sm:text-[1.6rem] ${flip ? '-rotate-1' : 'rotate-[-2deg]'}`}>
                     <HandWrite delay={0.9}>{p.note}</HandWrite>
                   </span>
                 </div>
               </div>
 
-              <Reveal className={`relative min-w-0 ${flip ? 'md:order-1' : ''}`}>
-                <div className='hand text-[1.5rem] text-pencil'>
-                  no. {i + 1}
-                  {p.team && <span className='ml-3 text-sky'>· team project, {p.team.size} of us</span>}
-                </div>
-                <h3 className='text-[2rem] font-semibold tracking-[-0.02em] sm:text-[2.4rem]'>{p.title}</h3>
-                <p className='mt-2 text-[1.15rem] leading-snug'>{p.tagline}</p>
+              <Reveal className='project-body relative min-w-0'>
+                <p className='text-[1.15rem] leading-snug md:mt-2'>{p.tagline}</p>
                 <p className='mt-4 leading-relaxed text-pencil'>{p.summary}</p>
 
                 <p className='mt-5 text-[0.92rem] text-pencil'>{p.stack.slice(0, 5).join(' · ')}</p>
