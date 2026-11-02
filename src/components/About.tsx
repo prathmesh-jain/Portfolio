@@ -22,7 +22,7 @@ export default function About() {
         </div>
 
         <motion.aside
-          className='relative h-fit min-w-0 bg-[#fff9c9] p-6 shadow-[0_10px_24px_-14px_rgba(28,34,48,0.35)]'
+          className='on-light relative h-fit min-w-0 bg-[#fff9c9] p-6 shadow-[0_10px_24px_-14px_var(--color-shadow)]'
           initial={{ opacity: 0, y: -30, rotate: 6 }}
           whileInView={{ opacity: 1, y: 0, rotate: 0.8 }}
           whileHover={{ rotate: -0.6, y: -4, transition: { type: 'spring', stiffness: 260, damping: 10 } }}

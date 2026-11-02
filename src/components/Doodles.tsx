@@ -47,6 +47,28 @@ export function ArrowLeft({ className, style, delay = 0 }: DoodleProps) {
   )
 }
 
+/** Wobbly connector pointing right (between index cards on wide screens). */
+export function ArrowRightCurvy({ className, style, delay = 0 }: DoodleProps) {
+  const r = useReducedMotion()
+  return (
+    <svg viewBox='0 0 44 30' fill='none' className={className} style={style} aria-hidden='true'>
+      <motion.path d='M3 18C12 8 24 24 38 13' {...stroke} {...draw(delay, 0.45, r)} />
+      <motion.path d='M29 10L38.5 12.5L34 21' {...stroke} {...draw(delay + 0.4, 0.2, r)} />
+    </svg>
+  )
+}
+
+/** Wobbly connector pointing down (between index cards on phones). */
+export function ArrowDownCurvy({ className, style, delay = 0 }: DoodleProps) {
+  const r = useReducedMotion()
+  return (
+    <svg viewBox='0 0 30 44' fill='none' className={className} style={style} aria-hidden='true'>
+      <motion.path d='M14 3C4 12 22 24 13 39' {...stroke} {...draw(delay, 0.45, r)} />
+      <motion.path d='M7 31L13 40L20 33' {...stroke} {...draw(delay + 0.4, 0.2, r)} />
+    </svg>
+  )
+}
+
 export function Squiggle({ className, style, delay = 0.15 }: DoodleProps) {
   const r = useReducedMotion()
   return (

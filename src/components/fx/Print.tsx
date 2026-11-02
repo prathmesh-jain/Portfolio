@@ -57,7 +57,7 @@ export default function Print({ children, tilt, className = '', delay = 0, curso
       onPointerLeave={reset}
     >
       <motion.div
-        className={`print group relative ${className}`}
+        className={`print on-light group relative ${className}`}
         style={{ rotateX, rotateY, transformStyle: 'preserve-3d' }}
         initial={{ opacity: fade ? 0 : 1, y: -50, rotate: tilt * 5, scale: 1.04 }}
         whileInView={{ opacity: 1, y: 0, rotate: tilt, scale: 1 }}

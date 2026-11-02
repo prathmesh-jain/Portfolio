@@ -2,6 +2,7 @@ import Marker from '../components/fx/Marker'
 import Words from '../components/fx/Words'
 import HandWrite from '../components/fx/HandWrite'
 import Print from '../components/fx/Print'
+import FlowCards from '../components/FlowCards'
 import { motion } from 'motion/react'
 import type { ReactNode } from 'react'
 import Link from '../components/Link'
@@ -84,13 +85,14 @@ export default function CaseStudy({ project: p, next }: { project: Project; next
 
       {/* for skimmers: the whole page in three lines, plus shortcuts */}
       <motion.aside
-        className='relative mt-20 max-w-3xl -rotate-[0.4deg] border-2 border-dashed border-ink/60 p-6 sm:p-7'
-        initial={{ opacity: 0, y: 20 }}
-        whileInView={{ opacity: 1, y: 0 }}
+        className='on-light sticky-note relative mt-20 max-w-2xl p-6 pt-8 sm:p-8 sm:pt-9'
+        initial={{ opacity: 0, y: -24, rotate: 4 }}
+        whileInView={{ opacity: 1, y: 0, rotate: -0.8 }}
         viewport={{ once: true, margin: '-60px' }}
         transition={{ type: 'spring', stiffness: 140, damping: 18 }}
       >
-        <div className='hand absolute -top-5 left-5 bg-paper px-2 text-[1.6rem] leading-none text-pen'>
+        <span className='tape -top-3 left-1/2 -translate-x-1/2 rotate-2' />
+        <div className='hand mb-3 text-[1.7rem] leading-none text-[#d63b2a]'>
           tl;dr <span className='text-pencil'>(for the 6-second skim)</span>
         </div>
         <ul className='space-y-2 text-[1.02rem] leading-relaxed'>
@@ -137,38 +139,7 @@ export default function CaseStudy({ project: p, next }: { project: Project; next
         </Part>
 
         <Part id='how' title='How it works' note={p.flowTitle.toLowerCase()}>
-          <ol className='flex flex-col items-stretch gap-3 lg:flex-row lg:items-start'>
-            {p.flow.map((step, i) => (
-              <li key={step.title} className='flex flex-col items-center gap-3 lg:flex-1 lg:flex-row lg:items-start'>
-                <motion.div
-                  className='w-full border-2 border-ink bg-paper p-4 hover:shadow-[4px_4px_0_0_var(--color-ink)]'
-                  style={{ borderRadius: i % 2 ? '14px 6px 16px 5px' : '6px 15px 5px 14px' }}
-                  initial={{ opacity: 0, y: 24, rotate: i % 2 ? 5 : -5 }}
-                  whileInView={{ opacity: 1, y: 0, rotate: i % 2 ? 0.6 : -0.6 }}
-                  whileHover={{ y: -4, rotate: 0 }}
-                  viewport={{ once: true, margin: '-60px' }}
-                  transition={{ type: 'spring', stiffness: 160, damping: 14, delay: i * 0.18 }}
-                >
-                  <div className='hand text-[1.4rem] leading-none text-pen'>{i + 1}.</div>
-                  <div className='mt-1 font-semibold'>{step.title}</div>
-                  <p className='mt-1 text-[0.92rem] leading-relaxed text-pencil'>{step.detail}</p>
-                </motion.div>
-                {i < p.flow.length - 1 && (
-                  <motion.span
-                    className='hand shrink-0 text-[1.8rem] leading-none text-pen lg:mt-10'
-                    aria-hidden='true'
-                    initial={{ opacity: 0, scale: 0.3 }}
-                    whileInView={{ opacity: 1, scale: 1 }}
-                    viewport={{ once: true, margin: '-60px' }}
-                    transition={{ type: 'spring', stiffness: 300, damping: 12, delay: i * 0.18 + 0.15 }}
-                  >
-                    <span className='lg:hidden'>↓</span>
-                    <span className='hidden lg:inline'>→</span>
-                  </motion.span>
-                )}
-              </li>
-            ))}
-          </ol>
+          <FlowCards steps={p.flow} />
           {p.flowNotes && (
             <ul className='mt-10 max-w-2xl space-y-2 text-[1.02rem] leading-relaxed'>
               {p.flowNotes.map((n) => (

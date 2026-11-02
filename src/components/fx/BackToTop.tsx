@@ -26,9 +26,22 @@ export default function BackToTop() {
           transition={{ type: 'spring', stiffness: 260, damping: 18 }}
           aria-label='Back to top'
         >
-          <span className='inline-block transition-transform duration-300 group-hover:-translate-y-1 group-hover:rotate-[-20deg]'>✈</span>
+          {/* static hand-drawn up arrow (a fixed button doesn't need a draw-in animation) */}
+          <svg
+            viewBox='0 0 24 24'
+            fill='none'
+            stroke='currentColor'
+            strokeWidth='2.4'
+            strokeLinecap='round'
+            strokeLinejoin='round'
+            className='h-6 w-6 shrink-0 transition-transform duration-300 group-hover:-translate-y-1'
+            aria-hidden='true'
+          >
+            <path d='M12.3 20.5C11.6 15 12.6 9 11.8 4' />
+            <path d='M5.8 10.2C8 8 10 5.6 11.8 3.6C13.6 5.8 15.6 7.8 18.2 9.8' />
+          </svg>
           {/* label only where there's room; on phones it's a small icon button */}
-          <span className='hand hidden text-[1.25rem] leading-none sm:inline'>beam me up</span>
+          <span className='hand hidden text-[1.3rem] leading-none sm:inline'>back to top</span>
         </motion.button>
       )}
     </AnimatePresence>
